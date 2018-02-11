@@ -1,13 +1,11 @@
 package com.flightticketsystem.runtime.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 
 @Entity
+@Table(name = "Customer")
 public class Customer implements Serializable{
 
     private static final long serialVersionUID = 1L;

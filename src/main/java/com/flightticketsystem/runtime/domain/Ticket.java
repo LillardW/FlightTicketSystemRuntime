@@ -6,7 +6,7 @@ import java.io.Serializable;
 import com.flightticketsystem.runtime.constant.TicketStatus;
 
 @Entity
-@Table(name = "")
+@Table(name = "Ticket")
 public class Ticket implements Serializable{
 
     private static final long serialVersionUID = 1L;
