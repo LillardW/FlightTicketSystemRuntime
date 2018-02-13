@@ -3,10 +3,8 @@ package com.flightticketsystem.runtime.domain;
 import javax.persistence.*;
 import java.io.Serializable;
 
-import com.flightticketsystem.runtime.constant.TicketStatus;
-
 @Entity
-@Table(name = "Ticket")
+@Table(name = "TICKET_SYSTEM_TICKET")
 public class Ticket implements Serializable{
 
     private static final long serialVersionUID = 1L;
@@ -20,13 +18,13 @@ public class Ticket implements Serializable{
     private String ticketNo;
 
     @Column(name = "TICKET_STATUS")
-    private Integer ticketStatus = TicketStatus.ORDERED.getTicketStatus();
+    private Integer ticketStatus;
 
     @Column(name = "TICKET_PRICE")
     private Double ticketPrice;
 
-    @Column(name = "CUSTOMER_ID")
-    private Long customerId;
+    @Embedded
+    private Person passenger;
 
     @Column(name = "TICKET_DEPARTMENT")
     private String ticketDepartment;
@@ -69,14 +67,6 @@ public class Ticket implements Serializable{
         this.ticketPrice = ticketPrice;
     }
 
-    public Long getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
-    }
-
     public String getTicketDepartment() {
         return ticketDepartment;
     }
@@ -101,11 +91,19 @@ public class Ticket implements Serializable{
         this.ticketPlace = ticketPlace;
     }
 
-    public Ticket(String ticketNo, Integer ticketStatus, Double ticketPrice, Long customerId, String ticketDepartment, String ticketTerminal, String ticketPlace) {
+    public Person getPassenger() {
+        return passenger;
+    }
+
+    public void setPassenger(Person passenger) {
+        this.passenger = passenger;
+    }
+
+    public Ticket(String ticketNo, Integer ticketStatus, Double ticketPrice, Person passenger, String ticketDepartment, String ticketTerminal, String ticketPlace) {
         this.ticketNo = ticketNo;
         this.ticketStatus = ticketStatus;
         this.ticketPrice = ticketPrice;
-        this.customerId = customerId;
+        this.passenger = passenger;
         this.ticketDepartment = ticketDepartment;
         this.ticketTerminal = ticketTerminal;
         this.ticketPlace = ticketPlace;
