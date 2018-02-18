@@ -3,6 +3,7 @@ package com.flightticketsystem.runtime.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(name = "TICKET_SYSTEM_USER")
@@ -23,7 +24,13 @@ public class User implements Serializable {
     private String userEmail;
 
     @Embedded
-    private Person userOwner;
+    private Person accountOwner;
+
+    @Column(name = "CREATE_TIME")
+    private Date createTime;
+
+    @Column(name = "LAST_MODIFY_TIME")
+    private Date lastModifyTime;
 
     public Long getUserId() {
         return userId;
@@ -57,19 +64,36 @@ public class User implements Serializable {
         this.userEmail = userEmail;
     }
 
-    public Person getUserOwner() {
-        return userOwner;
+    public Person getAccountOwner() {
+        return accountOwner;
     }
 
-    public void setUserOwner(Person userOwner) {
-        this.userOwner = userOwner;
+    public void setAccountOwner(Person accountOwner) {
+        this.accountOwner = accountOwner;
     }
 
-    public User(Long userId, String userName, String password, String userEmail, Person userOwner) {
-        this.userId = userId;
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getLastModifyTime() {
+        return lastModifyTime;
+    }
+
+    public void setLastModifyTime(Date lastModifyTime) {
+        this.lastModifyTime = lastModifyTime;
+    }
+
+    public User(String userName, String password, String userEmail, Person accountOwner, Date createTime, Date lastModifyTime) {
         this.userName = userName;
         this.password = password;
         this.userEmail = userEmail;
-        this.userOwner = userOwner;
+        this.accountOwner = accountOwner;
+        this.createTime = createTime;
+        this.lastModifyTime = lastModifyTime;
     }
 }

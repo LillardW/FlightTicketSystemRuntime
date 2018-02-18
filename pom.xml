@@ -55,6 +55,12 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.4</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -99,7 +105,7 @@
         </pluginRepository>
         <pluginRepository>
             <id>spring-milestones</id>
-            <name>Spring Milestones</name>
+            <name>Sprng Milestones</name>
             <url>https://repo.spring.io/milestone</url>
             <snapshots>
                 <enabled>false</enabled>

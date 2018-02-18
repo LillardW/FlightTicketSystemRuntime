@@ -14,9 +14,6 @@ public class Person implements Serializable{
     @Column(name = "PERSON_NAME")
     private String personName;
 
-    @Column(name = "PERSON_EMAIL")
-    private String personEmail;
-
     public Integer getPersonId() {
         return personId;
     }
@@ -33,11 +30,4 @@ public class Person implements Serializable{
         this.personName = personName;
     }
 
-    public String getPersonEmail() {
-        return personEmail;
-    }
-
-    public void setPersonEmail(String personEmail) {
-        this.personEmail = personEmail;
-    }
 }

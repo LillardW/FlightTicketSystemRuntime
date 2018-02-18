@@ -1,5 +1,8 @@
 package com.flightticketsystem.runtime.domain;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -26,14 +29,13 @@ public class Ticket implements Serializable{
     @Embedded
     private Person passenger;
 
-    @Column(name = "TICKET_DEPARTMENT")
-    private String ticketDepartment;
+    @JoinColumn(name = "FLIGHT_ID")
+    @ManyToOne(targetEntity = Flight.class, optional = false)
+    @Fetch(value = FetchMode.SELECT)
+    private Flight flight;
 
-    @Column(name = "TICKET_TERMINAL")
-    private String ticketTerminal;
-
-    @Column(name = "TICKET_PLACE")
-    private String ticketPlace;
+    @Column(name = "FLIGHT_PLACE")
+    private String flightPlace;
 
     public Long getTicketId() {
         return ticketId;
@@ -67,28 +69,20 @@ public class Ticket implements Serializable{
         this.ticketPrice = ticketPrice;
     }
 
-    public String getTicketDepartment() {
-        return ticketDepartment;
+    public Flight getFlight() {
+        return flight;
     }
 
-    public void setTicketDepartment(String ticketDepartment) {
-        this.ticketDepartment = ticketDepartment;
+    public void setFlight(Flight flight) {
+        this.flight = flight;
     }
 
-    public String getTicketTerminal() {
-        return ticketTerminal;
+    public String getFlightPlace() {
+        return flightPlace;
     }
 
-    public void setTicketTerminal(String ticketTerminal) {
-        this.ticketTerminal = ticketTerminal;
-    }
-
-    public String getTicketPlace() {
-        return ticketPlace;
-    }
-
-    public void setTicketPlace(String ticketPlace) {
-        this.ticketPlace = ticketPlace;
+    public void setFlightPlace(String flightPlace) {
+        this.flightPlace = flightPlace;
     }
 
     public Person getPassenger() {
@@ -99,13 +93,12 @@ public class Ticket implements Serializable{
         this.passenger = passenger;
     }
 
-    public Ticket(String ticketNo, Integer ticketStatus, Double ticketPrice, Person passenger, String ticketDepartment, String ticketTerminal, String ticketPlace) {
+    public Ticket(String ticketNo, Integer ticketStatus, Double ticketPrice, Person passenger, Flight flight, String flightPlace) {
         this.ticketNo = ticketNo;
         this.ticketStatus = ticketStatus;
         this.ticketPrice = ticketPrice;
         this.passenger = passenger;
-        this.ticketDepartment = ticketDepartment;
-        this.ticketTerminal = ticketTerminal;
-        this.ticketPlace = ticketPlace;
+        this.flight = flight;
+        this.flightPlace = flightPlace;
     }
 }
