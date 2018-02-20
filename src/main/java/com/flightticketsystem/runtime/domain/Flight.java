@@ -1,9 +1,6 @@
 package com.flightticketsystem.runtime.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,8 +8,10 @@ import java.util.Date;
 @Table(name = "TICKET_SYSTEM_FLIGHT")
 public class Flight implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "FLIGHT_ID")
-    private String flightId;
+    private Integer flightId;
 
     @Column(name = "FLIGHT_NO")
     private String flightNo;
@@ -29,11 +28,11 @@ public class Flight implements Serializable {
     @Column(name = "ESTIMATED_FLIGHT_TIME")
     private Date estimatedFlightTime;
 
-    public String getFlightId() {
+    public Integer getFlightId() {
         return flightId;
     }
 
-    public void setFlightId(String flightId) {
+    public void setFlightId(Integer flightId) {
         this.flightId = flightId;
     }
 

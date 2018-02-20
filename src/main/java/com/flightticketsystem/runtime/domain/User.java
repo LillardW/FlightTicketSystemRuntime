@@ -96,4 +96,8 @@ public class User implements Serializable {
         this.createTime = createTime;
         this.lastModifyTime = lastModifyTime;
     }
+
+    public User() {
+
+    }
 }

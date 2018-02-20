@@ -1,9 +1,9 @@
 package com.flightticketsystem.runtime.utils;
 
+import org.apache.log4j.Logger;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import org.apache.log4j.Logger;
 
 public class URLUtil {
 	

@@ -9,14 +9,14 @@ import com.flightticketsystem.runtime.utils.Des3EncryptionUtil;
 import com.flightticketsystem.runtime.utils.MD5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-@Controller
+@RestController
 public class BaseController {
 
     protected Logger logger = Logger.getLogger(this.getClass());

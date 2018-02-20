@@ -1,25 +1,25 @@
 package com.flightticketsystem.runtime.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "TICKET_SYSTEM_CITY")
 public class City implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CITY_ID")
-    private String cityId;
+    private Integer cityId;
 
     @Column(name = "CITY_NAME")
     private String cityName;
 
-    public String getCityId() {
+    public Integer getCityId() {
         return cityId;
     }
 
-    public void setCityId(String cityId) {
+    public void setCityId(Integer cityId) {
         this.cityId = cityId;
     }
 

@@ -1,6 +1,6 @@
 package com.flightticketsystem.runtime.utils;
 
-import com.favorites.comm.Const;
+import com.flightticketsystem.runtime.constant.Constant;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
@@ -31,7 +31,7 @@ public class HtmlUtil {
 		String logo="";
 		logo=getPageImg(url);
 		if(StringUtils.isBlank(logo)){
-			logo=Const.BASE_PATH + Const.default_logo;
+			logo= Constant.BASE_PATH + Constant.default_logo;
 		}
 		return logo;
 	}
@@ -44,7 +44,7 @@ public class HtmlUtil {
 		String imgUrl="";
 		Document doc;
 		try {
-			doc = Jsoup.connect(url).userAgent(Const.userAgent).get();
+			doc = Jsoup.connect(url).userAgent(Constant.userAgent).get();
 			Elements images = doc.select("img[src~=(?i)\\.(png|jpe?g|gif)]");
 			for(Element image : images){
 				imgUrl=image.attr("src");
@@ -88,7 +88,7 @@ public class HtmlUtil {
 		Map<String, String> result = new HashMap<String, String>();
 		try {
 			result.put("url", url);
-			Document doc = Jsoup.connect(url).userAgent(Const.userAgent).get();
+			Document doc = Jsoup.connect(url).userAgent(Constant.userAgent).get();
 			String title = doc.title();
 			if(StringUtils.isNotBlank(title)){
 				result.put("title", title);

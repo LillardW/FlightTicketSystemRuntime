@@ -3,11 +3,12 @@ package com.flightticketsystem.runtime.service;
 import com.flightticketsystem.runtime.constant.ExceptionMsg;
 import com.flightticketsystem.runtime.domain.Response;
 import com.flightticketsystem.runtime.domain.User;
-import org.apache.log4j.Logger;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+@SpringBootApplication
 public interface BaseService {
 
     public Response result(ExceptionMsg msg);

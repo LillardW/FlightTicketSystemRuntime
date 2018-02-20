@@ -9,12 +9,14 @@ import com.flightticketsystem.runtime.utils.Des3EncryptionUtil;
 import com.flightticketsystem.runtime.utils.MD5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+@Service
 public class BaseServiceImpl implements BaseService {
 
     public Logger logger = Logger.getLogger(this.getClass());
