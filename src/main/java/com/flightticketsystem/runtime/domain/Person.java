@@ -10,16 +10,16 @@ public class Person implements Serializable{
     private static final long serialVersionUID = 1L;
 
     @Column(name = "PERSON_ID")
-    private Integer personId;
+    private String personId;
 
     @Column(name = "PERSON_NAME")
     private String personName;
 
-    public Integer getPersonId() {
+    public String getPersonId() {
         return personId;
     }
 
-    public void setPersonId(Integer personId) {
+    public void setPersonId(String personId) {
         this.personId = personId;
     }
 

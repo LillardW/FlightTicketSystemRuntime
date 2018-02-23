@@ -1,0 +1,9 @@
+{
+    "userName": "qwerty",
+    "password": 123456,
+    "userEmail": "asdfgh@qq.com",
+    "accountOwner": {
+        "personId":123456789123456789,
+        "personName":"hehe"
+    }
+}
