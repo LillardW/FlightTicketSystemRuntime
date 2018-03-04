@@ -11,16 +11,16 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "USER_ID")
+    @Column(name = "USER_ID", nullable = false)
     private Long userId;
 
-    @Column(name = "USER_NAME")
+    @Column(name = "USER_NAME", nullable = false)
     private String userName;
 
-    @Column(name = "USER_PASSWORD")
+    @Column(name = "USER_PASSWORD", nullable = false)
     private String password;
 
-    @Column(name = "USER_EMAIL")
+    @Column(name = "USER_EMAIL", nullable = false)
     private String userEmail;
 
     @Embedded

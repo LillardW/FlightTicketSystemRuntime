@@ -6,15 +6,13 @@ import com.flightticketsystem.runtime.domain.ResponseData;
 import com.flightticketsystem.runtime.domain.User;
 import com.flightticketsystem.runtime.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/user")
 public class UserController {
 

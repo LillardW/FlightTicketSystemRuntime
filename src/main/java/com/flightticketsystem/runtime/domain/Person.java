@@ -9,10 +9,10 @@ public class Person implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-    @Column(name = "PERSON_ID")
+    @Column(name = "PERSON_ID", nullable = false)
     private String personId;
 
-    @Column(name = "PERSON_NAME")
+    @Column(name = "PERSON_NAME", nullable = false)
     private String personName;
 
     public String getPersonId() {
