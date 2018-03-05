@@ -26,10 +26,10 @@ public class User implements Serializable {
     @Embedded
     private Person accountOwner;
 
-    @Column(name = "CREATE_TIME")
+    @Column(name = "CREATE_TIME", nullable = false)
     private Date createTime;
 
-    @Column(name = "LAST_MODIFY_TIME")
+    @Column(name = "LAST_MODIFY_TIME", nullable = false)
     private Date lastModifyTime;
 
     public Long getUserId() {

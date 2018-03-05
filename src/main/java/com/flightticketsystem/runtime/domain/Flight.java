@@ -13,19 +13,19 @@ public class Flight implements Serializable {
     @Column(name = "FLIGHT_ID")
     private Integer flightId;
 
-    @Column(name = "FLIGHT_NO")
+    @Column(name = "FLIGHT_NO", nullable = false)
     private String flightNo;
 
-    @JoinColumn(name = "CITY_ID")
+    @JoinColumn(name = "CITY_ID", nullable = false)
     private City departureCity;
 
-    @JoinColumn(name = "CITY_ID")
+    @JoinColumn(name = "CITY_ID", nullable = false)
     private City arrivalCity;
 
-    @Column(name = "FLIGHT_TIME")
+    @Column(name = "FLIGHT_TIME", nullable = false)
     private Date flightTime;
 
-    @Column(name = "ESTIMATED_FLIGHT_TIME")
+    @Column(name = "ESTIMATED_FLIGHT_TIME", nullable = false)
     private Date estimatedFlightTime;
 
     public Integer getFlightId() {
