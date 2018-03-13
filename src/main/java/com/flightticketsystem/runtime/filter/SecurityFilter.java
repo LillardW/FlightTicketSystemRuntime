@@ -41,7 +41,7 @@ public class SecurityFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) srequest;
         String uri = request.getRequestURI();
-        if (request.getSession().getAttribute(Constant.LOGIN_SESSION_KEY) == null) {
+        if (request.getSession().getAttribute(Constant.LOGIN_SESSION_KEY_USERID) == null) {
             Cookie[] cookies = request.getCookies();
             if (containsSuffix(uri) || GreenUrlSet.contains(uri) || containsKey(uri)) {
                 logger.debug("don't check  url, " + request.getRequestURI());
@@ -51,7 +51,7 @@ public class SecurityFilter implements Filter {
                 boolean flag = true;
                 for (int i = 0; i < cookies.length; i++) {
                     Cookie cookie = cookies[i];
-                    if (cookie.getName().equals(Constant.LOGIN_SESSION_KEY)) {
+                    if (cookie.getName().equals(Constant.LOGIN_SESSION_KEY_USERID)) {
                         if (StringUtils.isNotBlank(cookie.getValue())) {
                             flag = false;
                         } else {
@@ -72,7 +72,7 @@ public class SecurityFilter implements Filter {
                             html = "<script type=\"text/javascript\">window.location.href=\"_BP_login\"</script>";
                         } else {
                             logger.info("userId :" + user.getUserId());
-                            request.getSession().setAttribute(Constant.LOGIN_SESSION_KEY, user);
+                            request.getSession().setAttribute(Constant.LOGIN_SESSION_KEY_USERID, user);
                             String referer = this.getRef(request);
                             if (referer.contains("/collect?") || referer.contains("/lookAround/standard/") || referer.contains("/lookAround/simple/")) {
                                 filterChain.doFilter(srequest, sresponse);
@@ -164,16 +164,9 @@ public class SecurityFilter implements Filter {
                 || url.contains("/register") || url.contains("/user/register") || url.contains("/index")
                 || url.contains("/forgotPassword") || url.contains("/user/sendForgotPasswordEmail")
                 || url.contains("/newPassword") || url.contains("/user/setNewPassword")
-                || (url.contains("/collector") && !url.contains("/collect/detail/"))
-                || url.contains("/collect/standard/") || url.contains("/collect/simple/")
-                || url.contains("/user") || url.contains("/favorites") || url.contains("/comment")
-                || url.startsWith("/lookAround/standard/")
-                || url.startsWith("/lookAround/simple/")
+                || url.contains("/user")
                 || url.startsWith("/user/")
-                || url.startsWith("/feedback")
-                || url.startsWith("/standard/")
-                || url.startsWith("/collect/standard/lookAround/")
-                || url.startsWith("/collect/simple/lookAround/")) {
+                ) {
             return true;
         } else {
             return false;

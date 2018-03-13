@@ -9,7 +9,10 @@ public class Constant {
 
     public static String BASE_PATH;
 
-    public static String LOGIN_SESSION_KEY = "Favorites_user";
+    public static String LOGIN_SESSION_KEY_USERID = "FLIGHT_TICKET_SYSTEM_USERID";
+
+    public static String LOGIN_SESSION_KEY_USERNAME = "FLIGHT_TICKET_SYSTEM_USERNAME";
+
 
     public static String PASSWORD_KEY = "@#$%^&*()OPG#$%^&*(HG";
 

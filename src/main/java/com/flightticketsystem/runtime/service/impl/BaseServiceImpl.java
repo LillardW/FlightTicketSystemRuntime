@@ -38,7 +38,7 @@ public class BaseServiceImpl implements BaseService {
     }
 
     public User getUser() {
-        return (User) getSession().getAttribute(Constant.LOGIN_SESSION_KEY);
+        return (User) getSession().getAttribute(Constant.LOGIN_SESSION_KEY_USERID);
     }
 
     public Long getUserId() {

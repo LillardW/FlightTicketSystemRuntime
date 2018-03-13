@@ -11,7 +11,6 @@ import com.flightticketsystem.runtime.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +19,7 @@ import java.util.Date;
 @Service
 public class UserServiceImpl implements UserService {
 
-    Logger logger = Logger.getLogger(this.getClass());
+    private final static Logger logger = Logger.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -30,31 +29,23 @@ public class UserServiceImpl implements UserService {
 
     public ResponseData login(User user, HttpServletResponse response) {
         try {
-            User loginUser = userRepository.findByUserNameOrUserEmail(user.getUserName(), user.getUserEmail());
+            User loginUser = userRepository.findByUserName(user.getUserName());
             if (loginUser == null) {
                 return new ResponseData(ExceptionMsg.LoginNameNotExists);
             } else if (!loginUser.getPassword().equals(baseService.getPwd(user.getPassword()))) {
                 return new ResponseData(ExceptionMsg.LoginNameOrPassWordError);
             }
-            Cookie cookie = new Cookie(Constant.LOGIN_SESSION_KEY, baseService.cookieSign(loginUser.getUserId().toString()));
+            Cookie cookie = new Cookie(Constant.LOGIN_SESSION_KEY_USERID, baseService.cookieSign(loginUser.getUserId().toString()));
             cookie.setMaxAge(Constant.COOKIE_TIMEOUT);
             cookie.setPath("/");
             response.addCookie(cookie);
-            baseService.getSession().setAttribute(Constant.LOGIN_SESSION_KEY, loginUser);
+            Cookie cookie4UserName = new Cookie(Constant.LOGIN_SESSION_KEY_USERNAME, user.getUserName());
+            cookie4UserName.setMaxAge(Constant.COOKIE_TIMEOUT);
+            cookie4UserName.setPath("/");
+            response.addCookie(cookie4UserName);
+            baseService.getSession().setAttribute(Constant.LOGIN_SESSION_KEY_USERID, loginUser);
+            baseService.getSession().setAttribute(Constant.LOGIN_SESSION_KEY_USERNAME, user.getUserName());
             String preUrl = "/";
-            if (null != baseService.getSession().getAttribute(Constant.LAST_REFERER)) {
-                preUrl = String.valueOf(baseService.getSession().getAttribute(Constant.LAST_REFERER));
-                if (preUrl.indexOf("/collect?") < 0 && preUrl.indexOf("/lookAround/standard/") < 0
-                        && preUrl.indexOf("/lookAround/simple/") < 0) {
-                    preUrl = "/";
-                }
-            }
-            if (preUrl.indexOf("/lookAround/standard/") >= 0) {
-                preUrl = "/lookAround/standard/ALL";
-            }
-            if (preUrl.indexOf("/lookAround/simple/") >= 0) {
-                preUrl = "/lookAround/simple/ALL";
-            }
             return new ResponseData(ExceptionMsg.SUCCESS, preUrl);
         } catch (Exception e) {
             // TODO: handle exception
@@ -79,6 +70,15 @@ public class UserServiceImpl implements UserService {
             }
         } catch (Exception e) {
             logger.error("Registration Error: " + e);
+        }
+        return baseService.result();
+    }
+
+    public Response updateUserProfile(User user) {
+        try {
+
+        } catch (Exception e) {
+
         }
         return baseService.result();
     }

@@ -38,7 +38,7 @@ public class BaseController {
     }
 
     protected User getUser() {
-        return (User) getSession().getAttribute(Constant.LOGIN_SESSION_KEY);
+        return (User) getSession().getAttribute(Constant.LOGIN_SESSION_KEY_USERID);
     }
 
     protected Long getUserId() {

@@ -13,4 +13,6 @@ public interface UserService {
     public ResponseData login(User user, HttpServletResponse response);
 
     public Response register(User user);
+
+    public Response updateUserProfile(User user);
 }
