@@ -5,12 +5,13 @@ import com.flightticketsystem.runtime.domain.Response;
 import com.flightticketsystem.runtime.domain.ResponseData;
 import com.flightticketsystem.runtime.domain.User;
 import com.flightticketsystem.runtime.service.UserService;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
-@RestController
+@Controller
 @CrossOrigin
 @RequestMapping("/user")
 public class UserController {

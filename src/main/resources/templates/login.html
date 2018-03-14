@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>登录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="UTF-8"/>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <link href="css/bootstrap.css" rel='stylesheet' type='text/css'/>
+    <link href="css/style.css" rel='stylesheet' type='text/css'/>
+    <script src="js/jquery.min.js"></script>
+    <!-- start-smoth-scrolling-->
+    <script type="text/javascript" src="js/move-top.js"></script>
+    <script type="text/javascript" src="js/easing.js"></script>
+    <script type="text/javascript" src="js/axios.min.js"></script>
+    <script type="text/javascript" src="js/jquery.serializejson.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+                $('html,body').animate({scrollTop: $(this.hash).offset().top}, 1000);
+            });
+        });
+    </script>
+    <!--start-smoth-scrolling-->
+</head>
+<body>
+<!--start-header-->
+<div class="header" id="home">
+    <div class="container">
+        <div class="head">
+            <div class="logo">
+                <a href="index.html"><img src="images/logo.png" alt=""/></a>
+            </div>
+            <div class="navigation">
+                <span class="menu"></span>
+                <ul class="navig">
+                    <li><a href="index.html" class="hvr-bounce-to-bottom">首页</a></li>
+                    <li><a href="about.html" class="hvr-bounce-to-bottom">关于</a></li>
+                    <li><a href="services.html" class="hvr-bounce-to-bottom">Services</a></li>
+                    <li><a href="typo.html" class="hvr-bounce-to-bottom">Typo</a></li>
+                    <li><a href="login.html" class="active hvr-bounce-to-bottom">登录</a></li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<!-- script-for-menu -->
+<!-- script-for-menu -->
+<script>
+    $("span.menu").click(function () {
+        $(" ul.navig").slideToggle("slow", function () {
+        });
+    });
+</script>
+<!--script-for-menu-->
+<!--start-about-->
+<script>
+    function submitLoginMessage() {
+        var user = $("#userForm").serializeJSON();
+
+        console.log("user: "+JSON.stringify(user));
+        axios.post("localhost:8080/user/login", user, {
+            timeout: 1000,
+            withCredentials: true
+        }).then(function (res) {
+            if(res.data.rspCode === "000000") {
+                console.log("登录成功！");
+            } else {
+                console.log("failed");
+            }
+        });
+    }
+</script>
+<div class="about">
+    <div class="container">
+
+        <form id="userForm" action="/user/login" method="post" enctype="application/json">
+            <span>用户名</span>
+            <input name="userName" type="text"/>
+            <span>密码</span>
+            <input name="password" type="password"/>
+            <input type="button" onclick="submitLoginMessage()" value="提交"/>
+        </form>
+    </div>
+</div>
+<!--end-about-->
+<!--start-test-->
+<div class="test" id="testimonials">
+
+</div>
+<!--end-test-->
+<!--FlexSlider-->
+<link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen"/>
+<script src="js/jquery.flexslider.js"></script>
+<script type="text/javascript">
+    $(function () {
+        SyntaxHighlighter.all();
+    });
+    $(window).load(function () {
+        $('.flexslider').flexslider({
+            animation: "slide",
+            start: function (slider) {
+                $('body').removeClass('loading');
+            }
+        });
+    });
+</script>
+
+<!--End-slider-script-->
+<!--start-footer-->
+<div class="footer">
+    <div class="container">
+        <div class="touch-top heading">
+            <h3>FOLLOW US</h3>
+        </div>
+        <div class="touch-bottom">
+            <p>756 gt globel Place, CD-Road,M 07 435.</p>
+            <h6>1 234 567 9871 , 800-2345-679</h6>
+            <p>purus tincidunt egestas</p>
+            <ul>
+                <li><a href="#"><span class="fb"> </span></a></li>
+                <li><a href="#"><span class="twit"> </span></a></li>
+                <li><a href="#"><span class="google"> </span></a></li>
+            </ul>
+        </div>
+        <div class="footer-top">
+            <p class="footer-class">Copyright &copy; 2015.Company name All rights reserved.More Templates <a
+                    href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a
+                    href="http://www.cssmoban.com/" title="网站模板" target="_blank">网站模板</a></p>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $().UItoTop({easingType: 'easeOutQuart'});
+
+        });
+    </script>
+    <a href="#home" id="toTop" class="scroll" style="display: block;"> <span id="toTopHover"
+                                                                             style="opacity: 1;"> </span></a>
+</div>
+<!--end-footer-->
+</body>
+</html>
