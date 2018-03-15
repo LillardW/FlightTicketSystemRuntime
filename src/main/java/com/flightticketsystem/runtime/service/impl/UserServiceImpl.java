@@ -5,6 +5,7 @@ import com.flightticketsystem.runtime.constant.ExceptionMsg;
 import com.flightticketsystem.runtime.domain.Response;
 import com.flightticketsystem.runtime.domain.ResponseData;
 import com.flightticketsystem.runtime.domain.User;
+import com.flightticketsystem.runtime.domain.UserModel;
 import com.flightticketsystem.runtime.repository.UserRepository;
 import com.flightticketsystem.runtime.service.BaseService;
 import com.flightticketsystem.runtime.service.UserService;
@@ -81,6 +82,16 @@ public class UserServiceImpl implements UserService {
 
         }
         return baseService.result();
+    }
+
+    public User convert(UserModel userModel) {
+        User user = new User();
+        user.setUserName(userModel.getUserName());
+        user.setPassword(userModel.getPassword());
+        user.setUserEmail(userModel.getUserEmail());
+        user.getAccountOwner().setPersonId(userModel.getPersonId());
+        user.getAccountOwner().setPersonName(userModel.getPersonName());
+        return user;
     }
 
 

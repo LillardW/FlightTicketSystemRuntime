@@ -62,35 +62,24 @@
 </script>
 <!--script-for-menu-->
 <!--start-about-->
-<script>
-    function submitLoginMessage() {
-        var user = $("#userForm").serializeJSON();
 
-        console.log("user: "+JSON.stringify(user));
-        axios.post("/user/login", user, {
-            timeout: 1000,
-            withCredentials: true
-        }).then(function (res) {
-            if(res.data.rspCode === "000000") {
-                console.log("登录成功！");
-            } else {
-                console.log("failed");
-            }
-        });
-    }
-</script>
 <div class="about">
     <div class="container">
 
-        <form id="userForm" th:object="${user}" th:action="@{/user/login}" method="post">
+        <form id="userForm" th:object="${userModel}" th:action="@{user/register}" method="post">
             <span>用户名</span>
-            <input name="userName" th:value="*{userName}" type="text"/>
+            <input name="userName" th:value="${userName}" type="text"/>
             <span>密码</span>
-            <input name="password" th:value="*{password}" type="password"/>
+            <input name="password" th:value="${password}" type="password"/>
+            <span>邮箱</span>
+            <input name="userEmail" th:value="${userEmail}" type="text"/>
+            <span>身份证号码</span>
+            <input name="personId" th:value="${personId}" type="text"/>
+            <span>真实姓名</span>
+            <input name="personName" th:value="${personName}" type="text"/>
             <input type="submit" name="提交"/>
         </form>
     </div>
-    <a href="/register">还未注册？</a>
 </div>
 <!--end-about-->
 <!--start-test-->
