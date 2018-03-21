@@ -15,7 +15,7 @@ public interface UserService {
 
     public Response register(User user);
 
-    public Response updateUserProfile(User user);
+    public Response updateUserProfile(UserModel userModel);
 
     public User convert(UserModel userModel);
 }

@@ -1,8 +1,6 @@
 package com.flightticketsystem.runtime.controller;
 
-import com.flightticketsystem.runtime.aop.LoggerManage;
 import com.flightticketsystem.runtime.domain.Response;
-import com.flightticketsystem.runtime.domain.ResponseData;
 import com.flightticketsystem.runtime.domain.User;
 import com.flightticketsystem.runtime.domain.UserModel;
 import com.flightticketsystem.runtime.service.UserService;
@@ -35,7 +33,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/updateProfile", method = RequestMethod.POST)
-    public Response updateProfile(@RequestBody User user) {
-        return userService.updateUserProfile(user);
+    public Response updateProfile(UserModel userModel) {
+        return userService.updateUserProfile(userModel);
     }
 }

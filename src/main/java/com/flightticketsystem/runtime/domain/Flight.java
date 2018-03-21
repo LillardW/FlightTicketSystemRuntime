@@ -11,28 +11,31 @@ public class Flight implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "FLIGHT_ID")
-    private Integer flightId;
+    private int flightId;
 
     @Column(name = "FLIGHT_NO", nullable = false)
     private String flightNo;
 
-    @JoinColumn(name = "CITY_ID", nullable = false)
-    private City departureCity;
+    @Column(name = "DEPARTURE_CITY", nullable = false)
+    private String departureCity;
 
-    @JoinColumn(name = "CITY_ID", nullable = false)
-    private City arrivalCity;
+    @Column(name = "ARRIVAL_CITY", nullable = false)
+    private String arrivalCity;
 
-    @Column(name = "FLIGHT_TIME", nullable = false)
+    @Transient
     private Date flightTime;
 
-    @Column(name = "ESTIMATED_FLIGHT_TIME", nullable = false)
-    private Date estimatedFlightTime;
+    @Column(name = "ESTIMATED_TAKE_OFF_TIME", nullable = false)
+    private Date estimatedTakeOffTime;
 
-    public Integer getFlightId() {
+    @Column(name = "ESTIMATED_ARRIVAL_TIME", nullable = false)
+    private Date estimatedArrivalTime;
+
+    public int getFlightId() {
         return flightId;
     }
 
-    public void setFlightId(Integer flightId) {
+    public void setFlightId(int flightId) {
         this.flightId = flightId;
     }
 
@@ -44,19 +47,19 @@ public class Flight implements Serializable {
         this.flightNo = flightNo;
     }
 
-    public City getDepartureCity() {
+    public String getDepartureCity() {
         return departureCity;
     }
 
-    public void setDepartureCity(City departureCity) {
+    public void setDepartureCity(String departureCity) {
         this.departureCity = departureCity;
     }
 
-    public City getArrivalCity() {
+    public String getArrivalCity() {
         return arrivalCity;
     }
 
-    public void setArrivalCity(City arrivalCity) {
+    public void setArrivalCity(String arrivalCity) {
         this.arrivalCity = arrivalCity;
     }
 
@@ -68,11 +71,19 @@ public class Flight implements Serializable {
         this.flightTime = flightTime;
     }
 
-    public Date getEstimatedFlightTime() {
-        return estimatedFlightTime;
+    public Date getEstimatedTakeOffTime() {
+        return estimatedTakeOffTime;
     }
 
-    public void setEstimatedFlightTime(Date estimatedFlightTime) {
-        this.estimatedFlightTime = estimatedFlightTime;
+    public void setEstimatedTakeOffTime(Date estimatedTakeOffTime) {
+        this.estimatedTakeOffTime = estimatedTakeOffTime;
+    }
+
+    public Date getEstimatedArrivalTime() {
+        return estimatedArrivalTime;
+    }
+
+    public void setEstimatedArrivalTime(Date estimatedArrivalTime) {
+        this.estimatedArrivalTime = estimatedArrivalTime;
     }
 }

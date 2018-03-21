@@ -2,6 +2,8 @@ package com.flightticketsystem.runtime.domain;
 
 public class UserModel {
 
+    private Integer userId;
+
     private String userName;
 
     private String password;
@@ -11,6 +13,14 @@ public class UserModel {
     private String personId;
 
     private String personName;
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
     public String getUserName() {
         return userName;

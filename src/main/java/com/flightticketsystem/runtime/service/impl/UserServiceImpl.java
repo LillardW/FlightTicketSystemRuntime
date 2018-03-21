@@ -2,10 +2,7 @@ package com.flightticketsystem.runtime.service.impl;
 
 import com.flightticketsystem.runtime.constant.Constant;
 import com.flightticketsystem.runtime.constant.ExceptionMsg;
-import com.flightticketsystem.runtime.domain.Response;
-import com.flightticketsystem.runtime.domain.ResponseData;
-import com.flightticketsystem.runtime.domain.User;
-import com.flightticketsystem.runtime.domain.UserModel;
+import com.flightticketsystem.runtime.domain.*;
 import com.flightticketsystem.runtime.repository.UserRepository;
 import com.flightticketsystem.runtime.service.BaseService;
 import com.flightticketsystem.runtime.service.UserService;
@@ -75,9 +72,10 @@ public class UserServiceImpl implements UserService {
         return baseService.result();
     }
 
-    public Response updateUserProfile(User user) {
+    public Response updateUserProfile(UserModel userModel) {
         try {
-
+            User user = convert(userModel);
+            userRepository.save(user);
         } catch (Exception e) {
 
         }
@@ -89,8 +87,10 @@ public class UserServiceImpl implements UserService {
         user.setUserName(userModel.getUserName());
         user.setPassword(userModel.getPassword());
         user.setUserEmail(userModel.getUserEmail());
-        user.getAccountOwner().setPersonId(userModel.getPersonId());
-        user.getAccountOwner().setPersonName(userModel.getPersonName());
+        Person person = new Person();
+        person.setPersonId(userModel.getPersonId());
+        person.setPersonName(userModel.getPersonName());
+        user.setAccountOwner(person);
         return user;
     }
 

@@ -2,7 +2,10 @@ package com.flightticketsystem.runtime.service;
 
 import com.flightticketsystem.runtime.domain.Flight;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public interface FlightService {
 
-    Flight searchFlights(Flight flight);
+    ArrayList<Flight> searchFlights(Flight flight);
 }

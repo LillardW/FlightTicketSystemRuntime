@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>登录</title>
+    <title>搜索结果</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta charset="UTF-8"/>
     <script type="application/x-javascript"> addEventListener("load", function () {
         setTimeout(hideURLbar, 0);
     }, false);
@@ -43,8 +42,8 @@
                 <ul class="navig">
                     <li><a href="index.html" class="hvr-bounce-to-bottom">首页</a></li>
                     <li><a href="about.html" class="hvr-bounce-to-bottom">关于</a></li>
-                    <li><a href="services.html" class="hvr-bounce-to-bottom">Services</a></li>
-                    <li><a href="typo.html" class="hvr-bounce-to-bottom">Typo</a></li>
+                    <li><a href="services.html" class="hvr-bounce-to-bottom">服务</a></li>
+                    <li><a href="typo.html" class="hvr-bounce-to-bottom">样式</a></li>
                     <li><a href="login.html" class="active hvr-bounce-to-bottom">登录</a></li>
                 </ul>
             </div>
@@ -65,20 +64,30 @@
 
 <div class="about">
     <div class="container">
-
-        <form id="userForm" th:object="${userModel}" th:action="@{user/register}" method="post">
-            <span>用户名</span>
-            <input name="userName" th:value="${userName}" type="text"/>
-            <span>密码</span>
-            <input name="password" th:value="${password}" type="password"/>
-            <span>邮箱</span>
-            <input name="userEmail" th:value="${userEmail}" type="text"/>
-            <span>身份证号码</span>
-            <input name="personId" th:value="${personId}" type="text"/>
-            <span>真实姓名</span>
-            <input name="personName" th:value="${personName}" type="text"/>
-            <input type="submit" name="提交"/>
-        </form>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>航班号</th>
+                <th>出发城市</th>
+                <th>到达城市</th>
+                <th>起飞时间</th>
+                <th>到达时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr  th:each="flight : ${flightSearchResult}">
+                <td th:text="${flight.flightNo}"></td>
+                <td th:text="${flight.departureCity}"></td>
+                <td th:text="${flight.arrivalCity}"></td>
+                <td th:text="${flight.estimatedTakeOffTime}"></td>
+                <td th:text="${flight.estimatedArrivalTime}"></td>
+                <td><a th:href="@{/bootTicket(id=${flight.flightId})}">订票</a></td>
+                <!--<td><a th:href="@{/toEdit(id=${user.id})}">edit</a></td>
+                <td><a th:href="@{/delete(id=${user.id})}">delete</a></td> -->
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 <!--end-about-->
