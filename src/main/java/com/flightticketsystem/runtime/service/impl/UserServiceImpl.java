@@ -76,6 +76,9 @@ public class UserServiceImpl implements UserService {
         try {
             User user = convert(userModel);
             User origUser = findUserByUserId(user.getUserId());
+            if(!userModel.getPassword().equals(origUser.getPassword())) {
+                user.setPassword(baseService.getPwd(userModel.getPassword()));
+            }
             user.setCreateTime(origUser.getCreateTime());
             user.setLastModifyTime(new Date());
             userRepository.save(user);

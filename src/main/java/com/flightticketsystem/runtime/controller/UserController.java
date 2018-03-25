@@ -46,13 +46,13 @@ public class UserController {
     }
 
     @RequestMapping(value = "/updateUserProfile", method = RequestMethod.POST)
-    public String updateProfile(UserModel userModel, Model model) {
+    public String updateProfile(UserModel userModel, HttpSession session) {
         boolean result = userService.updateUserProfile(userModel);
         if(result) {
             User user = userService.findUserByUserId(userModel.getUserId());
-            model.addAttribute("currentUser", userService.convertToModel(user));
-            return "updateUserProfile";
+            session.setAttribute("currentUser", userService.convertToModel(user));
+            return "redirect:/updateUserProfilePage";
         }
-        return "updateUserProfile";
+        return "redirect:/updateUserProfilePage";
     }
 }

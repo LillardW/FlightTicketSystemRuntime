@@ -91,7 +91,7 @@ public class PageController {
         return "bookTicket";
     }
 
-    @RequestMapping("updateUserProfile")
+    @RequestMapping("/updateUserProfilePage")
     public String updateUserProfilePage(HttpSession session) {
         if(session.getAttribute("currentUser") != null) {
             return "updateUserProfile";
