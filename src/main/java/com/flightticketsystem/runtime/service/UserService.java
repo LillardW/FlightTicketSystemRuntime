@@ -15,7 +15,13 @@ public interface UserService {
 
     public Response register(User user);
 
-    public Response updateUserProfile(UserModel userModel);
+    public boolean updateUserProfile(UserModel userModel);
 
     public User convert(UserModel userModel);
+
+    public UserModel convertToModel(User user);
+
+    public User findUserByUserId(long userId);
+
+    public User findUserByUserName(User user);
 }

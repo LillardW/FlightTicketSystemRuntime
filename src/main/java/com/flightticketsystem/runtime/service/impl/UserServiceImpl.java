@@ -72,18 +72,23 @@ public class UserServiceImpl implements UserService {
         return baseService.result();
     }
 
-    public Response updateUserProfile(UserModel userModel) {
+    public boolean updateUserProfile(UserModel userModel) {
         try {
             User user = convert(userModel);
+            User origUser = findUserByUserId(user.getUserId());
+            user.setCreateTime(origUser.getCreateTime());
+            user.setLastModifyTime(new Date());
             userRepository.save(user);
+            return true;
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
-        return baseService.result();
+        return false;
     }
 
     public User convert(UserModel userModel) {
         User user = new User();
+        user.setUserId(userModel.getUserId());
         user.setUserName(userModel.getUserName());
         user.setPassword(userModel.getPassword());
         user.setUserEmail(userModel.getUserEmail());
@@ -94,5 +99,22 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    public UserModel convertToModel(User user) {
+        UserModel userModel = new UserModel();
+        userModel.setUserId(user.getUserId());
+        userModel.setUserName(user.getUserName());
+        userModel.setUserEmail(user.getUserEmail());
+        userModel.setPassword(user.getPassword());
+        userModel.setPersonId(user.getAccountOwner().getPersonId());
+        userModel.setPersonName(user.getAccountOwner().getPersonName());
+        return userModel;
+    }
 
+    public User findUserByUserId(long userId) {
+        return userRepository.findByUserId(userId);
+    }
+
+    public User findUserByUserName(User user) {
+        return userRepository.findByUserName(user.getUserName());
+    }
 }

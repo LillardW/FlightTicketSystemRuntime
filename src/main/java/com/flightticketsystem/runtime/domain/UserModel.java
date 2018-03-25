@@ -2,7 +2,7 @@ package com.flightticketsystem.runtime.domain;
 
 public class UserModel {
 
-    private Integer userId;
+    private long userId;
 
     private String userName;
 
@@ -14,11 +14,11 @@ public class UserModel {
 
     private String personName;
 
-    public Integer getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

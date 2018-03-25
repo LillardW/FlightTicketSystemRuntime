@@ -76,15 +76,13 @@
             </tr>
             </thead>
             <tbody>
-            <tr  th:each="flight : ${flightSearchResult}">
+            <tr  th:each="flight : ${flightSearchResults}">
                 <td th:text="${flight.flightNo}"></td>
                 <td th:text="${flight.departureCity}"></td>
                 <td th:text="${flight.arrivalCity}"></td>
                 <td th:text="${flight.estimatedTakeOffTime}"></td>
                 <td th:text="${flight.estimatedArrivalTime}"></td>
                 <td><a th:href="@{/bootTicket(id=${flight.flightId})}">订票</a></td>
-                <!--<td><a th:href="@{/toEdit(id=${user.id})}">edit</a></td>
-                <td><a th:href="@{/delete(id=${user.id})}">delete</a></td> -->
             </tr>
             </tbody>
         </table>
