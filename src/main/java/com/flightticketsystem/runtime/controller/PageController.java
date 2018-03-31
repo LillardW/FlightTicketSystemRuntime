@@ -86,7 +86,7 @@ public class PageController {
         return "flightSearchResult";
     }
 
-    @RequestMapping("/bookTicket")
+    @RequestMapping("/bookTicketPage")
     public String bookTicketPage(@RequestParam int id) {
         return "bookTicket";
     }

@@ -99,7 +99,7 @@ span.menu:before {
 	height:32px;
 }
 .header {
-	padding: 10px 0px;
+	padding: 10px 0;
 }
 ul.navig li.plan:hover ul.sub-nav{
 	display:none;
@@ -127,7 +127,7 @@ ul.navig li a {
 span.menu {
 	display: block;
 	float: right;
-	margin: 16px 0px 0 0;
+	margin: 16px 0 0 0;
 }
 ul.navig {
   margin: 0;
@@ -141,7 +141,7 @@ ul.navig {
 }
 .navigation {
 	height: 60px;
-	padding: 0px 0px 0em;
+	padding: 0 0 0em;
 	margin-bottom: 0em;
 }
 }
@@ -281,7 +281,7 @@ ul.navig li a.active{
 	margin-top: 10%;
 }
 select {
-	padding: 9px 0px 9px 10px;
+	padding: 9px 0 9px 10px;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	-o-appearance: none;
@@ -340,7 +340,7 @@ select {
 /*--banner-end--*/
 /*--why-start--*/
 .why{
-	padding:6em 0px;
+	padding:6em 0;
 }
 .why-top{
 	text-align:center;
@@ -385,13 +385,13 @@ select {
 	margin:0 auto;
 }
 .why-left span.w-one{
-	background-position:0px 0px;
+	background-position:0 0;
 }
 .why-left span.w-two{
-	background-position:-100px 0px;
+	background-position:-100px 0;
 }
 .why-left span.w-tre{
-	background-position:-200px 0px;
+	background-position:-200px 0;
 }
 /*--why-end--*/
 /*--how-start--*/
@@ -402,7 +402,7 @@ select {
 	color:#fff;
 }
 .how {
-	padding: 6em 0px;
+	padding: 6em 0;
 	background: rgba(20, 20, 20, 0.960784);
 }
 .how-right p {
@@ -436,7 +436,7 @@ select {
 /*--how-end--*/
 /*--secure-start--*/
 .secure{
-	padding:6em 0px;
+	padding:6em 0;
 }
 .secure-left h4{
 	font-size: 1.5em;
@@ -473,7 +473,7 @@ select {
 .touch-bottom h6{
 	color: #fff;
 	font-size:20px;
-	margin:10px 0px;
+	margin:10px 0;
 }
 .touch-bottom ul{
 	padding:0;
@@ -503,16 +503,16 @@ select {
 	-ms-transition: 0.5s all ease;
 }
 .touch-bottom ul li a span.fb{
-	background-position:0px 0px;
+	background-position:0 0;
 }
 .touch-bottom ul li a span.twit{
-	background-position:-32px 0px;
+	background-position:-32px 0;
 }
 .touch-bottom ul li a span.google{
-	background-position:-64px 0px;
+	background-position:-64px 0;
 }
 .touch-bottom ul li a span.fb:hover{
-	background-position:0px -32px;
+	background-position:0 -32px;
 }
 .touch-bottom ul li a span.twit:hover{
 	background-position:-32px -32px;
@@ -529,7 +529,7 @@ select {
 	margin:0;
 }
 .contact{
-	padding:6em 0px;
+	padding:6em 0;
 }
 .contact-top {
 	text-align: center;
@@ -539,11 +539,11 @@ select {
 	text-align:center;
 }
 .contact-bottom input[type="text"]:nth-child(2) {
-	margin:0px 8px;
+	margin:0 8px;
 }
 .contact-bottom input[type="text"] {
 	width: 32.627%;
-	margin: 0px;
+	margin: 0;
 	color: #D6D4D4;
 	background: none;
 	padding: 15px 10px;
@@ -568,7 +568,7 @@ select {
 	font-weight: 700;
 	cursor: pointer;
 	font-weight: 700;
-	margin: 20px 0 0 0px;
+	margin: 20px 0 0 0;
 	border: 1px solid #BEBEBE;
 	background: none;
 	outline: none;
@@ -587,7 +587,7 @@ select {
 /*--map-end--*/
 /*--services-start--*/
 .services{
-	padding:6em 0px;
+	padding:6em 0;
 }
 .services-bottom {
 	margin-top:3%;
@@ -614,7 +614,7 @@ select {
 }
 .services-one ul li{
 	list-style-image: url(../images/side.png);
-	margin: 0px 0px 12px 18px;
+	margin: 0 0 12px 18px;
 }
 .services-one ul li a{
 	color: #AFAFAF;
@@ -645,7 +645,7 @@ select {
 	margin-top: 10%;
 }
 .additional{
-	padding:6em 0px;
+	padding:6em 0;
 }
 .additional-bottom{
 	margin-top:3%;
@@ -669,7 +669,7 @@ select {
 }
 .add-left ul li{
 	list-style-image: url(../images/side.png);
-	margin: 0px 0px 12px 18px;
+	margin: 0 0 12px 18px;
 }
 .add-left ul li a {
 	color: #AFAFAF;
@@ -703,7 +703,7 @@ select {
 /*--test-end--*/
 /*--news-start--*/
 .news {
-	padding: 6em 0px;
+	padding: 6em 0;
 	background: rgba(64, 63, 69, 0.1);
 }
 .news-top{
@@ -747,7 +747,7 @@ p.admin {
 /*--news-end--*/
 /*--events-start--*/
 .events{
-	padding:6em 0px;
+	padding:6em 0;
 }
 .events-top {
 	text-align: center;
@@ -785,7 +785,7 @@ p.admin {
 /*--events-end--*/
 /*--footer-start--*/
 .footer{
-	padding:4em 0px;
+	padding:4em 0;
 	background:#403f45;
 }
 .footer-top {
@@ -805,7 +805,7 @@ p.admin {
 /*--footer-end--*/
 /*--typo-start--*/
 .pages {
-	padding: 6em 0px;
+	padding: 6em 0;
 }
 .headdings, .Buttons, .progress-bars, .alerts, .bread-crumbs, .pagenatin, .appearance, .distracted {
 	padding: 2em 0;
@@ -820,7 +820,7 @@ h3.ghj {
 /*--typo-end--*/
 /*--about-start--*/
 .about{
-	padding:6em 0px;
+	padding:6em 0;
 }
 .about-bottom{
 	margin-top:2%;
@@ -868,7 +868,7 @@ h3.ghj {
 }
 .why,.how,.secure,.news,.events,.about,
 .services,.additional,.pages,.contact {
-	padding: 5em 0px;
+	padding: 5em 0;
 }	
 .banner-top {
 	left: 10%;
@@ -922,7 +922,7 @@ ul.navig li a {
 	font-size: 2.4em;
 }
 .why, .how, .secure, .news, .events, .about, .services, .additional, .pages, .contact {
-	padding: 4em 0px;
+	padding: 4em 0;
 }
 .why-bottom {
 	margin-top: 3%;
@@ -940,7 +940,7 @@ ul.navig li a {
 	font-size: 1.05em;
 }
 .contact-bottom input[type="text"]:nth-child(2) {
-  margin: 0px 5px;
+  margin: 0 5px;
 }
 .contact-bottom input[type="text"] {
   font-size: 15px;
@@ -963,7 +963,7 @@ ul.navig li a {
 	padding: 6px 10px;
 }
 select {
-	padding: 6px 0px 6px 10px;
+	padding: 6px 0 6px 10px;
 	width: 99%;
 }
 .banner-top {
@@ -981,7 +981,7 @@ select {
 }
 .why, .how, .secure, .news, .events, .about, .services,
  .additional, .pages, .contact {
-	padding: 3.5em 0px;
+	padding: 3.5em 0;
 }
 .why-left p {
 	margin-top: 0%;
@@ -1016,7 +1016,7 @@ select {
 	margin-top: 3%;
 }
 .footer {
-	padding: 3em 0px;
+	padding: 3em 0;
 }
 .test {
 	padding-bottom: 3.5em;
@@ -1064,7 +1064,7 @@ select {
   width: 100%;
 }
 .contact-bottom input[type="text"]:nth-child(2) {
-  margin: 0px 3px;
+  margin: 0 3px;
 }
 .contact-bottom input[type="text"],.contact-bottom textarea {
 	font-size: 14px;
@@ -1152,10 +1152,10 @@ select {
 	background-size: 300%;
 }
 .why-left span.w-two {
-	background-position: -80px 0px;
+	background-position: -80px 0;
 }
 .why-left span.w-tre {
-	background-position: -160px 0px;
+	background-position: -160px 0;
 }
 .heading h3,h3.ghj {
 	font-size: 2em;
@@ -1165,7 +1165,7 @@ select {
 }
 .why, .how, .secure, .news, .events, .about, .services,
  .additional, .pages, .contact {
-	padding: 3em 0px;
+	padding: 3em 0;
 }
 .how-left {
 	width: 50%;
@@ -1241,14 +1241,14 @@ select {
 	width: 50%;
 }
 .footer {
-	padding: 2.5em 0px;
+	padding: 2.5em 0;
 }
 .touch-bottom p {
 	font-size: 14px;
 }
 .touch-bottom h6 {
 	font-size: 19px;
-	margin: 7px 0px;
+	margin: 7px 0;
 }
 .footer-top p {
 	font-size: 14px;
@@ -1277,13 +1277,13 @@ select {
   width: 32.53%;
 }
 .submit-btn input[type=submit] {
-  margin: 7px 0 0 0px;
+  margin: 7px 0 0 0;
 }
 .services-one h4 {
   font-size: 1.1em;
 }
 span.menu {
-	margin: 14px 0px 0 0;
+	margin: 14px 0 0 0;
 }	
 .submit-btn input[type=submit] {
   font-size: 15px;
@@ -1320,7 +1320,7 @@ span.menu {
   font-size: 13px;
 }
 .header {
-	padding: 5px 0px;
+	padding: 5px 0;
 }
 .logo {
 	margin-top: 9px;
@@ -1342,7 +1342,7 @@ span.menu {
 }
 select {
 	font-size: 12px;
-	padding: 3px 0px 3px 10px;
+	padding: 3px 0 3px 10px;
 }
 .bnr-btn input[type=submit] {
 	padding: 5px 9px;
@@ -1359,7 +1359,7 @@ select {
 	margin: 2px auto 0;
 }
 .why, .how, .secure, .news, .events, .about, .services, .additional, .pages, .contact {
-	padding: 2.5em 0px;
+	padding: 2.5em 0;
 }
 .why-left {
 	width: 100%;
@@ -1467,14 +1467,14 @@ h2.head {
   padding: 7px 0;
 }
 .header {
-	padding: 0px 0px;
+	padding: 0 0;
 }
 .contact-bottom input[type="text"] {
 	width: 100%;
 	margin-bottom: 10px;
 }
 .contact-bottom input[type="text"]:nth-child(2) {
-	margin: 0px 0px 10px 0px;
+	margin: 0 0 10px 0;
 }
 .contact-bottom textarea {
 	height: 10.7em;
@@ -1543,7 +1543,7 @@ select {
 	min-height: 298px;
 }
 .why, .how, .secure, .news, .events, .about, .services, .additional, .pages, .contact {
-	padding: 2em 0px;
+	padding: 2em 0;
 }
 .why-top p {
 	font-size: 13px;
@@ -1554,10 +1554,10 @@ select {
 	height: 70px;
 }
 .why-left span.w-two {
-  background-position: -70px 0px;
+  background-position: -70px 0;
 }
 .why-left span.w-tre {
-  background-position: -140px 0px;
+  background-position: -140px 0;
 }
 .why-left p {
   font-size: 13px;
@@ -1603,14 +1603,14 @@ select {
 	font-size: 13px;
 }
 .footer {
-	padding: 2em 0px;
+	padding: 2em 0;
 }
 .touch-bottom p {
 	font-size: 13px;
 }
 .touch-bottom h6 {
 	font-size: 17px;
-	margin: 4px 0px;
+	margin: 4px 0;
 }
 .footer-top p {
 	font-size: 13px;
@@ -1624,13 +1624,13 @@ select {
   background-position: -56px -28px;
 }
 .touch-bottom ul li a span.google{
-  background-position: -56px 0px;
+  background-position: -56px 0;
 }
 .touch-bottom ul li a span.fb:hover {
-  background-position: 0px -28px;
+  background-position: 0 -28px;
 }
 .touch-bottom ul li a span.twit {
-  background-position: -28px 0px;
+  background-position: -28px 0;
 }
 .touch-bottom ul li a span.twit:hover {
   background-position: -28px -28px;
@@ -1674,7 +1674,7 @@ select {
 	margin-top: 11px;
 }
 span.menu {
-	margin: 11px 0px 0 0;
+	margin: 11px 0 0 0;
 }
 ul.navig {
 	top: 11%;
@@ -1694,7 +1694,7 @@ ul.navig li a {
 }
 select {
 	font-size: 11px;
-	padding: 3px 0px 3px 4px;
+	padding: 3px 0 3px 4px;
 }
 .bnr-btn {
 	margin: 3.5% 0 0 27.4%;
@@ -1710,24 +1710,24 @@ select {
 	font-size: 1.3em;
 }
 .why-top p {
-	margin: 0px auto 0;
+	margin: 0 auto 0;
 }
 .why, .how, .secure, .news, .events, .about, .services, .additional, .pages, .contact {
-	padding: 1.5em 0px;
+	padding: 1.5em 0;
 }
 .why-left span {
 	width: 55px;
 	height: 55px;
 }
 .why-left span.w-two {
-  background-position: -55px 0px;
+  background-position: -55px 0;
 }
 .why-left {
   margin-bottom: 12px;
   padding: 0;
 }
 .why-left span.w-tre {
-	background-position: -110px 0px;
+	background-position: -110px 0;
 }
 .how-left, .how-right {
   padding: 0;
@@ -1776,7 +1776,7 @@ select {
   background-size: 100%;
 }
 .footer {
-	padding: 1.5em 0px;
+	padding: 1.5em 0;
 }
 .touch-bottom {
   margin-top: 4%;
@@ -1785,7 +1785,7 @@ select {
   margin-top: 4.5%;
 }
 .touch-bottom h6 {
-  margin: 6px 0px;
+  margin: 6px 0;
 }
 .events-bottom {
   margin-top: 4%;
@@ -1851,10 +1851,108 @@ h4.head {
   font-size: 23%;
 }
 h2.b2,h1.b1,h3.b3,h4.b4,h5.b5 {
-  margin: 0px 0px;
+  margin: 0 0;
 }
 .touch-bottom ul {
   margin: 5% 0 0 0;
 }
 }
 /*--media-quaries-starts-here--*/
+
+/* jQuery.seat-charts*/
+
+.front-indicator {
+	width: 145px;
+	margin: 5px 32px 15px 32px;
+	background-color: #f6f6f6;
+	color: #adadad;
+	text-align: center;
+	padding: 3px;
+	border-radius: 5px;
+}
+.wrapper {
+	width: 100%;
+	text-align: center;
+}
+.container {
+	margin: 0 auto;
+    /*main error*/
+	/*width: 500px;*/
+	text-align: left;
+}
+.booking-details {
+	float: left;
+	text-align: left;
+	margin-left: 35px;
+	font-size: 12px;
+	position: relative;
+	height: 401px;
+}
+.booking-details h2 {
+	margin: 25px 0 20px 0;
+	font-size: 17px;
+}
+.booking-details h3 {
+	margin: 5px 5px 0 0;
+	font-size: 14px;
+}
+div.seatCharts-cell {
+	color: #182C4E;
+	height: 25px;
+	width: 25px;
+	line-height: 25px;
+
+}
+div.seatCharts-seat {
+	color: #FFFFFF;
+	cursor: pointer;
+}
+div.seatCharts-row {
+	height: 35px;
+}
+div.seatCharts-seat.available {
+	background-color: #B9DEA0;
+
+}
+div.seatCharts-seat.available.first-class {
+	/* 	background: url(vip.png); */
+	background-color: #3a78c3;
+}
+div.seatCharts-seat.focused {
+	background-color: #76B474;
+}
+div.seatCharts-seat.selected {
+	background-color: #E6CAC4;
+}
+div.seatCharts-seat.unavailable {
+	background-color: #472B34;
+}
+div.seatCharts-container {
+	border-right: 1px dotted #adadad;
+	width: 200px;
+	padding: 20px;
+	float: left;
+}
+div.seatCharts-legend {
+	padding-left: 0;
+	position: absolute;
+	bottom: 16px;
+}
+ul.seatCharts-legendList {
+	padding-left: 0;
+}
+span.seatCharts-legendDescription {
+	margin-left: 5px;
+	line-height: 30px;
+}
+.checkout-button {
+	display: block;
+	margin: 10px 0;
+	font-size: 14px;
+}
+#selected-seats {
+	max-height: 90px;
+	overflow-y: scroll;
+	overflow-x: none;
+	width: 170px;
+}

@@ -103,40 +103,49 @@ html[xmlns] .slides {display: block;}
 }
 }
 @media screen and (max-width: 640px) {
-  .flex-direction-nav a {
-	width: 20px;
-	height: 20px;
-	top: 102%;
-	background-size: 200%;
-}
-.flex-direction-nav .flex-prev {
-  background-position: -20px 0px;
-}
-@media screen and (max-width: 480px) {
-section.slider {
-	padding-top: 0%;
-}
-.flexslider {
-	padding: 0px 0px;
-}
-.flex-direction-nav .flex-next {
-  left: 90.4%;
-}
-.flex-direction-nav .flex-prev,.flex-direction-nav .flex-next {
-	top: 107%;
-}
-}
-@media screen and (max-width: 320px) {
-	section.slider {
-		padding-top: 0%;
-	}	
 	.flex-direction-nav a {
-		top: 100%;
+		width: 20px;
+		height: 20px;
+		top: 102%;
+		background-size: 200%;
 	}
-	.flex-direction-nav .flex-prev, .flex-direction-nav .flex-next {
-	top: 100%;
+
+	.flex-direction-nav .flex-prev {
+		background-position: -20px 0px;
 	}
-	.flex-direction-nav .flex-next {
-		left: 84.4%;
+
+	@media screen and (max-width: 480px) {
+		section.slider {
+			padding-top: 0%;
+		}
+
+		.flexslider {
+			padding: 0px 0px;
+		}
+
+		.flex-direction-nav .flex-next {
+			left: 90.4%;
+		}
+
+		.flex-direction-nav .flex-prev, .flex-direction-nav .flex-next {
+			top: 107%;
+		}
+	}
+	@media screen and (max-width: 320px) {
+		section.slider {
+			padding-top: 0%;
+		}
+
+		.flex-direction-nav a {
+			top: 100%;
+		}
+
+		.flex-direction-nav .flex-prev, .flex-direction-nav .flex-next {
+			top: 100%;
+		}
+
+		.flex-direction-nav .flex-next {
+			left: 84.4%;
+		}
 	}
 }
