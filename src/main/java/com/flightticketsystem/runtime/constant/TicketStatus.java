@@ -1,7 +1,7 @@
 package com.flightticketsystem.runtime.constant;
 
 public enum  TicketStatus {
-    ORDERED(1), PAID(2);
+    NOT_SOLD(1), PAID(2);
     private Integer ticketStatus;
 
     public Integer getTicketStatus() {

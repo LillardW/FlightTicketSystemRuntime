@@ -98,4 +98,10 @@ public class PageController {
         }
         return "redirect:index";
     }
+
+    @RequestMapping("/addFlightPage")
+    public String addFlightPage(Model model) {
+        model.addAttribute("flight",new Flight());
+        return "addFlightPage";
+    }
 }

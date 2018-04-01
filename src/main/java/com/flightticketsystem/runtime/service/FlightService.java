@@ -8,4 +8,6 @@ import java.util.List;
 public interface FlightService {
 
     ArrayList<Flight> searchFlights(Flight flight);
+
+    boolean addFlight(Flight flight, String seatCharts);
 }

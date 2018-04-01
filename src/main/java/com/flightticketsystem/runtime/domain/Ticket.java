@@ -13,7 +13,7 @@ public class Ticket implements Serializable{
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TICKET_ID")
     private Long ticketId;
 
@@ -100,5 +100,9 @@ public class Ticket implements Serializable{
         this.passenger = passenger;
         this.flight = flight;
         this.flightPlace = flightPlace;
+    }
+
+    public Ticket() {
+
     }
 }

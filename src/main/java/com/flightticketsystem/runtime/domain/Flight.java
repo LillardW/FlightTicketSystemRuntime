@@ -86,4 +86,14 @@ public class Flight implements Serializable {
     public void setEstimatedArrivalTime(Date estimatedArrivalTime) {
         this.estimatedArrivalTime = estimatedArrivalTime;
     }
+
+    public Flight(String flightNo, String departureCity, String arrivalCity, Date estimatedTakeOffTime, Date estimatedArrivalTime) {
+        this.flightNo = flightNo;
+        this.departureCity = departureCity;
+        this.arrivalCity = arrivalCity;
+        this.estimatedTakeOffTime = estimatedTakeOffTime;
+        this.estimatedArrivalTime = estimatedArrivalTime;
+    }
+
+    public Flight() {}
 }
