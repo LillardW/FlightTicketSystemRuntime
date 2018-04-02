@@ -29,7 +29,7 @@ public class FlightController {
         Flight flight = new Flight(flightNo,departureCity,arrivalCity,estimatedTakeOffTime,estimatedArrivalTime);
         boolean result = flightService.addFlight(flight, seatCharts);
         if(result) {
-            return "redirect:index";
+            return "redirect:/index";
         }
         return "redirect:addFlightPage";
     }

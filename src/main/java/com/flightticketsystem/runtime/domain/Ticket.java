@@ -26,7 +26,7 @@ public class Ticket implements Serializable{
     @Column(name = "TICKET_PRICE")
     private Double ticketPrice;
 
-    @Embedded
+    @Column(name = "PERSON_ID")
     private Person passenger;
 
     @JoinColumn(name = "FLIGHT_ID")

@@ -3,6 +3,7 @@ package com.flightticketsystem.runtime.service.impl;
 import com.flightticketsystem.runtime.constant.TicketPrice;
 import com.flightticketsystem.runtime.constant.TicketStatus;
 import com.flightticketsystem.runtime.domain.Flight;
+import com.flightticketsystem.runtime.domain.Person;
 import com.flightticketsystem.runtime.domain.Ticket;
 import com.flightticketsystem.runtime.repository.FlightRepository;
 import com.flightticketsystem.runtime.repository.TicketRepository;
@@ -25,26 +26,27 @@ public class TicketServiceImpl implements TicketService {
     public boolean addTickets(int flightId, String seatCharts) {
         String[] seats = seatCharts.split("/");
         int row = 1;
-        int column = 1;
+        char column = 'a';
         String flightPlace;
         Ticket ticket;
         int ticketPrice = 0;
-        Flight flight = flightRepository.findOne(new Long(flightId));
+        Flight flight = flightRepository.findByFlightId(flightId);
 
         for (int i = 1; i <= seatCharts.replaceAll("/", "").length(); i++) {
-            flightPlace = "r" + Integer.toString(row) + "c" + Integer.toString(column) + seatCharts.charAt(i);
+            flightPlace = Integer.toString(row) + column;
+            ++column;
+            if (seatCharts.charAt(i-1) == 'f') {
+                ticketPrice = TicketPrice.f.getTicketPrice();
+            } else {
+                ticketPrice = TicketPrice.n.getTicketPrice();
+            }
+            String ticketNo = new SimpleDateFormat("yyyyMMdd").format(flight.getEstimatedTakeOffTime()).toString() + flight.getFlightNo() + flightPlace;
+            ticket = new Ticket(ticketNo, TicketStatus.NOT_SOLD.getTicketStatus(), (double) ticketPrice, new Person("temp","temp"), flight, flightPlace);
+            ticketRepository.save(ticket);
             if (i % 6 == 0) {
                 ++row;
-                column = 1;
+                column = 'a';
             }
-            if (seatCharts.charAt(i) == 'f') {
-                ticketPrice = TicketPrice.f.getTicketPrice().intValue();
-            } else {
-                ticketPrice = TicketPrice.n.getTicketPrice().intValue();
-            }
-            String ticketNo = new SimpleDateFormat("yyyymmdd").format(flight.getEstimatedTakeOffTime()).toString() + flight.getFlightNo() + flightPlace;
-            ticket = new Ticket(ticketNo, TicketStatus.NOT_SOLD.getTicketStatus(), (double) ticketPrice, null, flight, flightPlace);
-            ticketRepository.save(ticket);
             if (i == seatCharts.replaceAll("/", "").length()) {
                 return true;
             }

@@ -31,4 +31,13 @@ public class Person implements Serializable{
         this.personName = personName;
     }
 
+    public Person(String personId, String personName) {
+        this.personId = personId;
+        this.personName = personName;
+    }
+
+    public Person() {
+
+    }
+
 }
