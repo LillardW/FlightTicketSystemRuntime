@@ -1,6 +1,7 @@
 package com.flightticketsystem.runtime.service.impl;
 
 import com.flightticketsystem.runtime.domain.Flight;
+import com.flightticketsystem.runtime.repository.DynamicQueryDao;
 import com.flightticketsystem.runtime.repository.FlightRepository;
 import com.flightticketsystem.runtime.service.FlightService;
 import com.flightticketsystem.runtime.service.TicketService;
@@ -21,9 +22,12 @@ public class FlightServiceImpl implements FlightService {
     @Autowired
     private FlightRepository flightRepository;
 
+    @Autowired
+    private DynamicQueryDao dynamicQueryDao;
+
     @Override
-    public ArrayList<Flight> searchFlights(Flight flight) {
-        return flightRepository.findFlightsByDepartureCityOrArrivalCityOrEstimatedTakeOffTime(flight.getDepartureCity(),flight.getArrivalCity(),flight.getEstimatedTakeOffTime());
+    public List<Flight> searchFlights(Flight flight) {
+        return dynamicQueryDao.findFlightsByDepartureCityOrArrivalCityOrEstimatedTakeOffTime(flight.getDepartureCity(),flight.getArrivalCity(),flight.getEstimatedTakeOffTime());
     }
 
     @Override

@@ -81,7 +81,7 @@ public class PageController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ArrayList<Flight> flightSearchResults = flightService.searchFlights(flight);
+        List<Flight> flightSearchResults = flightService.searchFlights(flight);
         model.addAttribute("flightSearchResults", flightSearchResults);
         return "flightSearchResult";
     }
