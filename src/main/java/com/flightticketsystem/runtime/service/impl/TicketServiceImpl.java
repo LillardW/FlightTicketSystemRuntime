@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 @Service
 public class TicketServiceImpl implements TicketService {
@@ -22,8 +23,7 @@ public class TicketServiceImpl implements TicketService {
     @Autowired
     private FlightRepository flightRepository;
 
-    @Override
-    public boolean addTickets(int flightId, String seatCharts) {
+    public boolean addTicket(int flightId, String seatCharts) {
         String[] seats = seatCharts.split("/");
         int row = 1;
         char column = 'a';
@@ -37,11 +37,15 @@ public class TicketServiceImpl implements TicketService {
             ++column;
             if (seatCharts.charAt(i-1) == 'f') {
                 ticketPrice = TicketPrice.f.getTicketPrice();
-            } else {
+            } else if (seatCharts.charAt(i-1) == 'n'){
                 ticketPrice = TicketPrice.n.getTicketPrice();
+            } else if (seatCharts.charAt(i-1) == '_') {
+
             }
             String ticketNo = new SimpleDateFormat("yyyyMMdd").format(flight.getEstimatedTakeOffTime()).toString() + flight.getFlightNo() + flightPlace;
-            ticket = new Ticket(ticketNo, TicketStatus.NOT_SOLD.getTicketStatus(), (double) ticketPrice, new Person("temp","temp"), flight, flightPlace);
+            //TODO
+            //ticket = new Ticket(ticketNo, TicketStatus.NOT_SOLD.getTicketStatus(), (double) ticketPrice, new Person("temp","temp"), flight, flightPlace);
+            ticket = new Ticket();
             ticketRepository.save(ticket);
             if (i % 6 == 0) {
                 ++row;
@@ -51,6 +55,11 @@ public class TicketServiceImpl implements TicketService {
                 return true;
             }
         }
+        return false;
+    }
+
+    @Override
+    public boolean addTicket(ArrayList<Ticket> tickets) {
         return false;
     }
 }

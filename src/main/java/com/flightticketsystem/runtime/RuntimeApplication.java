@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
-@ComponentScan(basePackages = {"com.flightticketsystem.runtime.service", "com.flightticketsystem.runtime.controller"})
+@ComponentScan(basePackages = {"com.flightticketsystem.runtime.service", "com.flightticketsystem.runtime.controller", "com.flightticketsystem.runtime.repository"})
 public class RuntimeApplication {
 
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {

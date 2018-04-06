@@ -4,6 +4,7 @@ import com.flightticketsystem.runtime.domain.Flight;
 import com.flightticketsystem.runtime.repository.DynamicQueryDao;
 import com.flightticketsystem.runtime.repository.FlightRepository;
 import com.flightticketsystem.runtime.service.FlightService;
+import com.flightticketsystem.runtime.service.PlaceService;
 import com.flightticketsystem.runtime.service.TicketService;
 import com.flightticketsystem.runtime.service.impl.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import java.util.List;
 public class FlightServiceImpl implements FlightService {
 
     @Resource
-    private TicketService ticketService;
+    private PlaceService placeService;
 
     @Autowired
     private FlightRepository flightRepository;
@@ -33,10 +34,22 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public boolean addFlight(Flight flight, String seatCharts) {
         Flight flight1 = flightRepository.save(flight);
+        /*
         if(flight1.getFlightId() != 0) {
             boolean addTicketResult = ticketService.addTickets(flight1.getFlightId(), seatCharts);
             return true;
+        }*/
+
+        if(flight1.getFlightId() != 0) {
+            boolean addPlaceResult = placeService.addPlaces(flight1.getFlightId(), seatCharts);
+            return true;
         }
         return false;
+    }
+
+    @Override
+    public List<String> searchUnavailableSeatCharts(int flightId) {
+        //TODO finish the method
+        return null;
     }
 }

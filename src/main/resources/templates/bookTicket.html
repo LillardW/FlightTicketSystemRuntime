@@ -178,6 +178,21 @@
         });
         return total;
     }
+
+    setInterval(function() {
+        $.ajax({
+            type     : 'get',
+            url      : 'book.php',
+            dataType : 'json',
+            success  : function(response) {
+                //遍历所有座位
+                $.each(response.bookings, function(index, booking) {
+                    //将已售出的座位状态设置为已售出
+                    sc.status(booking.seat_id, 'unavailable');
+                });
+            }
+        });
+    }, 10000);
 </script>
 <!--end-about-->
 <!--start-test-->

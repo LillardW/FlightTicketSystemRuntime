@@ -24,8 +24,6 @@ import java.util.List;
 @Controller
 public class PageController {
 
-    private static final Logger logger = LoggerFactory.getLogger(PageController.class);
-
     @Autowired
     private FlightService flightService;
 
@@ -74,7 +72,6 @@ public class PageController {
         DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         try {
             if (!res.getParameter("estimatedTakeOffTime").equals("") && res.getParameter("estimatedTakeOffTime") != null) {
-                logger.warn("take off time: " + res.getParameter("estimatedTakeOffTime"));
                 Date takeOffTime = format.parse(res.getParameter("estimatedTakeOffTime"));
                 flight.setEstimatedTakeOffTime(takeOffTime);
             }

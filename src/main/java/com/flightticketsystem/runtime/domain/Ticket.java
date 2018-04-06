@@ -34,8 +34,8 @@ public class Ticket implements Serializable{
     @Fetch(value = FetchMode.SELECT)
     private Flight flight;
 
-    @Column(name = "FLIGHT_PLACE")
-    private String flightPlace;
+    @JoinColumn(name = "PLACE_ID", table = "TICKET_SYSTEM_TICKET_PLACE")
+    private long placeId;
 
     public Long getTicketId() {
         return ticketId;
@@ -77,12 +77,12 @@ public class Ticket implements Serializable{
         this.flight = flight;
     }
 
-    public String getFlightPlace() {
-        return flightPlace;
+    public long getPlaceId() {
+        return placeId;
     }
 
-    public void setFlightPlace(String flightPlace) {
-        this.flightPlace = flightPlace;
+    public void setPlaceId(long placeId) {
+        this.placeId = placeId;
     }
 
     public Person getPassenger() {
@@ -93,13 +93,13 @@ public class Ticket implements Serializable{
         this.passenger = passenger;
     }
 
-    public Ticket(String ticketNo, Integer ticketStatus, Double ticketPrice, Person passenger, Flight flight, String flightPlace) {
+    public Ticket(String ticketNo, Integer ticketStatus, Double ticketPrice, Person passenger, Flight flight, long placeId) {
         this.ticketNo = ticketNo;
         this.ticketStatus = ticketStatus;
         this.ticketPrice = ticketPrice;
         this.passenger = passenger;
         this.flight = flight;
-        this.flightPlace = flightPlace;
+        this.placeId = placeId;
     }
 
     public Ticket() {

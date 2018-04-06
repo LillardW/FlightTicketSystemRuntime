@@ -10,4 +10,6 @@ public interface FlightService {
     List<Flight> searchFlights(Flight flight);
 
     boolean addFlight(Flight flight, String seatCharts);
+
+    List<String> searchUnavailableSeatCharts(int flightId);
 }
