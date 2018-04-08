@@ -2,19 +2,16 @@ package com.flightticketsystem.runtime.controller;
 
 
 import com.flightticketsystem.runtime.domain.Flight;
+import com.flightticketsystem.runtime.domain.Place;
 import com.flightticketsystem.runtime.service.FlightService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.flightticketsystem.runtime.service.PlaceService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @CrossOrigin
@@ -24,7 +21,7 @@ public class FlightController {
     @Resource
     private FlightService flightService;
 
-    @RequestMapping("/addFlight")
+    @RequestMapping(value = "/addFlight")
     public String addFlight(@RequestParam("flightNo") String flightNo, @RequestParam("departureCity") String departureCity, @RequestParam("arrivalCity") String arrivalCity, @RequestParam("estimatedTakeOffTime") Date estimatedTakeOffTime, @RequestParam("estimatedArrivalTime") Date estimatedArrivalTime, @RequestParam("seatCharts") String seatCharts) {
         Flight flight = new Flight(flightNo,departureCity,arrivalCity,estimatedTakeOffTime,estimatedArrivalTime);
         boolean result = flightService.addFlight(flight, seatCharts);
@@ -32,5 +29,11 @@ public class FlightController {
             return "redirect:/index";
         }
         return "redirect:addFlightPage";
+    }
+
+    @RequestMapping(value = "/searchSeatCharts", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Map<String, Object>> searchSeatCharts(@RequestParam("flightId") int flightId) { ;
+        return flightService.searchSeatCharts(flightId);
     }
 }

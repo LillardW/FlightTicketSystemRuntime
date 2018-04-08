@@ -58,4 +58,8 @@ public class Place implements Serializable {
         this.placeNo = placeNo;
         this.placeStatus = placeStatus;
     }
+
+    public Place() {
+
+    }
 }

@@ -1,9 +1,11 @@
 package com.flightticketsystem.runtime.service;
 
 import com.flightticketsystem.runtime.domain.Flight;
+import com.flightticketsystem.runtime.domain.Place;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public interface FlightService {
 
@@ -11,5 +13,5 @@ public interface FlightService {
 
     boolean addFlight(Flight flight, String seatCharts);
 
-    List<String> searchUnavailableSeatCharts(int flightId);
+    List<Map<String, Object>> searchSeatCharts(int flightId);
 }

@@ -1,6 +1,7 @@
 package com.flightticketsystem.runtime.repository;
 
 import com.flightticketsystem.runtime.domain.Flight;
+import com.flightticketsystem.runtime.domain.Place;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -22,7 +23,7 @@ public class DynamicQueryDao {
         query.select(root);
 
         Predicate p1 = null;
-        if (departureCity != null) {
+        if (departureCity != null && !departureCity.equals("")) {
             Predicate p2 = cb.equal(root.get("departureCity"), departureCity);
             if (p1 != null) {
                 p1 = cb.and(p1, p2);
@@ -31,7 +32,7 @@ public class DynamicQueryDao {
             }
         }
 
-        if (arrivalCity != null) {
+        if (arrivalCity != null && !arrivalCity.equals("")) {
             Predicate p3 = cb.equal(root.get("arrivalCity"), arrivalCity);
             if (p1 != null) {
                 p1 = cb.and(p1, p3);
@@ -55,7 +56,41 @@ public class DynamicQueryDao {
         }
 
         query.where(p1);
-        List<Flight> result = em.createQuery(query).getResultList();
+        return em.createQuery(query).getResultList();
+    }
+
+    public List<Map<String, Object>> searchSeatCharts(int flightId) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Place> query = cb.createQuery(Place.class);
+
+        Root<Place> root = query.from(Place.class);
+        query.select(root);
+
+        Predicate p1 = null;
+        if (flightId != 0) {
+            Predicate p2 = cb.equal(root.get("flightId"), flightId);
+            if (p1 != null) {
+                p1 = cb.and(p1, p2);
+            } else {
+                p1 = p2;
+            }
+        }
+
+        query.where(p1);
+        List<Place> resultList = em.createQuery(query).getResultList();
+        List<Map<String, Object>> result = new ArrayList<>();
+        for(Place place:resultList) {
+            result.add(convertToMap(place));
+        }
         return result;
+    }
+
+    public Map<String, Object> convertToMap(Place place) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("placeId",place.getPlaceId());
+        map.put("flightId",place.getFlightId());
+        map.put("placeNo", place.getPlaceNo());
+        map.put("placeStatus", place.getPlaceStatus());
+        return map;
     }
 }

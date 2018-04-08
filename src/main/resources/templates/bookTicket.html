@@ -180,14 +180,16 @@
     }
 
     setInterval(function() {
+        var flightId = window.location.href.split("=")[1];
         $.ajax({
             type     : 'get',
-            url      : 'book.php',
+            url      : '/flight/searchSeatCharts?flightId=' + flightId,
             dataType : 'json',
             success  : function(response) {
                 //遍历所有座位
-                $.each(response.bookings, function(index, booking) {
+                $.each(response, function(index, booking) {
                     //将已售出的座位状态设置为已售出
+                    //TODO
                     sc.status(booking.seat_id, 'unavailable');
                 });
             }

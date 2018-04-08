@@ -1,6 +1,7 @@
 package com.flightticketsystem.runtime.service.impl;
 
 import com.flightticketsystem.runtime.domain.Flight;
+import com.flightticketsystem.runtime.domain.Place;
 import com.flightticketsystem.runtime.repository.DynamicQueryDao;
 import com.flightticketsystem.runtime.repository.FlightRepository;
 import com.flightticketsystem.runtime.service.FlightService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class FlightServiceImpl implements FlightService {
@@ -34,11 +36,6 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public boolean addFlight(Flight flight, String seatCharts) {
         Flight flight1 = flightRepository.save(flight);
-        /*
-        if(flight1.getFlightId() != 0) {
-            boolean addTicketResult = ticketService.addTickets(flight1.getFlightId(), seatCharts);
-            return true;
-        }*/
 
         if(flight1.getFlightId() != 0) {
             boolean addPlaceResult = placeService.addPlaces(flight1.getFlightId(), seatCharts);
@@ -48,8 +45,8 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public List<String> searchUnavailableSeatCharts(int flightId) {
-        //TODO finish the method
-        return null;
+    public List<Map<String, Object>> searchSeatCharts(int flightId) {
+        List<Map<String, Object>> seatCharts = dynamicQueryDao.searchSeatCharts(flightId);
+        return seatCharts;
     }
 }
