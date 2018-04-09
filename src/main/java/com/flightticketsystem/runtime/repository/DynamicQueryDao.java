@@ -91,6 +91,7 @@ public class DynamicQueryDao {
         map.put("flightId",place.getFlightId());
         map.put("placeNo", place.getPlaceNo());
         map.put("placeStatus", place.getPlaceStatus());
+        map.put("placeLevel", place.getPlaceLevel());
         return map;
     }
 }

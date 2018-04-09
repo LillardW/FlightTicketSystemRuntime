@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
             String preUrl = "/";
             return new ResponseData(ExceptionMsg.SUCCESS, preUrl);
         } catch (Exception e) {
-            // TODO: handle exception
+            // *TODO: handle exception
             logger.error("login failed, ", e);
             return new ResponseData(ExceptionMsg.FAILED);
         }

@@ -21,6 +21,9 @@ public class Place implements Serializable {
     @Column(name = "PLACE_STATUS")
     private int placeStatus;
 
+    @Column(name = "PLACE_LEVEL")
+    private String placeLevel;
+
     public Long getPlaceId() {
         return placeId;
     }
@@ -53,10 +56,19 @@ public class Place implements Serializable {
         this.placeStatus = placeStatus;
     }
 
-    public Place(int flightId, String placeNo, int placeStatus) {
+    public String getPlaceLevel() {
+        return placeLevel;
+    }
+
+    public void setPlaceLevel(String placeLevel) {
+        this.placeLevel = placeLevel;
+    }
+
+    public Place(int flightId, String placeNo, int placeStatus, String placeLevel) {
         this.flightId = flightId;
         this.placeNo = placeNo;
         this.placeStatus = placeStatus;
+        this.placeLevel = placeLevel;
     }
 
     public Place() {

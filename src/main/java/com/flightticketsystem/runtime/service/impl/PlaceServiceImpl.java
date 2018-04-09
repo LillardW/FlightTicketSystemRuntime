@@ -30,7 +30,7 @@ public class PlaceServiceImpl implements PlaceService {
         for (int i = 1; i <= seatCharts.replaceAll("/", "").length(); i++) {
             flightPlace = Integer.toString(row) + "_" +Integer.toString(column);
             ++column;
-            place = new Place(flightId,flightPlace,PlaceStatus.AVAILABLE.getPlaceStatus());
+            place = new Place(flightId,flightPlace,PlaceStatus.AVAILABLE.getPlaceStatus(), Character.toString(seatCharts.charAt(i-1)));
             placeRepository.save(place);
             if (i % 6 == 0) {
                 ++row;

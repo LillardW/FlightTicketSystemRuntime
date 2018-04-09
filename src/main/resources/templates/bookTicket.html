@@ -83,21 +83,39 @@
 <script>
     var firstSeatLabel = 1;
     $(document).ready(function() {
+        var flightId = window.location.href.split("=")[1];
+        var seatChartMap = [];
+        $.ajax({
+            type     : 'get',
+            url      : '/flight/searchSeatCharts?flightId=' + flightId,
+            dataType : 'json',
+            success  : function(response) {
+                //遍历所有座位
+                var tempRow = '';
+                var temp = '1';
+                $.each(response, function(index, booking) {
+                    console.log("index: " + index);
+                    if (response[index].placeNo.charAt(0) === temp) {
+                        tempRow = tempRow + response[index].placeLevel;
+                        console.log("tempRow: "+tempRow);
+                        if(index === response.length) {
+                            seatChartMap.push(tempRow);
+                        }
+                    } else {
+                        temp = (parseInt(temp) + 1).toString();
+                        seatChartMap.push(tempRow);
+                        tempRow = '';
+                        tempRow = tempRow + response[index].placeLevel;
+                    }
+                });
+                console.log("seatChartMap: "+seatChartMap);
+            }
+        });
         var $cart = $('#selected-seats'),
             $counter = $('#counter'),
             $total = $('#total'),
             sc = $('#seat-map').seatCharts({
-                map: [
-                    'ff_ff',
-                    'ff_ff',
-                    'ee_ee',
-                    'ee_ee',
-                    'ee___',
-                    'ee_ee',
-                    'ee_ee',
-                    'ee_ee',
-                    'eeeee'
-                ],
+                map: seatChartMap,
                 seats: {
                     f: {
                         price   : 100,
@@ -181,12 +199,16 @@
 
     setInterval(function() {
         var flightId = window.location.href.split("=")[1];
+        console.log("internal!");
+        var sc = JSON.stringify($('#seat-map'));
+        console.log("sc:"+sc);
         $.ajax({
             type     : 'get',
             url      : '/flight/searchSeatCharts?flightId=' + flightId,
             dataType : 'json',
             success  : function(response) {
                 //遍历所有座位
+                console.log("response: "+JSON.stringify(response));
                 $.each(response, function(index, booking) {
                     //将已售出的座位状态设置为已售出
                     //TODO
