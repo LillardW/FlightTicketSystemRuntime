@@ -1,12 +1,10 @@
 package com.flightticketsystem.runtime.controller;
 
 import com.flightticketsystem.runtime.domain.Flight;
-import com.flightticketsystem.runtime.domain.Person;
 import com.flightticketsystem.runtime.domain.User;
 import com.flightticketsystem.runtime.domain.UserModel;
 import com.flightticketsystem.runtime.service.FlightService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,12 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Controller
 public class PageController {
+    private final static Logger logger = Logger.getLogger(PageController.class);
 
     @Autowired
     private FlightService flightService;
@@ -100,5 +98,12 @@ public class PageController {
     public String addFlightPage(Model model) {
         model.addAttribute("flight",new Flight());
         return "addFlightPage";
+    }
+
+    @RequestMapping("/checkout")
+    public String checkoutPage(@RequestParam String selectedSeats, @RequestParam int flightId) {
+        //TODO
+        logger.warn("selectedSeats: " + selectedSeats);
+        return "checkout";
     }
 }
