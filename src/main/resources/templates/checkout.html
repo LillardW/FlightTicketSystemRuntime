@@ -1,10 +1,151 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>确认购票</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="UTF-8"/>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <link href="css/bootstrap.css" rel='stylesheet' type='text/css'/>
+    <link href="css/style.css" rel='stylesheet' type='text/css'/>
+    <script src="js/jquery.min.js"></script>
+    <!-- start-smoth-scrolling-->
+    <script type="text/javascript" src="js/move-top.js"></script>
+    <script type="text/javascript" src="js/easing.js"></script>
+    <script type="text/javascript" src="js/axios.min.js"></script>
+    <script type="text/javascript" src="js/jquery.serializejson.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+                $('html,body').animate({scrollTop: $(this.hash).offset().top}, 1000);
+            });
+        });
+    </script>
+    <!--start-smoth-scrolling-->
 </head>
 <body>
+<!--start-header-->
+<div class="header" id="home">
+    <div class="container">
+        <div class="head">
+            <div class="logo">
+                <a href="index.html"><img src="images/logo.png" alt=""/></a>
+            </div>
+            <div class="navigation">
+                <span class="menu"></span>
+                <ul class="navig">
+                    <li><a href="index.html" class="hvr-bounce-to-bottom">首页</a></li>
+                    <li><a href="about.html" class="hvr-bounce-to-bottom">关于</a></li>
+                    <li><a href="addFlightPage.html" class="hvr-bounce-to-bottom">添加机票</a></li>
+                    <li><a href="typo.html" class="hvr-bounce-to-bottom">样式</a></li>
+                    <li><a href="login.html" class="hvr-bounce-to-bottom">登录</a></li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<!-- script-for-menu -->
+<!-- script-for-menu -->
+<script>
+    $("span.menu").click(function () {
+        $(" ul.navig").slideToggle("slow", function () {
+        });
+    });
+</script>
+<!--script-for-menu-->
+<!--start-about-->
+<div class="about">
+    <div class="container">
+        <p>你选择的是航班号为 的航班，航班起点城市为：到达城市为：</p>
+        <p>预计起飞时间：；预计到达时间：</p>
+        <p>请在下方输入乘机人信息：</p>
+        <form>
+            <table id="selectedSeats" class="table table-hover">
+                <thead>
+                <tr>
+                    <th>航班号</th>
+                    <th>座位</th>
+                    <th>票价</th>
+                    <th>乘机人姓名</th>
+                    <th>身份证号码</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="insertTicketModel ,iterStat: ${insertTicketModels}">
+                    <td th:id="'insertTicketModel_flightNo_' + iterStat.count" th:text="${insertTicketModel.flightNo}"></td>
+                    <td th:id="'insertTicketModel_placeNo_' + iterStat.count" th:text="${insertTicketModel.placeNo}"></td>
+                    <td th:id="'insertTicketModel_placeLevel'"></td>
+                    <td><input th:id="'insertTicketModel_personId_' + iterStat.count"/></td>
+                    <td><input th:id="'insertTicketModel_personName_' + iterStat.count"/></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+        <div class="col-md-8 col-sm-offset-2 text-center">
+            <button class="btn btn-default" type="button">提交</button>
+        </div>
+    </div>
+</div>
+<!--end-about-->
+<!--start-test-->
+<div class="test" id="testimonials">
 
+</div>
+<!--end-test-->
+<!--FlexSlider-->
+<link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen"/>
+<script src="js/jquery.flexslider.js"></script>
+<script type="text/javascript">
+    $(window).load(function () {
+        $('.flexslider').flexslider({
+            animation: "slide",
+            start: function (slider) {
+                $('body').removeClass('loading');
+            }
+        });
+    });
+</script>
+
+<!--End-slider-script-->
+<!--start-footer-->
+<div class="footer">
+    <div class="container">
+        <div class="touch-top heading">
+            <h3>FOLLOW US</h3>
+        </div>
+        <div class="touch-bottom">
+            <p>756 gt globel Place, CD-Road,M 07 435.</p>
+            <h6>1 234 567 9871 , 800-2345-679</h6>
+            <p>purus tincidunt egestas</p>
+            <ul>
+                <li><a href="#"><span class="fb"> </span></a></li>
+                <li><a href="#"><span class="twit"> </span></a></li>
+                <li><a href="#"><span class="google"> </span></a></li>
+            </ul>
+        </div>
+        <div class="footer-top">
+            <p class="footer-class">Copyright &copy; 2015.Company name All rights reserved.More Templates <a
+                    href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a
+                    href="http://www.cssmoban.com/" title="网站模板" target="_blank">网站模板</a></p>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $().UItoTop({easingType: 'easeOutQuart'});
+
+        });
+    </script>
+    <a href="#home" id="toTop" class="scroll" style="display: block;"> <span id="toTopHover"
+                                                                             style="opacity: 1;"> </span></a>
+</div>
+<!--end-footer-->
 </body>
 </html>

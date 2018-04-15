@@ -1,9 +1,11 @@
 package com.flightticketsystem.runtime.controller;
 
 import com.flightticketsystem.runtime.domain.Flight;
+import com.flightticketsystem.runtime.domain.InsertTicketModel;
 import com.flightticketsystem.runtime.domain.User;
 import com.flightticketsystem.runtime.domain.UserModel;
 import com.flightticketsystem.runtime.service.FlightService;
+import com.flightticketsystem.runtime.service.TicketService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,9 @@ public class PageController {
 
     @Autowired
     private FlightService flightService;
+
+    @Autowired
+    private TicketService ticketService;
 
     @RequestMapping("/index")
     public String homePage(Model model, HttpSession session) {
@@ -101,8 +106,10 @@ public class PageController {
     }
 
     @RequestMapping("/checkout")
-    public String checkoutPage(@RequestParam String selectedSeats, @RequestParam int flightId) {
+    public String checkoutPage(@RequestParam String selectedSeats, @RequestParam int flightId, Model model) {
         //TODO
+        List<InsertTicketModel> insertTicketModels = ticketService.getInsertTicketModels(selectedSeats, flightId);
+        model.addAttribute("insertTicketModels",insertTicketModels);
         logger.warn("selectedSeats: " + selectedSeats);
         return "checkout";
     }

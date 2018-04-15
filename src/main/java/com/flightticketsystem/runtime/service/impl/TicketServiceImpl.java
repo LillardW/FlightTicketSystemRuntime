@@ -3,9 +3,11 @@ package com.flightticketsystem.runtime.service.impl;
 import com.flightticketsystem.runtime.constant.TicketPrice;
 import com.flightticketsystem.runtime.constant.TicketStatus;
 import com.flightticketsystem.runtime.domain.Flight;
+import com.flightticketsystem.runtime.domain.InsertTicketModel;
 import com.flightticketsystem.runtime.domain.Person;
 import com.flightticketsystem.runtime.domain.Ticket;
 import com.flightticketsystem.runtime.repository.FlightRepository;
+import com.flightticketsystem.runtime.repository.PlaceRepository;
 import com.flightticketsystem.runtime.repository.TicketRepository;
 import com.flightticketsystem.runtime.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class TicketServiceImpl implements TicketService {
@@ -22,6 +25,9 @@ public class TicketServiceImpl implements TicketService {
 
     @Autowired
     private FlightRepository flightRepository;
+
+    @Autowired
+    private PlaceRepository placeRepository;
 
     public boolean addTicket(int flightId, String seatCharts) {
         String[] seats = seatCharts.split("/");
@@ -61,5 +67,21 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public boolean addTicket(ArrayList<Ticket> tickets) {
         return false;
+    }
+
+    public List<InsertTicketModel> getInsertTicketModels(String selectedSeatsString, int flightId) {
+        List<InsertTicketModel> insertTicketModels = new ArrayList<>();
+        String[] selectedSeats = selectedSeatsString.split(",");
+        InsertTicketModel insertTicketModel;
+        for(String selectSeat: selectedSeats) {
+            insertTicketModel = new InsertTicketModel();
+            insertTicketModel.setFlightId(flightId);
+            insertTicketModel.setFlightNo(flightRepository.findByFlightId(flightId).getFlightNo());
+            insertTicketModel.setPlaceNo(selectSeat);
+            insertTicketModel.setPlaceLevel(placeRepository.findPlaceIdByFlightIdAndPlaceNo(flightId, selectSeat).getPlaceLevel());
+            insertTicketModel.setPlaceId(placeRepository.findPlaceIdByFlightIdAndPlaceNo(flightId, selectSeat).getPlaceId());
+            insertTicketModels.add(insertTicketModel);
+        }
+        return insertTicketModels;
     }
 }

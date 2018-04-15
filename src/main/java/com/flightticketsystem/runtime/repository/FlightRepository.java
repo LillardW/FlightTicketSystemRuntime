@@ -9,7 +9,8 @@ import java.util.List;
 
 public interface FlightRepository extends JpaRepository<Flight, Long> {
 
-    public ArrayList<Flight> findFlightsByDepartureCityOrArrivalCityOrEstimatedTakeOffTime(String departureCity, String arrivalCity, Date takeOffTime);
+    ArrayList<Flight> findFlightsByDepartureCityOrArrivalCityOrEstimatedTakeOffTime(String departureCity, String arrivalCity, Date takeOffTime);
 
-    public Flight findByFlightId(int flightId);
+    Flight findByFlightId(int flightId);
+
 }
