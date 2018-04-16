@@ -5,10 +5,13 @@ import com.flightticketsystem.runtime.domain.Ticket;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public interface TicketService {
 
-    boolean addTicket(ArrayList<Ticket> tickets);
+    //boolean addTicket(ArrayList<Ticket> tickets);
+
+    boolean addTicket(ArrayList<Map<String, Object>> insertTicketModels);
 
     List<InsertTicketModel> getInsertTicketModels(String selectedSeats, int flightId);
 }

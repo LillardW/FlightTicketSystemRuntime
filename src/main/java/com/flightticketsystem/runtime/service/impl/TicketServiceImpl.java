@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TicketServiceImpl implements TicketService {
@@ -29,45 +30,52 @@ public class TicketServiceImpl implements TicketService {
     @Autowired
     private PlaceRepository placeRepository;
 
-    public boolean addTicket(int flightId, String seatCharts) {
-        String[] seats = seatCharts.split("/");
-        int row = 1;
-        char column = 'a';
-        String flightPlace;
-        Ticket ticket;
-        int ticketPrice = 0;
-        Flight flight = flightRepository.findByFlightId(flightId);
-
-        for (int i = 1; i <= seatCharts.replaceAll("/", "").length(); i++) {
-            flightPlace = Integer.toString(row) + column;
-            ++column;
-            if (seatCharts.charAt(i-1) == 'f') {
-                ticketPrice = TicketPrice.f.getTicketPrice();
-            } else if (seatCharts.charAt(i-1) == 'n'){
-                ticketPrice = TicketPrice.n.getTicketPrice();
-            } else if (seatCharts.charAt(i-1) == '_') {
-
-            }
-            String ticketNo = new SimpleDateFormat("yyyyMMdd").format(flight.getEstimatedTakeOffTime()).toString() + flight.getFlightNo() + flightPlace;
-            //TODO
-            //ticket = new Ticket(ticketNo, TicketStatus.NOT_SOLD.getTicketStatus(), (double) ticketPrice, new Person("temp","temp"), flight, flightPlace);
-            ticket = new Ticket();
-            ticketRepository.save(ticket);
-            if (i % 6 == 0) {
-                ++row;
-                column = 'a';
-            }
-            if (i == seatCharts.replaceAll("/", "").length()) {
-                return true;
-            }
+    public boolean addTicket(ArrayList<Map<String, Object>> insertTicketModels) {
+        for(Map<String, Object> map : insertTicketModels) {
+            Ticket ticket = convertToTicket(map);
         }
         return false;
     }
 
-    @Override
-    public boolean addTicket(ArrayList<Ticket> tickets) {
-        return false;
-    }
+//    public boolean addTicket(int flightId, String seatCharts) {
+//        String[] seats = seatCharts.split("/");
+//        int row = 1;
+//        char column = 'a';
+//        String flightPlace;
+//        Ticket ticket;
+//        int ticketPrice = 0;
+//        Flight flight = flightRepository.findByFlightId(flightId);
+//
+//        for (int i = 1; i <= seatCharts.replaceAll("/", "").length(); i++) {
+//            flightPlace = Integer.toString(row) + column;
+//            ++column;
+//            if (seatCharts.charAt(i-1) == 'f') {
+//                ticketPrice = TicketPrice.f.getTicketPrice();
+//            } else if (seatCharts.charAt(i-1) == 'n'){
+//                ticketPrice = TicketPrice.n.getTicketPrice();
+//            } else if (seatCharts.charAt(i-1) == '_') {
+//
+//            }
+//            String ticketNo = new SimpleDateFormat("yyyyMMdd").format(flight.getEstimatedTakeOffTime()).toString() + flight.getFlightNo() + flightPlace;
+//            //TODO
+//            //ticket = new Ticket(ticketNo, TicketStatus.NOT_SOLD.getTicketStatus(), (double) ticketPrice, new Person("temp","temp"), flight, flightPlace);
+//            ticket = new Ticket();
+//            ticketRepository.save(ticket);
+//            if (i % 6 == 0) {
+//                ++row;
+//                column = 'a';
+//            }
+//            if (i == seatCharts.replaceAll("/", "").length()) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+
+
+//    public boolean addTicket(ArrayList<Ticket> tickets) {
+//        return false;
+//    }
 
     public List<InsertTicketModel> getInsertTicketModels(String selectedSeatsString, int flightId) {
         List<InsertTicketModel> insertTicketModels = new ArrayList<>();
@@ -83,5 +91,10 @@ public class TicketServiceImpl implements TicketService {
             insertTicketModels.add(insertTicketModel);
         }
         return insertTicketModels;
+    }
+
+    public Ticket convertToTicket(Map<String, Object> map) {
+
+        return null;
     }
 }

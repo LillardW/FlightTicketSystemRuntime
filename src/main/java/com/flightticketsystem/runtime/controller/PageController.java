@@ -106,10 +106,11 @@ public class PageController {
     }
 
     @RequestMapping("/checkout")
-    public String checkoutPage(@RequestParam String selectedSeats, @RequestParam int flightId, Model model) {
+    public String checkoutPage(@RequestParam String selectedSeats, @RequestParam int flightId, Model model, HttpSession session) {
         //TODO
         List<InsertTicketModel> insertTicketModels = ticketService.getInsertTicketModels(selectedSeats, flightId);
-        model.addAttribute("insertTicketModels",insertTicketModels);
+        model.addAttribute("insertTicketModels", insertTicketModels);
+        session.setAttribute("insertTicketModels", insertTicketModels);
         logger.warn("selectedSeats: " + selectedSeats);
         return "checkout";
     }

@@ -67,7 +67,7 @@
         <p>你选择的是航班号为 的航班，航班起点城市为：到达城市为：</p>
         <p>预计起飞时间：；预计到达时间：</p>
         <p>请在下方输入乘机人信息：</p>
-        <form>
+        <form action="/flight/checkout">
             <table id="selectedSeats" class="table table-hover">
                 <thead>
                 <tr>
@@ -80,18 +80,20 @@
                 </thead>
                 <tbody>
                 <tr th:each="insertTicketModel ,iterStat: ${insertTicketModels}">
-                    <td th:id="'insertTicketModel_flightNo_' + iterStat.count" th:text="${insertTicketModel.flightNo}"></td>
-                    <td th:id="'insertTicketModel_placeNo_' + iterStat.count" th:text="${insertTicketModel.placeNo}"></td>
-                    <td th:id="'insertTicketModel_placeLevel'"></td>
-                    <td><input th:id="'insertTicketModel_personId_' + iterStat.count"/></td>
-                    <td><input th:id="'insertTicketModel_personName_' + iterStat.count"/></td>
+                    <td th:id="'insertTicketModel_flightNo_' + ${iterStat.count}" th:text="${insertTicketModel.flightNo}"></td>
+                    <td th:id="'insertTicketModel_placeNo_' + ${iterStat.count}" th:text="${insertTicketModel.placeNo}"></td>
+                    <td th:id="'insertTicketModel_placeLevel_' + ${iterStat.count}" th:if="${insertTicketModel.placeLevel}=='f'" th:text="100"></td>
+                    <td th:id="'insertTicketModel_placeLevel_' + ${iterStat.count}" th:if="${insertTicketModel.placeLevel}=='e'" th:text="40"></td>
+                    <td><input th:id="'insertTicketModel_personId_' + ${iterStat.count}"/></td>
+                    <td><input th:id="'insertTicketModel_personName_' + ${iterStat.count}"/></td>
                 </tr>
                 </tbody>
             </table>
+            <div class="col-md-8 col-sm-offset-2 text-center">
+                <button class="btn btn-default" onclick="submitInsertTicketModel()" type="button">提交</button>
+            </div>
         </form>
-        <div class="col-md-8 col-sm-offset-2 text-center">
-            <button class="btn btn-default" type="button">提交</button>
-        </div>
+
     </div>
 </div>
 <!--end-about-->
@@ -99,6 +101,35 @@
 <div class="test" id="testimonials">
 
 </div>
+
+<script type="text/javascript">
+    function submitInsertTicketModel() {
+        var insertTicketModels = [];
+        for(var i = 1; i <= 5; i++) {
+            var flightNo = $('#insertTicketModel_flightNo_' + i.toString());
+            var placeNo = $('#insertTicketModel_placeNo_' + i.toString());
+            var personId = $('#insertTicketModel_personId_' + i.toString());
+            var personName = $('#insertTicketModel_personName_' + i.toString());
+        }
+        //TODO
+        $.ajax({
+            type     : 'get',
+            url      : '/flight/searchSeatCharts?flightId=' + flightId,
+            dataType : 'json',
+            success  : function(response) {
+                //遍历所有座位
+                $.each(response, function(index) {
+                    //将已售出的座位状态设置为已售出
+                    if(response[index].placeStatus === 2) {
+                        unavailableMap = [];
+                        unavailableMap.push(response[index].placeNo);
+                    }
+                });
+            }
+            }
+        );
+    }
+</script>
 <!--end-test-->
 <!--FlexSlider-->
 <link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen"/>
