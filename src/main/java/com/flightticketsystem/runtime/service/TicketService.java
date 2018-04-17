@@ -11,7 +11,7 @@ public interface TicketService {
 
     //boolean addTicket(ArrayList<Ticket> tickets);
 
-    boolean addTicket(ArrayList<Map<String, Object>> insertTicketModels);
+    boolean addTicket(List<Map<String, Object>> insertTicketModels);
 
     List<InsertTicketModel> getInsertTicketModels(String selectedSeats, int flightId);
 }

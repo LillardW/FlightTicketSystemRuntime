@@ -147,6 +147,15 @@
                     ]
                 },
                 click: function () {
+                    if(selectedSeats.length === 5) {
+                        alert("由于系统限制，最大座位选择数为5！");
+                        return;
+                    } else if(selectedSeats.length > 5) {
+                        alert("系统错误，请重新选择座位！");
+                        //TODO
+                        selectedSeats = [];
+                        return;
+                    }
                     if (this.status() == 'available') {
                         //let's create a new <li> which we'll add to the cart items
                         $('<li>'+this.data().category+' Seat # '+this.settings.label+': <b>$'+this.data().price+'</b> <a href="#" class="cancel-cart-item">[cancel]</a>'+'</li>')

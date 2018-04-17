@@ -1,7 +1,7 @@
 package com.flightticketsystem.runtime.constant;
 
 public enum TicketPrice {
-    f(100),n(40);
+    f(100),e(40);
 
     private Integer ticketPrice;
 

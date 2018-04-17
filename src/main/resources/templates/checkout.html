@@ -80,10 +80,14 @@
                 </thead>
                 <tbody>
                 <tr th:each="insertTicketModel ,iterStat: ${insertTicketModels}">
-                    <td th:id="'insertTicketModel_flightNo_' + ${iterStat.count}" th:text="${insertTicketModel.flightNo}"></td>
-                    <td th:id="'insertTicketModel_placeNo_' + ${iterStat.count}" th:text="${insertTicketModel.placeNo}"></td>
-                    <td th:id="'insertTicketModel_placeLevel_' + ${iterStat.count}" th:if="${insertTicketModel.placeLevel}=='f'" th:text="100"></td>
-                    <td th:id="'insertTicketModel_placeLevel_' + ${iterStat.count}" th:if="${insertTicketModel.placeLevel}=='e'" th:text="40"></td>
+                    <td th:id="'insertTicketModel_flightNo_' + ${iterStat.count}"
+                        th:text="${insertTicketModel.flightNo}"></td>
+                    <td th:id="'insertTicketModel_placeNo_' + ${iterStat.count}"
+                        th:text="${insertTicketModel.placeNo}"></td>
+                    <td th:id="'insertTicketModel_placeLevel_' + ${iterStat.count}"
+                        th:if="${insertTicketModel.placeLevel}=='f'" th:text="100"></td>
+                    <td th:id="'insertTicketModel_placeLevel_' + ${iterStat.count}"
+                        th:if="${insertTicketModel.placeLevel}=='e'" th:text="40"></td>
                     <td><input th:id="'insertTicketModel_personId_' + ${iterStat.count}"/></td>
                     <td><input th:id="'insertTicketModel_personName_' + ${iterStat.count}"/></td>
                 </tr>
@@ -105,27 +109,36 @@
 <script type="text/javascript">
     function submitInsertTicketModel() {
         var insertTicketModels = [];
-        for(var i = 1; i <= 5; i++) {
-            var flightNo = $('#insertTicketModel_flightNo_' + i.toString());
-            var placeNo = $('#insertTicketModel_placeNo_' + i.toString());
-            var personId = $('#insertTicketModel_personId_' + i.toString());
-            var personName = $('#insertTicketModel_personName_' + i.toString());
+        for (var i = 1; i <= 5; i++) {
+            var flightNo = $('#insertTicketModel_flightNo_' + i.toString()).val();
+            if(flightNo === null) {
+                break;
+            }
+            var placeNo = $('#insertTicketModel_placeNo_' + i.toString()).val();
+            var personId = $('#insertTicketModel_personId_' + i.toString()).val();
+            var personName = $('#insertTicketModel_personName_' + i.toString()).val();
+            var insertTicketModel = {
+                flightNo: flightNo,
+                placeNo: placeNo,
+                personId: personId,
+                personName: personName
+            };
+            insertTicketModels.push(insertTicketModel);
         }
+        console.log("insertTicketModels: " + JSON.stringify(insertTicketModels));
         //TODO
         $.ajax({
-            type     : 'get',
-            url      : '/flight/searchSeatCharts?flightId=' + flightId,
-            dataType : 'json',
-            success  : function(response) {
-                //遍历所有座位
-                $.each(response, function(index) {
-                    //将已售出的座位状态设置为已售出
-                    if(response[index].placeStatus === 2) {
-                        unavailableMap = [];
-                        unavailableMap.push(response[index].placeNo);
+                type: 'post',
+                url: '/flight/checkout',
+                data: insertTicketModels,
+                dataType: 'json',
+                success: function (response) {
+                    if(response === "success") {
+                        console.log("success");
+                    } else {
+                        console.log("fail");
                     }
-                });
-            }
+                }
             }
         );
     }

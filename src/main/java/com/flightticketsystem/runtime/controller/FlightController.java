@@ -43,8 +43,12 @@ public class FlightController {
     }
 
     @RequestMapping(value = "/checkout", method = RequestMethod.POST)
-    public String checkout(ArrayList<Map<String, Object>> insertTicketModels) {
+    public String checkout(@RequestBody List<Map<String, Object>> insertTicketModels) {
         boolean result = ticketService.addTicket(insertTicketModels);
-        return "";
+        if(result == true) {
+            return "success";
+        } else {
+            return "fail";
+        }
     }
 }

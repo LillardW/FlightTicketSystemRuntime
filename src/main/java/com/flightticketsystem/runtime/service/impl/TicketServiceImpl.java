@@ -2,10 +2,7 @@ package com.flightticketsystem.runtime.service.impl;
 
 import com.flightticketsystem.runtime.constant.TicketPrice;
 import com.flightticketsystem.runtime.constant.TicketStatus;
-import com.flightticketsystem.runtime.domain.Flight;
-import com.flightticketsystem.runtime.domain.InsertTicketModel;
-import com.flightticketsystem.runtime.domain.Person;
-import com.flightticketsystem.runtime.domain.Ticket;
+import com.flightticketsystem.runtime.domain.*;
 import com.flightticketsystem.runtime.repository.FlightRepository;
 import com.flightticketsystem.runtime.repository.PlaceRepository;
 import com.flightticketsystem.runtime.repository.TicketRepository;
@@ -30,11 +27,12 @@ public class TicketServiceImpl implements TicketService {
     @Autowired
     private PlaceRepository placeRepository;
 
-    public boolean addTicket(ArrayList<Map<String, Object>> insertTicketModels) {
+    public boolean addTicket(List<Map<String, Object>> insertTicketModels) {
         for(Map<String, Object> map : insertTicketModels) {
             Ticket ticket = convertToTicket(map);
+            ticketRepository.save(ticket);
         }
-        return false;
+        return true;
     }
 
 //    public boolean addTicket(int flightId, String seatCharts) {
@@ -94,7 +92,17 @@ public class TicketServiceImpl implements TicketService {
     }
 
     public Ticket convertToTicket(Map<String, Object> map) {
-
-        return null;
+        Flight flight = flightRepository.findByFlightNo(String.valueOf(map.get("flightId")));
+        Place place = placeRepository.findPlaceIdByFlightIdAndPlaceNo(flight.getFlightId(),String.valueOf(map.get("placeNo")));
+        String ticketNo = new SimpleDateFormat("yyyyMMdd").format(flight.getEstimatedTakeOffTime()).toString() + flight.getFlightNo() + place.getPlaceNo();
+        int ticketPrice = 0;
+        if(place.getPlaceLevel().equals("f")) {
+            ticketPrice = TicketPrice.f.getTicketPrice();
+        } else if (place.getPlaceLevel().equals("e")) {
+            ticketPrice = TicketPrice.e.getTicketPrice();
+        }
+        Person person = new Person(String.valueOf(map.get("personId")),String.valueOf(map.get("personName")));
+        Ticket ticket = new Ticket(ticketNo,TicketStatus.PAID.getTicketStatus(),ticketPrice,person,flight,place.getPlaceId());
+        return ticket;
     }
 }

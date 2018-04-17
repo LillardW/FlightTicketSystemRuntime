@@ -24,7 +24,7 @@ public class Ticket implements Serializable{
     private Integer ticketStatus;
 
     @Column(name = "TICKET_PRICE")
-    private Double ticketPrice;
+    private Integer ticketPrice;
 
     @Column(name = "PERSON_ID")
     private Person passenger;
@@ -61,11 +61,11 @@ public class Ticket implements Serializable{
         this.ticketStatus = ticketStatus;
     }
 
-    public Double getTicketPrice() {
+    public Integer getTicketPrice() {
         return ticketPrice;
     }
 
-    public void setTicketPrice(Double ticketPrice) {
+    public void setTicketPrice(Integer ticketPrice) {
         this.ticketPrice = ticketPrice;
     }
 
@@ -93,7 +93,7 @@ public class Ticket implements Serializable{
         this.passenger = passenger;
     }
 
-    public Ticket(String ticketNo, Integer ticketStatus, Double ticketPrice, Person passenger, Flight flight, long placeId) {
+    public Ticket(String ticketNo, Integer ticketStatus, Integer ticketPrice, Person passenger, Flight flight, long placeId) {
         this.ticketNo = ticketNo;
         this.ticketStatus = ticketStatus;
         this.ticketPrice = ticketPrice;

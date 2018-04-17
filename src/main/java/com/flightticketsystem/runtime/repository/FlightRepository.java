@@ -13,4 +13,6 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
 
     Flight findByFlightId(int flightId);
 
+    Flight findByFlightNo(String flightNo);
+
 }
