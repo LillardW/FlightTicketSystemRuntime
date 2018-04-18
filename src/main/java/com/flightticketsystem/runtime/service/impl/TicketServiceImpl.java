@@ -92,7 +92,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     public Ticket convertToTicket(Map<String, Object> map) {
-        Flight flight = flightRepository.findByFlightNo(String.valueOf(map.get("flightId")));
+        Flight flight = flightRepository.findByFlightNo(String.valueOf(map.get("flightNo")));
         Place place = placeRepository.findPlaceIdByFlightIdAndPlaceNo(flight.getFlightId(),String.valueOf(map.get("placeNo")));
         String ticketNo = new SimpleDateFormat("yyyyMMdd").format(flight.getEstimatedTakeOffTime()).toString() + flight.getFlightNo() + place.getPlaceNo();
         int ticketPrice = 0;

@@ -110,11 +110,11 @@
     function submitInsertTicketModel() {
         var insertTicketModels = [];
         for (var i = 1; i <= 5; i++) {
-            var flightNo = $('#insertTicketModel_flightNo_' + i.toString()).val();
-            if(flightNo === null) {
+            var flightNo = $('#insertTicketModel_flightNo_' + i.toString()).text();
+            if (flightNo === null || flightNo === "") {
                 break;
             }
-            var placeNo = $('#insertTicketModel_placeNo_' + i.toString()).val();
+            var placeNo = $('#insertTicketModel_placeNo_' + i.toString()).text();
             var personId = $('#insertTicketModel_personId_' + i.toString()).val();
             var personName = $('#insertTicketModel_personName_' + i.toString()).val();
             var insertTicketModel = {
@@ -126,14 +126,14 @@
             insertTicketModels.push(insertTicketModel);
         }
         console.log("insertTicketModels: " + JSON.stringify(insertTicketModels));
-        //TODO
         $.ajax({
                 type: 'post',
                 url: '/flight/checkout',
-                data: insertTicketModels,
+                data: JSON.stringify(insertTicketModels),
                 dataType: 'json',
+                contentType: 'application/json;charset=utf-8',
                 success: function (response) {
-                    if(response === "success") {
+                    if (response === "success") {
                         console.log("success");
                     } else {
                         console.log("fail");

@@ -43,6 +43,7 @@ public class FlightController {
     }
 
     @RequestMapping(value = "/checkout", method = RequestMethod.POST)
+    @ResponseBody
     public String checkout(@RequestBody List<Map<String, Object>> insertTicketModels) {
         boolean result = ticketService.addTicket(insertTicketModels);
         if(result == true) {
