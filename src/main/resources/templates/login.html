@@ -1,10 +1,35 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <title>登录</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta charset="UTF-8"/>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap Login Form Template</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/form-elements.css">
+    <link rel="stylesheet" href="css/loginPageStyle.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="ico/favicon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+
     <script type="application/x-javascript"> addEventListener("load", function () {
         setTimeout(hideURLbar, 0);
     }, false);
@@ -15,11 +40,11 @@
     <link href="css/bootstrap.css" rel='stylesheet' type='text/css'/>
     <link href="css/style.css" rel='stylesheet' type='text/css'/>
     <script src="js/jquery.min.js"></script>
-    <!-- start-smoth-scrolling-->
+    <link rel="stylesheet" href="css/jquery-ui.css"/>
+    <script src="js/jquery-ui.js"></script>
+
     <script type="text/javascript" src="js/move-top.js"></script>
     <script type="text/javascript" src="js/easing.js"></script>
-    <script type="text/javascript" src="js/axios.min.js"></script>
-    <script type="text/javascript" src="js/jquery.serializejson.js"></script>
     <script type="text/javascript">
         jQuery(document).ready(function ($) {
             $(".scroll").click(function (event) {
@@ -28,104 +53,88 @@
             });
         });
     </script>
-    <!--start-smoth-scrolling-->
+
 </head>
-<body>
-<!--start-header-->
-<div class="header" id="home">
-    <div class="container">
-        <div class="head">
-            <div class="logo">
-                <a href="index.html"><img src="images/logo.png" alt=""/></a>
+
+<body style="background-image: url(img/backgrounds/1.jpg); background-size: 100%;">
+
+<!-- Top content -->
+<div class="top-content">
+
+    <div class="header" id="home">
+        <div class="container">
+            <div class="head">
+                <div class="logo">
+                    <a href="index.html"><img src="images/logo.png" alt=""/></a>
+                </div>
+                <div class="navigation">
+                    <span class="menu"></span>
+                    <ul class="navig">
+                        <li><a href="index.html" class="hvr-bounce-to-bottom">首页</a></li>
+                        <li><a href="about.html" class="hvr-bounce-to-bottom">关于</a></li>
+                        <li><a href="addFlightPage.html" class="hvr-bounce-to-bottom">添加机票</a></li>
+                        <li><a href="updateUserProfilePage" class="hvr-bounce-to-bottom">udpate</a></li>
+                        <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}">
+                            <a th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}"
+                               href="login.html" class="hvr-bounce-to-bottom"><span
+                                    th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}"
+                                    th:text="${session.LOGIN_SESSION_KEY_USERNAME}"></span></a></li>
+                        <li th:if="${session.LOGIN_SESSION_KEY_USERNAME == null}"><a
+                                th:if="${session.LOGIN_SESSION_KEY_USERNAME == null}" href="login.html"
+                                class="active hvr-bounce-to-bottom"><span
+                                th:if="${session.LOGIN_SESSION_KEY_USERNAME == null}"
+                                th:text="登录"> </span></a></li>
+                    </ul>
+                </div>
+                <div class="clearfix"></div>
             </div>
-            <div class="navigation">
-                <span class="menu"></span>
-                <ul class="navig">
-                    <li><a href="index.html" class="hvr-bounce-to-bottom">首页</a></li>
-                    <li><a href="about.html" class="hvr-bounce-to-bottom">关于</a></li>
-                    <li><a href="addFlightPage.html" class="hvr-bounce-to-bottom">添加机票</a></li>
-                    <li><a href="typo.html" class="hvr-bounce-to-bottom">样式</a></li>
-                    <li><a href="login.html" class="active hvr-bounce-to-bottom">登录</a></li>
-                </ul>
-            </div>
-            <div class="clearfix"></div>
         </div>
     </div>
-</div>
-<!-- script-for-menu -->
-<!-- script-for-menu -->
-<script>
-    $("span.menu").click(function () {
-        $(" ul.navig").slideToggle("slow", function () {
-        });
-    });
-</script>
-<!--script-for-menu-->
-<!--start-about-->
-<script>
-    function submitLoginMessage() {
-        var user = $("#userForm").serializeJSON();
-
-        console.log("user: " + JSON.stringify(user));
-        axios.post("/user/login", user, {
-            timeout: 1000,
-            withCredentials: true
-        }).then(function (res) {
-            if (res.data.rspCode === "000000") {
-                console.log("登录成功！");
-            } else {
-                console.log("failed");
-            }
-        });
-    }
-</script>
-<div class="about">
-    <div class="container">
-
-        <form id="userForm" class="form-horizonal" th:object="${user}" th:action="@{/user/login}" method="post">
-            <div class="form-group">
-                <label class="col-sm-2 control-label" for="userName">用户名</label>
-                <div class="col-sm-10">
-                    <input id="userName" name="userName" class="form-control" th:value="*{userName}" type="text"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label" for="password">密码</label>
-                <div class="col-sm-10">
-                    <input id="password" name="password" class="form-control" th:value="*{password}" type="password"/>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-default">登录</button>
+    <div class="inner-bg">
+        <div class="container">
+            <!--<div class="row">-->
+            <!--<div class="col-sm-8 col-sm-offset-2 text">-->
+            <!--<h1><strong>Bootstrap</strong> Login Form</h1>-->
+            <!--<div class="description">-->
+            <!--<p>-->
+            <!--This is a free responsive login form made with Bootstrap.-->
+            <!--Download it on <a href="#"><strong>AZMIND</strong></a>, customize and use it as you like!-->
+            <!--</p>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3 form-box">
+                    <div class="form-top">
+                        <div class="form-top-left">
+                            <h3>Login to our site</h3>
+                            <p>Enter your username and password to log on:</p>
+                        </div>
+                        <div class="form-top-right">
+                            <i class="fa fa-lock"></i>
+                        </div>
+                    </div>
+                    <div class="form-bottom">
+                        <form role="form" action="" method="post" class="login-form">
+                            <div class="form-group">
+                                <label class="sr-only" for="form-username">用户名</label>
+                                <input type="text" name="form-username" placeholder="请输入用户名"
+                                       class="form-username form-control" id="form-username">
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="form-password">密码</label>
+                                <input type="password" name="form-password" placeholder="请输入密码"
+                                       class="form-password form-control" id="form-password">
+                            </div>
+                            <button type="button" onclick="onClickedSubmit()" class="btn">登录</button>
+                        </form>
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
-    <a href="/register">还未注册？</a>
-</div>
-<!--end-about-->
-<!--start-test-->
-<div class="test" id="testimonials">
 
 </div>
-<!--end-test-->
-<!--FlexSlider-->
-<link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen"/>
-<script src="js/jquery.flexslider.js"></script>
-<script type="text/javascript">
-    $(window).load(function () {
-        $('.flexslider').flexslider({
-            animation: "slide",
-            start: function (slider) {
-                $('body').removeClass('loading');
-            }
-        });
-    });
-</script>
-
-<!--End-slider-script-->
-<!--start-footer-->
 <div class="footer">
     <div class="container">
         <div class="touch-top heading">
@@ -142,13 +151,39 @@
             </ul>
         </div>
         <div class="footer-top">
-            <p class="footer-class">Copyright &copy; 2015.Company name All rights reserved.More Templates <a
-                    href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a
-                    href="http://www.cssmoban.com/" title="网站模板" target="_blank">网站模板</a></p>
+            <p class="footer-class">Copyright &copy; 2018.Company name All rights reserved.More Templates </p>
         </div>
     </div>
     <script type="text/javascript">
+
+        function onClickedSubmit() {
+            var user = {
+                userName: $("#form-username").val(),
+                password: $("#form-password").val()
+            };
+            $.post("/user/login", user, function (data) {
+                console.log("Data: " + data);
+                if (data === "success") {
+                    window.location.href = "/index";
+                } else if (data === "failed") {
+                    window.location.href = "/login";
+                } else {
+                    alert("系统繁忙，请重试！");
+                    return;
+                }
+            });
+        }
+
         $(document).ready(function () {
+            /*
+            var defaults = {
+                  containerID: 'toTop', // fading element id
+                containerHoverID: 'toTopHover', // fading element hover id
+                scrollSpeed: 1200,
+                easingType: 'linear'
+             };
+            */
+
             $().UItoTop({easingType: 'easeOutQuart'});
 
         });
@@ -156,6 +191,17 @@
     <a href="#home" id="toTop" class="scroll" style="display: block;"> <span id="toTopHover"
                                                                              style="opacity: 1;"> </span></a>
 </div>
-<!--end-footer-->
+
+<!-- Javascript -->
+<!--<script src="js/jquery-1.11.0.min.js"></script>-->
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.backstretch.js"></script>
+<script src="js/scripts.js"></script>
+
+<!--[if lt IE 10]>
+<script src="js/placeholder.js"></script>
+<![endif]-->
+
 </body>
+
 </html>

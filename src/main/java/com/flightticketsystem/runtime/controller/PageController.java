@@ -30,6 +30,13 @@ public class PageController {
     @Autowired
     private TicketService ticketService;
 
+    @RequestMapping("/")
+    public String indexPage(Model model, HttpSession session) {
+        model.addAttribute("flight", new Flight());
+        session.setAttribute("LOGIN_SESSION_KEY_USERNAME", null);
+        return "index";
+    }
+
     @RequestMapping("/index")
     public String homePage(Model model, HttpSession session) {
         model.addAttribute("flight", new Flight());

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>About</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -44,7 +44,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <li><a href="about.html" class="active hvr-bounce-to-bottom">关于</a></li>
                     <li><a href="services.html" class="hvr-bounce-to-bottom">服务</a></li>
                     <li><a href="typo.html" class="hvr-bounce-to-bottom">样式</a></li>
-                    <li><a href="login.html" class="hvr-bounce-to-bottom">登录</a></li>
+                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}">
+                        <a th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}"
+                           href="login.html" class="hvr-bounce-to-bottom"><span
+                                th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}"
+                                th:text="${session.LOGIN_SESSION_KEY_USERNAME}"></span></a></li>
+                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME == null}"><a
+                            th:if="${session.LOGIN_SESSION_KEY_USERNAME == null}" href="login.html"
+                            class="active hvr-bounce-to-bottom"><span
+                            th:if="${session.LOGIN_SESSION_KEY_USERNAME == null}"
+                            th:text="登录"> </span></a></li>
                 </ul>
             </div>
             <div class="clearfix"></div>

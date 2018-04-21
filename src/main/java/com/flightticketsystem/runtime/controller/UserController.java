@@ -27,14 +27,15 @@ public class UserController {
     private UserRepository userRepository;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ResponseBody
     public String login(User user, HttpServletResponse response, Model model, HttpSession session) {
         ResponseData responseData = userService.login(user, response);
         if(responseData.getRspCode().equals("000000")) {
             session.setAttribute("LOGIN_SESSION_KEY_USERNAME", user.getUserName());
             session.setAttribute("currentUser",userService.convertToModel(userService.findUserByUserName(user)));
-            return "redirect:/index";
+            return "success";
         }else {
-            return "redirect:/login";
+            return "failed";
         }
     }
 

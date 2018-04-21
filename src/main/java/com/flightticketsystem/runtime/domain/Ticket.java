@@ -1,5 +1,6 @@
 package com.flightticketsystem.runtime.domain;
 
+import com.sun.istack.internal.Nullable;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -17,24 +18,24 @@ public class Ticket implements Serializable{
     @Column(name = "TICKET_ID")
     private Long ticketId;
 
-    @Column(name = "TICKET_NO")
+    @Column(name = "TICKET_NO", nullable = false)
     private String ticketNo;
 
-    @Column(name = "TICKET_STATUS")
+    @Column(name = "TICKET_STATUS", nullable = false)
     private Integer ticketStatus;
 
-    @Column(name = "TICKET_PRICE")
+    @Column(name = "TICKET_PRICE", nullable = false)
     private Integer ticketPrice;
 
-    @Column(name = "PERSON_ID")
+    @Column(name = "PERSON_ID", nullable = false)
     private Person passenger;
 
-    @JoinColumn(name = "FLIGHT_ID")
+    @JoinColumn(name = "FLIGHT_ID", nullable = false)
     @ManyToOne(targetEntity = Flight.class, optional = false)
     @Fetch(value = FetchMode.SELECT)
     private Flight flight;
 
-    @JoinColumn(name = "PLACE_ID", table = "TICKET_SYSTEM_TICKET_PLACE")
+    @JoinColumn(name = "PLACE_ID", table = "TICKET_SYSTEM_TICKET_PLACE", nullable = false)
     private long placeId;
 
     public Long getTicketId() {

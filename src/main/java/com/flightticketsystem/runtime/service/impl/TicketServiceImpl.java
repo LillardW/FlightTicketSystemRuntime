@@ -1,5 +1,6 @@
 package com.flightticketsystem.runtime.service.impl;
 
+import com.flightticketsystem.runtime.constant.PlaceStatus;
 import com.flightticketsystem.runtime.constant.TicketPrice;
 import com.flightticketsystem.runtime.constant.TicketStatus;
 import com.flightticketsystem.runtime.domain.*;
@@ -30,6 +31,9 @@ public class TicketServiceImpl implements TicketService {
     public boolean addTicket(List<Map<String, Object>> insertTicketModels) {
         for(Map<String, Object> map : insertTicketModels) {
             Ticket ticket = convertToTicket(map);
+            Place place = placeRepository.findOne(ticket.getPlaceId());
+            place.setPlaceStatus(PlaceStatus.SOLD.getPlaceStatus());
+            placeRepository.save(place);
             ticketRepository.save(ticket);
         }
         return true;
