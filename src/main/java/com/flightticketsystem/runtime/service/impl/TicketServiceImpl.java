@@ -28,9 +28,9 @@ public class TicketServiceImpl implements TicketService {
     @Autowired
     private PlaceRepository placeRepository;
 
-    public boolean addTicket(List<Map<String, Object>> insertTicketModels) {
+    public boolean addTicket(List<Map<String, Object>> insertTicketModels, long userId) {
         for(Map<String, Object> map : insertTicketModels) {
-            Ticket ticket = convertToTicket(map);
+            Ticket ticket = convertToTicket(map, userId);
             Place place = placeRepository.findOne(ticket.getPlaceId());
             place.setPlaceStatus(PlaceStatus.SOLD.getPlaceStatus());
             placeRepository.save(place);
@@ -95,7 +95,7 @@ public class TicketServiceImpl implements TicketService {
         return insertTicketModels;
     }
 
-    public Ticket convertToTicket(Map<String, Object> map) {
+    public Ticket convertToTicket(Map<String, Object> map, long userId) {
         Flight flight = flightRepository.findByFlightNo(String.valueOf(map.get("flightNo")));
         Place place = placeRepository.findPlaceIdByFlightIdAndPlaceNo(flight.getFlightId(),String.valueOf(map.get("placeNo")));
         String ticketNo = new SimpleDateFormat("yyyyMMdd").format(flight.getEstimatedTakeOffTime()).toString() + flight.getFlightNo() + place.getPlaceNo();
@@ -106,7 +106,28 @@ public class TicketServiceImpl implements TicketService {
             ticketPrice = TicketPrice.e.getTicketPrice();
         }
         Person person = new Person(String.valueOf(map.get("personId")),String.valueOf(map.get("personName")));
-        Ticket ticket = new Ticket(ticketNo,TicketStatus.PAID.getTicketStatus(),ticketPrice,person,flight,place.getPlaceId());
+        Ticket ticket = new Ticket(ticketNo,TicketStatus.PAID.getTicketStatus(),ticketPrice,person,flight,place.getPlaceId(), userId);
         return ticket;
+    }
+
+    @Override
+    public List<Ticket> searchTicketsOfCurrentUser(long userId) {
+        List<Ticket> tickets = ticketRepository.findTicketsByUserId(userId);
+        return tickets;
+    }
+
+    public String reverseTicket(long ticketId) {
+        try {
+            Ticket ticket = ticketRepository.findOne(ticketId);
+            Place place = placeRepository.findOne(ticket.getPlaceId());
+            ticket.setTicketStatus(TicketStatus.REVERSED.getTicketStatus());
+            place.setPlaceStatus(PlaceStatus.AVAILABLE.getPlaceStatus());
+            ticketRepository.save(ticket);
+            placeRepository.save(place);
+            return "success";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "failed";
+        }
     }
 }

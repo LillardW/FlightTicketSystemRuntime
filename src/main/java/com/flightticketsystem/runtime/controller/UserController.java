@@ -1,5 +1,6 @@
 package com.flightticketsystem.runtime.controller;
 
+import com.flightticketsystem.runtime.constant.UserAuthority;
 import com.flightticketsystem.runtime.domain.Response;
 import com.flightticketsystem.runtime.domain.ResponseData;
 import com.flightticketsystem.runtime.domain.User;
@@ -28,22 +29,28 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public String login(User user, HttpServletResponse response, Model model, HttpSession session) {
+    public String login(@RequestBody User user, HttpServletResponse response, Model model, HttpSession session) {
         ResponseData responseData = userService.login(user, response);
         if(responseData.getRspCode().equals("000000")) {
+            String result = "";
             session.setAttribute("LOGIN_SESSION_KEY_USERNAME", user.getUserName());
             session.setAttribute("currentUser",userService.convertToModel(userService.findUserByUserName(user)));
-            return "success";
+            if(user.getAuthority() == UserAuthority.NORMAL.getUserAuthority()) {
+                result = "success";
+            } else if (user.getAuthority() == UserAuthority.ADMIN.getUserAuthority()) {
+                result =  "success";
+            }
+            return result;
         }else {
             return "failed";
         }
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String register(UserModel userModel) {
+    @ResponseBody
+    public Response register(@RequestBody UserModel userModel) {
         User user = userService.convert(userModel);
-        userService.register(user);
-        return "redirect:/index";
+        return userService.register(user);
     }
 
     @RequestMapping(value = "/updateUserProfile", method = RequestMethod.POST)

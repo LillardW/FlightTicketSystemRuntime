@@ -32,6 +32,9 @@ public class User implements Serializable {
     @Column(name = "LAST_MODIFY_TIME", nullable = false)
     private Date lastModifyTime;
 
+    @Column(name = "AUTHORITY", nullable = false)
+    private int authority = 0;
+
     public Long getUserId() {
         return userId;
     }
@@ -88,13 +91,22 @@ public class User implements Serializable {
         this.lastModifyTime = lastModifyTime;
     }
 
-    public User(String userName, String password, String userEmail, Person accountOwner, Date createTime, Date lastModifyTime) {
+    public int getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(int authority) {
+        this.authority = authority;
+    }
+
+    public User(String userName, String password, String userEmail, Person accountOwner, Date createTime, Date lastModifyTime, int authority) {
         this.userName = userName;
         this.password = password;
         this.userEmail = userEmail;
         this.accountOwner = accountOwner;
         this.createTime = createTime;
         this.lastModifyTime = lastModifyTime;
+        this.authority = authority;
     }
 
     public User() {

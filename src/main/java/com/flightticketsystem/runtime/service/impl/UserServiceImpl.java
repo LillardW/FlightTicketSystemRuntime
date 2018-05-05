@@ -2,6 +2,7 @@ package com.flightticketsystem.runtime.service.impl;
 
 import com.flightticketsystem.runtime.constant.Constant;
 import com.flightticketsystem.runtime.constant.ExceptionMsg;
+import com.flightticketsystem.runtime.constant.UserAuthority;
 import com.flightticketsystem.runtime.domain.*;
 import com.flightticketsystem.runtime.repository.UserRepository;
 import com.flightticketsystem.runtime.service.BaseService;
@@ -42,7 +43,7 @@ public class UserServiceImpl implements UserService {
             cookie4UserName.setPath("/");
             response.addCookie(cookie4UserName);
             baseService.getSession().setAttribute(Constant.LOGIN_SESSION_KEY_USERID, loginUser);
-            baseService.getSession().setAttribute(Constant.LOGIN_SESSION_KEY_USERNAME, user.getUserName());
+            baseService.getSession().setAttribute(Constant.LOGIN_SESSION_KEY_USERNAME, loginUser.getUserName());
             String preUrl = "/";
             return new ResponseData(ExceptionMsg.SUCCESS, preUrl);
         } catch (Exception e) {
@@ -95,6 +96,7 @@ public class UserServiceImpl implements UserService {
         user.setUserName(userModel.getUserName());
         user.setPassword(userModel.getPassword());
         user.setUserEmail(userModel.getUserEmail());
+        user.setAuthority(UserAuthority.NORMAL.getUserAuthority());
         Person person = new Person();
         person.setPersonId(userModel.getPersonId());
         person.setPersonName(userModel.getPersonName());
