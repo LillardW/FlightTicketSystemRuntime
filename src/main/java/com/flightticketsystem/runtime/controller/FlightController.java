@@ -38,9 +38,9 @@ public class FlightController {
     private UserService userService;
 
     @RequestMapping(value = "/addFlight")
-    public String addFlight(@RequestParam("flightNo") String flightNo, @RequestParam("departureCity") String departureCity, @RequestParam("arrivalCity") String arrivalCity, @RequestParam("estimatedTakeOffTime") Date estimatedTakeOffTime, @RequestParam("estimatedArrivalTime") Date estimatedArrivalTime, @RequestParam("seatCharts") String seatCharts) {
-        Flight flight = new Flight(flightNo, departureCity, arrivalCity, estimatedTakeOffTime, estimatedArrivalTime);
-        boolean result = flightService.addFlight(flight, seatCharts);
+    public String addFlight(@RequestBody FlightModel flightModel) {
+        Flight flight = new Flight(flightModel.getFlightNo(),flightModel.getDepartureCity(),flightModel.getArrivalCity(),flightModel.getEstimatedTakeOffTime(),flightModel.getEstimatedArrivalTime());
+        boolean result = flightService.addFlight(flight, flightModel.getSeatCharts());
         if (result) {
             return "redirect:/index";
         }

@@ -154,15 +154,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     </div>
     <script type="text/javascript">
         function onClickedSubmit() {
-            var user = {
-                userName: $("#form-username").val(),
-                password: $("#form-password").val(),
-                userEmail: $("#form-useremail").val(),
-                personId: $("#form-userid").val(),
-                personName: $("#form-realname").val()
-
+            var flight = {
+                flightNo: $("#form-flightNo").val(),
+                departureCity: $("#form-departureCity").val(),
+                arrivalCity: $("#form-arrivalCity").val(),
+                estimatedTakeOffTime: $("#form-estimatedTakeOffTime").val(),
+                estimatedArrivalTime: $("#form-estimatedArrivalTime").val(),
+                seatCharts: $("#form-seatCharts").val()
             };
-            axios.post("/user/register", user, 5000);
+            axios.post("/flight/addFlight", flight, 5000);
         }
 
         $(document).ready(function () {
