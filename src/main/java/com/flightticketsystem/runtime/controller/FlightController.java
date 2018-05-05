@@ -2,12 +2,11 @@ package com.flightticketsystem.runtime.controller;
 
 
 import com.flightticketsystem.runtime.constant.Constant;
-import com.flightticketsystem.runtime.domain.Flight;
-import com.flightticketsystem.runtime.domain.Place;
-import com.flightticketsystem.runtime.domain.Ticket;
+import com.flightticketsystem.runtime.domain.*;
 import com.flightticketsystem.runtime.service.FlightService;
 import com.flightticketsystem.runtime.service.PlaceService;
 import com.flightticketsystem.runtime.service.TicketService;
+import com.flightticketsystem.runtime.service.UserService;
 import com.flightticketsystem.runtime.service.impl.UserServiceImpl;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -35,6 +34,9 @@ public class FlightController {
     @Resource
     private TicketService ticketService;
 
+    @Resource
+    private UserService userService;
+
     @RequestMapping(value = "/addFlight")
     public String addFlight(@RequestParam("flightNo") String flightNo, @RequestParam("departureCity") String departureCity, @RequestParam("arrivalCity") String arrivalCity, @RequestParam("estimatedTakeOffTime") Date estimatedTakeOffTime, @RequestParam("estimatedArrivalTime") Date estimatedArrivalTime, @RequestParam("seatCharts") String seatCharts) {
         Flight flight = new Flight(flightNo, departureCity, arrivalCity, estimatedTakeOffTime, estimatedArrivalTime);
@@ -53,14 +55,15 @@ public class FlightController {
 
     @RequestMapping(value = "/checkout", method = RequestMethod.POST)
     @ResponseBody
-    public String checkout(@RequestBody List<Map<String, Object>> insertTicketModels, HttpServletRequest request) {
+    public String checkout(@RequestBody List<Map<String, Object>> insertTicketModels, HttpServletRequest request, HttpSession session) {
         Cookie[] cookies = request.getCookies();
         long userId = 0;
-        for (int i = 0; i < cookies.length; i++) {
-            if (cookies[i].equals(Constant.LOGIN_SESSION_KEY_USERID)) {
-                userId = Long.parseLong(cookies[i].getValue());
-            }
+
+        if(session.getAttribute("currentUser") != null) {
+            User user = userService.convert((UserModel) session.getAttribute("currentUser"));
+            userId = user.getUserId();
         }
+
         if (userId == 0) {
             return "fail";
         }
@@ -72,13 +75,14 @@ public class FlightController {
         }
     }
 
+
     @RequestMapping(value = "/searchTicketsOfCurrentUser", method = RequestMethod.GET)
     @ResponseBody
     public List<Ticket> searchTicketsOfCurrentUser(@RequestParam("userId") long userId) {
         return ticketService.searchTicketsOfCurrentUser(userId);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @RequestMapping(value = "/reverseTicket", method = RequestMethod.GET)
     @ResponseBody
     public String reverseTicket(@RequestParam("ticketId") long ticketId) {
         return ticketService.reverseTicket(ticketId);

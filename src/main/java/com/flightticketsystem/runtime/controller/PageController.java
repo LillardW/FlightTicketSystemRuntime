@@ -40,7 +40,6 @@ public class PageController {
     @RequestMapping("/index")
     public String homePage(Model model, HttpSession session) {
         model.addAttribute("flight", new Flight());
-        session.setAttribute("LOGIN_SESSION_KEY_USERNAME", null);
         return "index";
     }
 
@@ -75,7 +74,7 @@ public class PageController {
     }
 
     @RequestMapping("/flightSearchResult")
-    public String flightSearchResultPage(HttpServletRequest res, Model model) {
+    public String flightSearchResultPage(HttpServletRequest res, Model model, HttpSession session) {
         Flight flight = new Flight();
         flight.setDepartureCity(res.getParameter("departureCity"));
         flight.setArrivalCity(res.getParameter("arrivalCity"));
@@ -94,8 +93,12 @@ public class PageController {
     }
 
     @RequestMapping("/bookTicketPage")
-    public String bookTicketPage(@RequestParam int id) {
-        return "bookTicket";
+    public String bookTicketPage(@RequestParam int id, HttpSession session) {
+        if(session.getAttribute("currentUser") != null) {
+            return "bookTicket";
+        } else {
+            return "redirect:/login";
+        }
     }
 
     @RequestMapping("/updateUserProfilePage")
@@ -107,9 +110,20 @@ public class PageController {
     }
 
     @RequestMapping("/addFlightPage")
-    public String addFlightPage(Model model) {
-        model.addAttribute("flight",new Flight());
-        return "addFlightPage";
+    public String addFlightPage(Model model, HttpSession session) {
+        String page = "";
+        if(session.getAttribute("Authority") != null) {
+            if ((int) session.getAttribute("Authority") == 1) {
+                model.addAttribute("flight", new Flight());
+                page = "addFlightPage";
+            } else {
+                page = "index";
+            }
+            return page;
+        } else {
+            return "index";
+        }
+
     }
 
     @RequestMapping("/checkout")

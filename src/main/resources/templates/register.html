@@ -65,19 +65,9 @@
             </div>
         </div>
     </div>
+    <!--content starts -->
     <div class="inner-bg">
         <div class="container">
-            <!--<div class="row">-->
-            <!--<div class="col-sm-8 col-sm-offset-2 text">-->
-            <!--<h1><strong>Bootstrap</strong> Login Form</h1>-->
-            <!--<div class="description">-->
-            <!--<p>-->
-            <!--This is a free responsive login form made with Bootstrap.-->
-            <!--Download it on <a href="#"><strong>AZMIND</strong></a>, customize and use it as you like!-->
-            <!--</p>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</div>-->
             <div class="row">
                 <div class="col-sm-6 col-sm-offset-3 form-box">
                     <div class="form-top">
@@ -154,16 +144,7 @@
                 personName:$("#form-realname").val()
 
             };
-            $.ajax({
-                type     : 'post',
-                url      : '/user/register',
-                data:user,
-                dataType : 'json',
-                async : false,
-                success  : function(response) {
-                    alert("success");
-                }
-            });
+            axios.post("/user/register",user,5000);
         }
 
         $(document).ready(function () {

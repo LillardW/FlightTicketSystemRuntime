@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @CrossOrigin
@@ -29,21 +31,19 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public String login(@RequestBody User user, HttpServletResponse response, Model model, HttpSession session) {
+    public Map<String, Object> login(@RequestBody User user, HttpServletResponse response, Model model, HttpSession session) {
         ResponseData responseData = userService.login(user, response);
+        User completeUser = userRepository.findByUserName(user.getUserName());
+        Map<String, Object> responseResult = new HashMap<>();
         if(responseData.getRspCode().equals("000000")) {
-            String result = "";
             session.setAttribute("LOGIN_SESSION_KEY_USERNAME", user.getUserName());
             session.setAttribute("currentUser",userService.convertToModel(userService.findUserByUserName(user)));
-            if(user.getAuthority() == UserAuthority.NORMAL.getUserAuthority()) {
-                result = "success";
-            } else if (user.getAuthority() == UserAuthority.ADMIN.getUserAuthority()) {
-                result =  "success";
-            }
-            return result;
+            session.setAttribute("Authority",completeUser.getAuthority());
+            responseResult.put("Result","success");
         }else {
-            return "failed";
+            responseResult.put("Result","failed");
         }
+        return responseResult;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
