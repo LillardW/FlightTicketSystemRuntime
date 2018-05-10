@@ -63,4 +63,13 @@ public class UserController {
         }
         return "redirect:/updateUserProfilePage";
     }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout(HttpSession session) {
+        session.removeAttribute("LOGIN_SESSION_KEY_USERID");
+        session.removeAttribute("LOGIN_SESSION_KEY_USERNAME");
+        session.removeAttribute("currentUser");
+        session.removeAttribute("Authority");
+        return "redirect:/index";
+    }
 }
