@@ -1,16 +1,15 @@
 package com.flightticketsystem.runtime.controller;
 
-import com.flightticketsystem.runtime.domain.Flight;
-import com.flightticketsystem.runtime.domain.InsertTicketModel;
-import com.flightticketsystem.runtime.domain.User;
-import com.flightticketsystem.runtime.domain.UserModel;
+import com.flightticketsystem.runtime.domain.*;
 import com.flightticketsystem.runtime.service.FlightService;
 import com.flightticketsystem.runtime.service.TicketService;
+import com.flightticketsystem.runtime.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +28,9 @@ public class PageController {
 
     @Autowired
     private TicketService ticketService;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("/")
     public String indexPage(Model model, HttpSession session) {
@@ -102,9 +104,13 @@ public class PageController {
     }
 
     @RequestMapping("/updateUserProfilePage")
-    public String updateUserProfilePage(HttpSession session) {
-        if(session.getAttribute("currentUser") != null) {
+    public String updateUserProfilePage(@RequestParam int userId, HttpSession session, Model model) {
+        if((int)session.getAttribute("Authority") == 0) {
+            model.addAttribute("userModel",session.getAttribute("currentUser"));
             return "updateUserProfile";
+
+        } else if ((int) session.getAttribute("Authority") == 1){
+            //TODO
         }
         return "redirect:index";
     }
@@ -135,4 +141,29 @@ public class PageController {
         logger.warn("selectedSeats: " + selectedSeats);
         return "checkout";
     }
+
+    @RequestMapping(value = "/searchAllUser")
+    public String searchUserPage(Model model, HttpSession session) {
+        if(session.getAttribute("Authority") == null || (int)session.getAttribute("Authority") == 0) {
+            return "redirect: /index";
+        } else {
+            model.addAttribute("userSearchResults",userService.searchAllUsers());
+            return "searchAllUser";
+        }
+    }
+
+    @RequestMapping(value = "/searchTickets1")
+    public String searchTicketsOfUser1(@RequestParam TicketSearchModel ticketSearchModel, HttpSession session, Model model) {
+        if(session.getAttribute("Authority") == null || (int) session.getAttribute("Authority") == 0) {
+            return "index";
+        }
+        model.addAttribute("searchTicketsResult",ticketService.searchTickets(ticketSearchModel));
+        return "searchTickets";
+    }
+
+    @RequestMapping(value = "/searchTickets")
+    public String searchTicketsOfUser() {
+        return "searchTickets";
+    }
+
 }

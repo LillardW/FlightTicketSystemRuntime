@@ -1,7 +1,8 @@
 package com.flightticketsystem.runtime.repository;
 
-import com.flightticketsystem.runtime.domain.Flight;
-import com.flightticketsystem.runtime.domain.Place;
+import com.flightticketsystem.runtime.domain.*;
+import com.flightticketsystem.runtime.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -11,6 +12,9 @@ import java.util.*;
 
 @Service
 public class DynamicQueryDao {
+
+    @Autowired
+    private UserService userService;
 
     @PersistenceContext
     private EntityManager em;
@@ -83,6 +87,41 @@ public class DynamicQueryDao {
             result.add(convertToMap(place));
         }
         return result;
+    }
+
+    public List<UserModel> searchAllUsers() {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<User> query = cb.createQuery(User.class);
+
+        Root<User> root = query.from(User.class);
+        query.select(root);
+
+        Predicate p1 = cb.notEqual(root.get("authority"),1);
+        query.where(p1);
+        List<User> resultList = em.createQuery(query).getResultList();
+        List<UserModel> returnList = new ArrayList<>();
+        List<Map<String, Object>> result = new ArrayList<>();
+        for(User user:resultList) {
+            returnList.add(userService.convertToModel(user));
+        }
+        return returnList;
+    }
+
+    public List<Ticket> searchTickets(TicketSearchModel ticketSearchModel) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Ticket> query = cb.createQuery(Ticket.class);
+
+        Root<Ticket> root = query.from(Ticket.class);
+        query.select(root);
+
+        Predicate p1 = cb.equal(root.get("userId"),ticketSearchModel.getUserId());
+        query.where(p1);
+
+        Predicate p2 = cb.equal(root.get(""),ticketSearchModel.getFlightNo());
+        query.where(p2);
+
+        List<Ticket> resultList = em.createQuery(query).getResultList();
+        return resultList;
     }
 
     public Map<String, Object> convertToMap(Place place) {

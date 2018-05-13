@@ -4,6 +4,7 @@ import com.flightticketsystem.runtime.constant.Constant;
 import com.flightticketsystem.runtime.constant.ExceptionMsg;
 import com.flightticketsystem.runtime.constant.UserAuthority;
 import com.flightticketsystem.runtime.domain.*;
+import com.flightticketsystem.runtime.repository.DynamicQueryDao;
 import com.flightticketsystem.runtime.repository.UserRepository;
 import com.flightticketsystem.runtime.service.BaseService;
 import com.flightticketsystem.runtime.service.UserService;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -25,6 +27,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private BaseService baseService;
+
+    @Autowired
+    private DynamicQueryDao dynamicQueryDao;
 
     public ResponseData login(User user, HttpServletResponse response) {
         try {
@@ -121,5 +126,9 @@ public class UserServiceImpl implements UserService {
 
     public User findUserByUserName(User user) {
         return userRepository.findByUserName(user.getUserName());
+    }
+
+    public List<UserModel> searchAllUsers() {
+        return dynamicQueryDao.searchAllUsers();
     }
 }

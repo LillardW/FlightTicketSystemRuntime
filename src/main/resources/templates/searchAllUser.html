@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Home</title>
+    <title>搜索结果</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta name="keywords" content="Paix Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design"/>
     <script type="application/x-javascript"> addEventListener("load", function () {
         setTimeout(hideURLbar, 0);
     }, false);
@@ -16,9 +14,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <link href="css/bootstrap.css" rel='stylesheet' type='text/css'/>
     <link href="css/style.css" rel='stylesheet' type='text/css'/>
     <script src="js/jquery.min.js"></script>
-
+    <!-- start-smoth-scrolling-->
     <script type="text/javascript" src="js/move-top.js"></script>
     <script type="text/javascript" src="js/easing.js"></script>
+    <script type="text/javascript" src="js/axios.min.js"></script>
+    <script type="text/javascript" src="js/jquery.serializejson.js"></script>
     <script type="text/javascript">
         jQuery(document).ready(function ($) {
             $(".scroll").click(function (event) {
@@ -40,12 +40,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="navigation">
                 <span class="menu"></span>
                 <ul class="navig">
-                    <li><a href="index.html" class="active hvr-bounce-to-bottom">首页</a></li>
+                    <li><a href="index.html" class="hvr-bounce-to-bottom">首页</a></li>
                     <li><a href="about.html" class="hvr-bounce-to-bottom">关于</a></li>
-                    <li><a href="addFlightPage.html" class="hvr-bounce-to-bottom">添加机票</a></li>
-                    <li><a href="updateUserProfilePage.html" class="hvr-bounce-to-bottom">udpate</a></li>
-                    <li><a href="searchAllUser.html" class="hvr-bounce-to-bottom">用户信息管理</a></li>
-                    <li><a href="searchTickets.html" class="hvr-bounce-to-bottom">票务管理</a></li>
+                    <li><a href="services.html" class="hvr-bounce-to-bottom">服务</a></li>
+                    <li><a href="typo.html" class="hvr-bounce-to-bottom">样式</a></li>
                     <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}"><a th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}" href="login.html" class="hvr-bounce-to-bottom"><span th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}" th:text="${session.LOGIN_SESSION_KEY_USERNAME}" ></span></a></li>
                     <li th:if="${session.LOGIN_SESSION_KEY_USERNAME == null}"><a th:if="${session.LOGIN_SESSION_KEY_USERNAME == null}" href="login.html" class="hvr-bounce-to-bottom"><span th:if="${session.LOGIN_SESSION_KEY_USERNAME == null}" th:text="登录"> </span></a></li>
                 </ul>
@@ -62,59 +60,58 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         });
     });
 </script>
-<!-- script-for-menu -->
-<!--start-banner-->
-<div class="banner">
+<!--script-for-menu-->
+<!--start-about-->
+
+<div class="about">
     <div class="container">
-        <div class="banner-top">
-            <h1>查找航班</h1>
-            <form th:action="@{/flightSearchResult}" method="post">
-                <div class="banner-bottom">
-                    <div class="bnr-one">
-                        <div class="bnr-left">
-                            <p>出发时间</p>
-                        </div>
-                        <div class="bnr-right">
-                            <input class="date" id="datepicker" name="estimatedTakeOffTime" onFocus="this.value = '';"
-                                   onBlur="if (this.value == '') {this.value = '';}"/>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="bnr-one">
-                        <div class="bnr-left">
-                            <p>起点城市</p>
-                        </div>
-                        <div class="bnr-right">
-                            <input class="" name="departureCity" id="departureCity" type="text" />
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="bnr-one">
-                        <div class="bnr-left">
-                            <p>终点城市</p>
-                        </div>
-                        <div class="bnr-right">
-                            <input class="" name="arrivalCity" id="arrivalCity" type="text"/>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="bnr-btn">
-                        <input type="submit" value="搜索"/>
-                    </div>
-                </div>
-            </form>
-        </div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>用户ID</th>
+                <th>用户名</th>
+                <th>用户Email</th>
+                <th>身份证号码</th>
+                <th>真实姓名</th>
+                <th>操作</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="userModel : ${userSearchResults}">
+                <td th:text="${userModel.userId}"></td>
+                <td th:text="${userModel.userName}"></td>
+                <td th:text="${userModel.userEmail}"></td>
+                <td th:text="${userModel.personId}"></td>
+                <td th:text="${userModel.personName}"></td>
+                <td><a th:href="@{updateUserProfilePage(id=${userModel.userId})}">修改信息</a></td>
+                <td><a th:href="@{deleteUser(id=${userModel.userId})}">删除</a></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
+<!--end-about-->
+<!--start-test-->
+<div class="test" id="testimonials">
 
-<link rel="stylesheet" href="css/jquery-ui.css"/>
-<script src="js/jquery-ui.js"></script>
-<script>
-    $(function () {
-        $("#datepicker,#datepicker1").datepicker();
+</div>
+<!--end-test-->
+<!--FlexSlider-->
+<link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen"/>
+<script src="js/jquery.flexslider.js"></script>
+<script type="text/javascript">
+    $(window).load(function () {
+        $('.flexslider').flexslider({
+            animation: "slide",
+            start: function (slider) {
+                $('body').removeClass('loading');
+            }
+        });
     });
 </script>
 
+<!--End-slider-script-->
 <!--start-footer-->
 <div class="footer">
     <div class="container">
@@ -137,7 +134,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     </div>
     <script type="text/javascript">
         $(document).ready(function () {
-
             $().UItoTop({easingType: 'easeOutQuart'});
 
         });

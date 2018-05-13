@@ -4,6 +4,7 @@ import com.flightticketsystem.runtime.constant.PlaceStatus;
 import com.flightticketsystem.runtime.constant.TicketPrice;
 import com.flightticketsystem.runtime.constant.TicketStatus;
 import com.flightticketsystem.runtime.domain.*;
+import com.flightticketsystem.runtime.repository.DynamicQueryDao;
 import com.flightticketsystem.runtime.repository.FlightRepository;
 import com.flightticketsystem.runtime.repository.PlaceRepository;
 import com.flightticketsystem.runtime.repository.TicketRepository;
@@ -27,6 +28,9 @@ public class TicketServiceImpl implements TicketService {
 
     @Autowired
     private PlaceRepository placeRepository;
+
+    @Autowired
+    private DynamicQueryDao dynamicQueryDao;
 
     public boolean addTicket(List<Map<String, Object>> insertTicketModels, long userId) {
         for(Map<String, Object> map : insertTicketModels) {
@@ -129,5 +133,9 @@ public class TicketServiceImpl implements TicketService {
             e.printStackTrace();
             return "failed";
         }
+    }
+
+    public List<Ticket> searchTickets(TicketSearchModel ticketSearchModel) {
+        return dynamicQueryDao.searchTickets(ticketSearchModel);
     }
 }

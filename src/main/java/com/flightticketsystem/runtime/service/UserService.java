@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 public interface UserService {
 
@@ -24,4 +25,6 @@ public interface UserService {
     public User findUserByUserId(long userId);
 
     public User findUserByUserName(User user);
+
+    public List<UserModel> searchAllUsers();
 }

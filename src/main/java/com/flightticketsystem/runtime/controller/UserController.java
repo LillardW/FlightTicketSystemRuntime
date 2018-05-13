@@ -59,7 +59,6 @@ public class UserController {
         if(result) {
             User user = userService.findUserByUserId(userModel.getUserId());
             session.setAttribute("currentUser", userService.convertToModel(user));
-            return "redirect:/updateUserProfilePage";
         }
         return "redirect:/updateUserProfilePage";
     }
