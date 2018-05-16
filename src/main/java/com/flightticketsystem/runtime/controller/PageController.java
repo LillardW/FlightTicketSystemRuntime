@@ -104,7 +104,7 @@ public class PageController {
     }
 
     @RequestMapping("/updateUserProfilePage")
-    public String updateUserProfilePage(@RequestParam int userId, HttpSession session, Model model) {
+    public String updateUserProfilePage(HttpSession session, Model model) {
         if((int)session.getAttribute("Authority") == 0) {
             model.addAttribute("userModel",session.getAttribute("currentUser"));
             return "updateUserProfile";
@@ -164,6 +164,17 @@ public class PageController {
     @RequestMapping(value = "/searchTickets")
     public String searchTicketsOfUser() {
         return "searchTickets";
+    }
+
+    @RequestMapping(value = "/userOrders")
+    public String userOrdersPage(HttpSession session, Model model) {
+        if((int)session.getAttribute("Authority")==0) {
+            UserModel userModel = (UserModel) session.getAttribute("currentUser");
+            model.addAttribute("tickets",ticketService.searchTickets(new TicketSearchModel(userModel.getUserId(),"","",new Date(),new Date())));
+            return "userOrders";
+        } else {
+            return "index";
+        }
     }
 
 }

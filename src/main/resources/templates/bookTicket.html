@@ -41,11 +41,13 @@
             <div class="navigation">
                 <span class="menu"></span>
                 <ul class="navig">
-                    <li><a href="index.html" class="hvr-bounce-to-bottom">首页</a></li>
-                    <li><a href="about.html" class="hvr-bounce-to-bottom">关于</a></li>
-                    <li><a href="addFlightPage.html" class="hvr-bounce-to-bottom">添加机票</a></li>
-                    <li><a href="typo.html" class="hvr-bounce-to-bottom">样式</a></li>
-                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}"><a th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}" href="login.html" class="hvr-bounce-to-bottom"><span th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}" th:text="${session.LOGIN_SESSION_KEY_USERNAME}" ></span></a></li>
+                    <li><a href="index.html" class="active hvr-bounce-to-bottom">首页</a></li>
+                    <!--<li><a href="addFlightPage.html" class="hvr-bounce-to-bottom">添加航班</a></li>-->
+                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}"><a th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}" th:href="addFlightPage.html" class="hvr-bounce-to-bottom">添加航班</a></li>
+                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==0}"><a href="updateUserProfilePage.html" class="hvr-bounce-to-bottom">更新资料</a></li>
+                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}"><a href="searchAllUser.html" class="hvr-bounce-to-bottom" th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}">用户信息管理</a></li>
+                    <li  th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}"><a href="searchTickets.html" class="hvr-bounce-to-bottom"  th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}">票务管理</a></li>
+                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}"><a th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}" th:href="@{/user/logout}" class="hvr-bounce-to-bottom"><span th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}" th:text="${session.LOGIN_SESSION_KEY_USERNAME}" ></span></a></li>
                     <li th:if="${session.LOGIN_SESSION_KEY_USERNAME == null}"><a th:if="${session.LOGIN_SESSION_KEY_USERNAME == null}" href="login.html" class="hvr-bounce-to-bottom"><span th:if="${session.LOGIN_SESSION_KEY_USERNAME == null}" th:text="登录"> </span></a></li>
                 </ul>
             </div>
