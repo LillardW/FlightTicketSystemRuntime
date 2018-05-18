@@ -4,10 +4,7 @@ import com.flightticketsystem.runtime.constant.PlaceStatus;
 import com.flightticketsystem.runtime.constant.TicketPrice;
 import com.flightticketsystem.runtime.constant.TicketStatus;
 import com.flightticketsystem.runtime.domain.*;
-import com.flightticketsystem.runtime.repository.DynamicQueryDao;
-import com.flightticketsystem.runtime.repository.FlightRepository;
-import com.flightticketsystem.runtime.repository.PlaceRepository;
-import com.flightticketsystem.runtime.repository.TicketRepository;
+import com.flightticketsystem.runtime.repository.*;
 import com.flightticketsystem.runtime.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +24,9 @@ public class TicketServiceImpl implements TicketService {
     private FlightRepository flightRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private PlaceRepository placeRepository;
 
     @Autowired
@@ -35,6 +35,10 @@ public class TicketServiceImpl implements TicketService {
     public boolean addTicket(List<Map<String, Object>> insertTicketModels, long userId) {
         for(Map<String, Object> map : insertTicketModels) {
             Ticket ticket = convertToTicket(map, userId);
+            Ticket existingTicket = ticketRepository.findTicketByTicketNo(ticket.getTicketNo());
+            if(existingTicket != null) {
+                return false;
+            }
             Place place = placeRepository.findOne(ticket.getPlaceId());
             place.setPlaceStatus(PlaceStatus.SOLD.getPlaceStatus());
             placeRepository.save(place);
@@ -100,7 +104,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     public Ticket convertToTicket(Map<String, Object> map, long userId) {
-        Flight flight = flightRepository.findByFlightNo(String.valueOf(map.get("flightNo")));
+        Flight flight = flightRepository.findByFlightId(Integer.parseInt(map.get("flightId").toString()));
         Place place = placeRepository.findPlaceIdByFlightIdAndPlaceNo(flight.getFlightId(),String.valueOf(map.get("placeNo")));
         String ticketNo = new SimpleDateFormat("yyyyMMdd").format(flight.getEstimatedTakeOffTime()).toString() + flight.getFlightNo() + place.getPlaceNo();
         int ticketPrice = 0;
@@ -135,7 +139,16 @@ public class TicketServiceImpl implements TicketService {
         }
     }
 
+    public List<TicketSearchModel> searchTickets(long userId) {
+        return dynamicQueryDao.searchTickets(userId);
+    }
+
     public List<Ticket> searchTickets(TicketSearchModel ticketSearchModel) {
         return dynamicQueryDao.searchTickets(ticketSearchModel);
+    }
+
+    public List<TicketSearchModel> searchTicketsOfUserByUserName(String userName) {
+        User user = userRepository.findByUserName(userName);
+        return dynamicQueryDao.searchTickets(user.getUserId());
     }
 }

@@ -20,6 +20,8 @@ public interface UserService {
 
     public User convert(UserModel userModel);
 
+    public User convert4Reg(UserModel userModel);
+
     public UserModel convertToModel(User user);
 
     public User findUserByUserId(long userId);
@@ -27,4 +29,6 @@ public interface UserService {
     public User findUserByUserName(User user);
 
     public List<UserModel> searchAllUsers();
+
+    public String deleteUser(long userId);
 }

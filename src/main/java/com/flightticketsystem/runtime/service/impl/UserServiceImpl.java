@@ -61,9 +61,12 @@ public class UserServiceImpl implements UserService {
     public Response register(User user) {
         try {
             User existingEmail = userRepository.findByUserEmail(user.getUserEmail());
+            User existingUserName = userRepository.findByUserName(user.getUserName());
             User existingAccountOwner = userRepository.findUserByAccountOwner_PersonId(user.getAccountOwner().getPersonId());
             if (existingEmail != null) {
                 return baseService.result(ExceptionMsg.EmailUsed);
+            } else if (existingUserName != null) {
+                return baseService.result(ExceptionMsg.UserNameUsed);
             } else if (existingAccountOwner != null) {
                 return baseService.result(ExceptionMsg.AccountOwnerExists);
             } else {
@@ -82,7 +85,7 @@ public class UserServiceImpl implements UserService {
         try {
             User user = convert(userModel);
             User origUser = findUserByUserId(user.getUserId());
-            if(!userModel.getPassword().equals(origUser.getPassword())) {
+            if (!userModel.getPassword().equals(origUser.getPassword())) {
                 user.setPassword(baseService.getPwd(userModel.getPassword()));
             }
             user.setCreateTime(origUser.getCreateTime());
@@ -98,6 +101,19 @@ public class UserServiceImpl implements UserService {
     public User convert(UserModel userModel) {
         User user = new User();
         user.setUserId(userModel.getUserId());
+        user.setUserName(userModel.getUserName());
+        user.setPassword(userModel.getPassword());
+        user.setUserEmail(userModel.getUserEmail());
+        user.setAuthority(UserAuthority.NORMAL.getUserAuthority());
+        Person person = new Person();
+        person.setPersonId(userModel.getPersonId());
+        person.setPersonName(userModel.getPersonName());
+        user.setAccountOwner(person);
+        return user;
+    }
+
+    public User convert4Reg(UserModel userModel) {
+        User user = new User();
         user.setUserName(userModel.getUserName());
         user.setPassword(userModel.getPassword());
         user.setUserEmail(userModel.getUserEmail());
@@ -130,5 +146,10 @@ public class UserServiceImpl implements UserService {
 
     public List<UserModel> searchAllUsers() {
         return dynamicQueryDao.searchAllUsers();
+    }
+
+    public String deleteUser(long userId) {
+        userRepository.delete(userId);
+        return "success";
     }
 }

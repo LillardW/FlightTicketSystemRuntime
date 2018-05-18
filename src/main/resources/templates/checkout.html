@@ -41,13 +41,15 @@
             <div class="navigation">
                 <span class="menu"></span>
                 <ul class="navig">
-                    <li><a href="index.html" class="active hvr-bounce-to-bottom">首页</a></li>
+                    <li><a href="index.html" class="hvr-bounce-to-bottom">首页</a></li>
                     <!--<li><a href="addFlightPage.html" class="hvr-bounce-to-bottom">添加航班</a></li>-->
                     <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}"><a th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}" th:href="addFlightPage.html" class="hvr-bounce-to-bottom">添加航班</a></li>
-                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==0}"><a href="updateUserProfilePage.html" class="hvr-bounce-to-bottom">更新资料</a></li>
                     <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}"><a href="searchAllUser.html" class="hvr-bounce-to-bottom" th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}">用户信息管理</a></li>
                     <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}"><a href="searchTickets.html" class="hvr-bounce-to-bottom"  th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}">票务管理</a></li>
-                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}"><a th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}" th:href="@{/user/logout}" class="hvr-bounce-to-bottom"><span th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}" th:text="${session.LOGIN_SESSION_KEY_USERNAME}" ></span></a></li>
+                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==0}"><a href="userOrders.html" class="hvr-bounce-to-bottom">查看订单</a></li>
+                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==0}"><a href="updateUserProfilePage.html?userId=0" class="hvr-bounce-to-bottom">更新资料</a></li>
+                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==0}"><a href="userOrders.html" class="hvr-bounce-to-bottom"  th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}">查看订单</a></li>
+                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}"><a th:title="登出" th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}" th:href="@{/user/logout}" class="hvr-bounce-to-bottom"><span th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}" th:text="${session.LOGIN_SESSION_KEY_USERNAME}" ></span></a></li>
                     <li th:if="${session.LOGIN_SESSION_KEY_USERNAME == null}"><a th:if="${session.LOGIN_SESSION_KEY_USERNAME == null}" href="login.html" class="hvr-bounce-to-bottom"><span th:if="${session.LOGIN_SESSION_KEY_USERNAME == null}" th:text="登录"> </span></a></li>
                 </ul>
             </div>
@@ -67,22 +69,25 @@
 <!--start-about-->
 <div class="about">
     <div class="container">
-        <p>你选择的是航班号为 的航班，航班起点城市为：到达城市为：</p>
-        <p>预计起飞时间：；预计到达时间：</p>
+        <p>你选择的是航班号为<span th:text="${flight.flightNo}"></span>的航班，航班起点城市为：<span th:text="${flight.departureCity}"></span>；到达城市为：<span th:text="${flight.arrivalCity}"></span></p>
+        <p>预计起飞时间：<span th:text="${flight.estimatedTakeOffTime}"></span>；预计到达时间：<span th:text="${flight.estimatedArrivalTime}"></span></p>
         <p>请在下方输入乘机人信息：</p>
         <form action="/flight/checkout">
             <table id="selectedSeats" class="table table-hover">
                 <thead>
                 <tr>
+                    <th hidden="hidden"></th>
                     <th>航班号</th>
                     <th>座位</th>
                     <th>票价</th>
-                    <th>乘机人姓名</th>
                     <th>身份证号码</th>
+                    <th>乘机人姓名</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="insertTicketModel ,iterStat: ${insertTicketModels}">
+                    <td hidden="hidden" th:id="'insertTicketModel_flightId_' + ${iterStat.count}"
+                        th:text="${insertTicketModel.flightId}"></td>
                     <td th:id="'insertTicketModel_flightNo_' + ${iterStat.count}"
                         th:text="${insertTicketModel.flightNo}"></td>
                     <td th:id="'insertTicketModel_placeNo_' + ${iterStat.count}"
@@ -113,6 +118,7 @@
     function submitInsertTicketModel() {
         var insertTicketModels = [];
         for (var i = 1; i <= 5; i++) {
+            var flightId = $('#insertTicketModel_flightId_' + i.toString()).text();
             var flightNo = $('#insertTicketModel_flightNo_' + i.toString()).text();
             if (flightNo === null || flightNo === "") {
                 break;
@@ -121,6 +127,7 @@
             var personId = $('#insertTicketModel_personId_' + i.toString()).val();
             var personName = $('#insertTicketModel_personName_' + i.toString()).val();
             var insertTicketModel = {
+                flightId:flightId,
                 flightNo: flightNo,
                 placeNo: placeNo,
                 personId: personId,
@@ -132,6 +139,13 @@
 
         axios.post("/flight/checkout",insertTicketModels).then(function (response) {
             console.log("response: "+JSON.stringify(response));
+            if (response.data === "success") {
+                alert("购票成功！");
+                window.location.href = "userOrders";
+            } else {
+                alert("您选择的座位已被选择，请返回重新选座！");
+                return;
+            }
         }).catch(function (error) {
             console.log("error: "+JSON.stringify(error));
         });
@@ -157,22 +171,20 @@
 <div class="footer">
     <div class="container">
         <div class="touch-top heading">
-            <h3>FOLLOW US</h3>
+            <h3></h3>
         </div>
         <div class="touch-bottom">
-            <p>756 gt globel Place, CD-Road,M 07 435.</p>
-            <h6>1 234 567 9871 , 800-2345-679</h6>
-            <p>purus tincidunt egestas</p>
+            <p></p>
+            <h6></h6>
+            <p></p>
             <ul>
-                <li><a href="#"><span class="fb"> </span></a></li>
-                <li><a href="#"><span class="twit"> </span></a></li>
-                <li><a href="#"><span class="google"> </span></a></li>
+                <li><a href="#"> </span></a></li>
+                <li><a href="#"> </span></a></li>
+                <li><a href="#"> </span></a></li>
             </ul>
         </div>
         <div class="footer-top">
-            <p class="footer-class">Copyright &copy; 2015.Company name All rights reserved.More Templates <a
-                    href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a
-                    href="http://www.cssmoban.com/" title="网站模板" target="_blank">网站模板</a></p>
+            <p class="footer-class"></p>
         </div>
     </div>
     <script type="text/javascript">

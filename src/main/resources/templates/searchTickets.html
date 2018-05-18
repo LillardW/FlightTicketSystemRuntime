@@ -41,10 +41,13 @@
                 <span class="menu"></span>
                 <ul class="navig">
                     <li><a href="index.html" class="hvr-bounce-to-bottom">首页</a></li>
-                    <li><a href="about.html" class="hvr-bounce-to-bottom">关于</a></li>
-                    <li><a href="services.html" class="hvr-bounce-to-bottom">服务</a></li>
-                    <li><a href="typo.html" class="hvr-bounce-to-bottom">样式</a></li>
-                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}"><a th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}" href="login.html" class="hvr-bounce-to-bottom"><span th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}" th:text="${session.LOGIN_SESSION_KEY_USERNAME}" ></span></a></li>
+                    <!--<li><a href="addFlightPage.html" class="hvr-bounce-to-bottom">添加航班</a></li>-->
+                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}"><a th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}" th:href="addFlightPage.html" class="hvr-bounce-to-bottom">添加航班</a></li>
+                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}"><a href="searchAllUser.html" class="hvr-bounce-to-bottom" th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}">用户信息管理</a></li>
+                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}"><a href="searchTickets.html" class="active hvr-bounce-to-bottom"  th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}">票务管理</a></li>
+                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==0}"><a href="userOrders.html" class="hvr-bounce-to-bottom">查看订单</a></li>
+                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==0}"><a href="updateUserProfilePage.html" class="hvr-bounce-to-bottom">更新资料</a></li>
+                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}"><a th:title="登出" th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}" th:href="@{/user/logout}" class="hvr-bounce-to-bottom"><span th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}" th:text="${session.LOGIN_SESSION_KEY_USERNAME}" ></span></a></li>
                     <li th:if="${session.LOGIN_SESSION_KEY_USERNAME == null}"><a th:if="${session.LOGIN_SESSION_KEY_USERNAME == null}" href="login.html" class="hvr-bounce-to-bottom"><span th:if="${session.LOGIN_SESSION_KEY_USERNAME == null}" th:text="登录"> </span></a></li>
                 </ul>
             </div>
@@ -65,61 +68,26 @@
 
 <div class="about">
     <div class="container">
-        <table class="table table-hover">
+        <p><div class="input-group"><label for="userName">根据用户名搜索：</label><input id="userName" name="userName" placeholder="在此输入用户名"><button class="btn btn-default" onclick="searchByUserName()">搜索</button></div></p>
+        <table id="ticket-table" class="table table-hover">
             <thead>
             <tr>
-                <th>机票ID</th>
+                <th>航班编号</th>
                 <th>机票编号</th>
                 <th>身份证号码</th>
                 <th>真实姓名</th>
-                <th>航班编号</th>
                 <th>起点城市</th>
                 <th>终点城市</th>
                 <th>起飞时间</th>
                 <th>到达时间</th>
                 <th>票价</th>
                 <th>座位号</th>
+                <th>状态</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody>
-            <!--<tr th:each="userModel : ${userSearchResults}">-->
-                <!--<td th:text="${userModel.userId}"></td>-->
-                <!--<td th:text="${userModel.userName}"></td>-->
-                <!--<td th:text="${userModel.userEmail}"></td>-->
-                <!--<td th:text="${userModel.personId}"></td>-->
-                <!--<td th:text="${userModel.personName}"></td>-->
-                <!--<td><a th:href="@{updateUserProfilePage(id=${userModel.userId})}">修改信息</a></td>-->
-                <!--<td><a th:href="@{deleteUser(id=${userModel.userId})}">删除</a></td>-->
-            <!--</tr>-->
-            <tr>
-                <td>129</td>
-                <td>20180410FT3124121_3</td>
-                <td>123456789123456789</td>
-                <td>张三</td>
-                <td>FT2333</td>
-                <td>上海</td>
-                <td>北京</td>
-                <td>2018-05-01 15:35:00</td>
-                <td>2018-05-01 18:45:00</td>
-                <td>100</td>
-                <td>12</td>
-                <td><a th:href="/user/">删除</a>
-            </tr>
-            <tr>
-                <td>130</td>
-                <td>20180410FT3124121_4</td>
-                <td>987654321987654321</td>
-                <td>李四</td>
-                <td>FT2333</td>
-                <td>上海</td>
-                <td>北京</td>
-                <td>2018-05-01 15:35:00</td>
-                <td>2018-05-01 18:45:00</td>
-                <td>100</td>
-                <td>14</td>
-                <td><a href="">删除</a>
-            </tr>
+
             </tbody>
         </table>
     </div>
@@ -149,27 +117,54 @@
 <div class="footer">
     <div class="container">
         <div class="touch-top heading">
-            <h3>FOLLOW US</h3>
+            <h3></h3>
         </div>
         <div class="touch-bottom">
-            <p>756 gt globel Place, CD-Road,M 07 435.</p>
-            <h6>1 234 567 9871 , 800-2345-679</h6>
-            <p>purus tincidunt egestas</p>
+            <p></p>
+            <h6></h6>
+            <p></p>
             <ul>
-                <li><a href="#"><span class="fb"> </span></a></li>
-                <li><a href="#"><span class="twit"> </span></a></li>
-                <li><a href="#"><span class="google"> </span></a></li>
+                <li><a href="#"> </span></a></li>
+                <li><a href="#"> </span></a></li>
+                <li><a href="#"> </span></a></li>
             </ul>
         </div>
         <div class="footer-top">
-            <p class="footer-class">Copyright &copy; 2018.Company name All rights reserved.More Templates </p>
+            <p class="footer-class"></p>
         </div>
     </div>
     <script type="text/javascript">
         $(document).ready(function () {
             $().UItoTop({easingType: 'easeOutQuart'});
-
         });
+
+        function searchByUserName() {
+            var userName = $("#userName").val();
+            axios.get("/flight/searchTicketsOfUser?userName=" + userName).then(function(response) {
+
+                for(var i=0;i<response.data.length;i++) {
+                    var item = response.data[i];
+                    if(item.ticketStatus === 3) {
+                        var td1 = "<tr><td>" + item.flightNo + "</td><td>" + item.ticketNo + "</td><td>" + item.personId + "</td><td>" + item.personName + "</td><td>" + item.departureCity + "</td><td>" + item.arrivalCity + "</td><td>" + item.estimatedTakeOffTime + "</td><td>" + item.estimatedArrivalTime + "</td><td>" + item.ticketPrice + "</td><td>" + item.placeNo + "</td><td>" + item.ticketStatus + "</td><td><a></a></td></tr>";
+                        $("#ticket-table tbody:last").append(td1);
+                    } else {
+                        var td2 = "<tr><td>" + item.flightNo + "</td><td>" + item.ticketNo + "</td><td>" + item.personId + "</td><td>" + item.personName + "</td><td>" + item.departureCity + "</td><td>" + item.arrivalCity + "</td><td>" + item.estimatedTakeOffTime + "</td><td>" + item.estimatedArrivalTime + "</td><td>" + item.ticketPrice + "</td><td>" + item.placeNo + "</td><td>" + item.ticketStatus + "</td><td><a href='#' onclick='reverseTicket("+item.ticketId+")'>退票</a></td></tr>";
+                        $("#ticket-table tbody:last").append(td2);
+                    }
+                }
+            });
+        }
+        
+        function reverseTicket(ticketId) {
+            axios.get("/flight/reverseTicket?ticketId="+ticketId).then(
+                function (value) {
+                    $("#ticket-table tbody:last").empty();
+                    searchByUserName();
+                }
+            ).catch(function (err) {
+                console.log(err);
+            });
+        }
     </script>
     <a href="#home" id="toTop" class="scroll" style="display: block;"> <span id="toTopHover"
                                                                              style="opacity: 1;"> </span></a>

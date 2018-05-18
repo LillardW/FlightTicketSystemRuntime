@@ -15,4 +15,6 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
 
     Flight findByFlightNo(String flightNo);
 
+    Flight findFlightByFlightNoAndDepartureCityAndArrivalCityAndEstimatedTakeOffTimeAndEstimatedArrivalTime(String flightNo, String departureCity, String arrivalCity, Date estimatedTakeOffTime, Date estimatedArrivalTime);
+
 }

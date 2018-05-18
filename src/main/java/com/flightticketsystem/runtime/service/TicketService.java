@@ -20,5 +20,9 @@ public interface TicketService {
 
     String reverseTicket(long ticketId);
 
+    List<TicketSearchModel> searchTickets(long userId);
+
     List<Ticket> searchTickets(TicketSearchModel ticketSearchModel);
+
+    List<TicketSearchModel> searchTicketsOfUserByUserName(String userName);
 }

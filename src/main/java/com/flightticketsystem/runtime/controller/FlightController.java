@@ -38,13 +38,10 @@ public class FlightController {
     private UserService userService;
 
     @RequestMapping(value = "/addFlight")
-    public String addFlight(@RequestBody FlightModel flightModel) {
+    @ResponseBody
+    public boolean addFlight(@RequestBody FlightModel flightModel) {
         Flight flight = new Flight(flightModel.getFlightNo(),flightModel.getDepartureCity(),flightModel.getArrivalCity(),flightModel.getEstimatedTakeOffTime(),flightModel.getEstimatedArrivalTime());
-        boolean result = flightService.addFlight(flight, flightModel.getSeatCharts());
-        if (result) {
-            return "redirect:/index";
-        }
-        return "redirect:addFlightPage";
+        return flightService.addFlight(flight, flightModel.getSeatCharts());
     }
 
     @RequestMapping(value = "/searchSeatCharts", method = RequestMethod.GET)
@@ -55,16 +52,14 @@ public class FlightController {
 
     @RequestMapping(value = "/checkout", method = RequestMethod.POST)
     @ResponseBody
-    public String checkout(@RequestBody List<Map<String, Object>> insertTicketModels, HttpServletRequest request, HttpSession session) {
-        Cookie[] cookies = request.getCookies();
-        long userId = 0;
+    protected String checkout(@RequestBody List<Map<String, Object>> insertTicketModels, HttpServletRequest request, HttpSession session) {
+        long userId = -1;
 
         if(session.getAttribute("currentUser") != null) {
-            User user = userService.convert((UserModel) session.getAttribute("currentUser"));
-            userId = user.getUserId();
+            userId = ((UserModel) session.getAttribute("currentUser")).getUserId();
         }
 
-        if (userId == 0) {
+        if (userId == -1) {
             return "fail";
         }
         boolean result = ticketService.addTicket(insertTicketModels, userId);
@@ -86,5 +81,11 @@ public class FlightController {
     @ResponseBody
     public String reverseTicket(@RequestParam("ticketId") long ticketId) {
         return ticketService.reverseTicket(ticketId);
+    }
+
+    @RequestMapping(value = "/searchTicketsOfUser", method = RequestMethod.GET)
+    @ResponseBody
+    public List<TicketSearchModel> searchTicketsOfUserByUserName(@RequestParam("userName") String userName) {
+        return ticketService.searchTicketsOfUserByUserName(userName);
     }
 }

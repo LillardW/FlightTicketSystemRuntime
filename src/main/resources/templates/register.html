@@ -88,12 +88,12 @@
                                 <input type="text" name="form-useremail" placeholder="请输入Email" class="form-username form-control" id="form-useremail">
                             </div>
                             <div class="form-group">
-                                <label class="sr-only" for="form-userid">真实姓名</label>
-                                <input type="text" name="form-userid" placeholder="请输入真实姓名" class="form-username form-control" id="form-userid">
+                                <label class="sr-only" for="form-realname">真实姓名</label>
+                                <input type="text" name="form-realname" placeholder="请输入真实姓名" class="form-username form-control" id="form-realname">
                             </div>
                             <div class="form-group">
-                                <label class="sr-only" for="form-realname">身份证号码</label>
-                                <input type="text" name="form-realname" placeholder="请输入身份证号码" class="form-username form-control" id="form-realname">
+                                <label class="sr-only" for="form-userid">身份证号码</label>
+                                <input type="text" name="form-userid" placeholder="请输入身份证号码" class="form-username form-control" id="form-userid">
                             </div>
                             <button type="button" onclick="onClickedSubmit()" class="btn">注册</button>
                         </form>
@@ -110,35 +110,57 @@
 <div class="footer">
     <div class="container">
         <div class="touch-top heading">
-            <h3>FOLLOW US</h3>
+            <h3></h3>
         </div>
         <div class="touch-bottom">
-            <p>756 gt globel Place, CD-Road,M 07 435.</p>
-            <h6>1 234 567 9871 , 800-2345-679</h6>
-            <p>purus tincidunt egestas</p>
+            <p></p>
+            <h6></h6>
+            <p></p>
             <ul>
-                <li><a href="#"><span class="fb"> </span></a></li>
-                <li><a href="#"><span class="twit"> </span></a></li>
-                <li><a href="#"><span class="google"> </span></a></li>
+                <li><a href="#"> </span></a></li>
+                <li><a href="#"> </span></a></li>
+                <li><a href="#"> </span></a></li>
             </ul>
         </div>
         <div class="footer-top">
-            <p class="footer-class">Copyright &copy; 2015.Company name All rights reserved.More Templates <a
-                    href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a
-                    href="http://www.cssmoban.com/" title="网站模板" target="_blank">网站模板</a></p>
+            <p class="footer-class"></p>
         </div>
     </div>
     <script type="text/javascript">
         function onClickedSubmit() {
-            var user = {
+            var userEmail = $("#form-useremail").val();
+            var personId = $("#form-userid").val();
+            console.log(personId);
+
+            if(!/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/.test(userEmail)) {
+                alert("输入的邮箱格式不正确，请重新输入！");
+                return;
+            }
+
+            var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+            if(!reg.test(personId)) {
+                alert("身份证输入不合法");
+                return;
+            }
+
+        var user = {
                 userName: $("#form-username").val(),
                 password: $("#form-password").val(),
-                userEmail: $("#form-useremail").val(),
-                personId:$("#form-userid").val(),
+                userEmail: userEmail,
+                personId: personId,
                 personName:$("#form-realname").val()
 
             };
-            axios.post("/user/register",user,5000);
+            axios.post("/user/register",user,10000).then(function (response) {
+                console.log("response:"+JSON.stringify(response));
+                if (response.data.rspCode !== "000000") {
+                    alert(response.data.rspMsg);
+                    return;
+                } else {
+                    alert("注册成功，请到登录页登录！");
+                    window.location.href = "login.html";
+                }
+            });
         }
 
         $(document).ready(function () {

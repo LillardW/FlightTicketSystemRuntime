@@ -33,13 +33,13 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public boolean addFlight(Flight addFlight, String seatCharts) {
-        try {
+        Flight existingFlight = flightRepository.findFlightByFlightNoAndDepartureCityAndArrivalCityAndEstimatedTakeOffTimeAndEstimatedArrivalTime(addFlight.getFlightNo(),addFlight.getDepartureCity(),addFlight.getArrivalCity(),addFlight.getEstimatedTakeOffTime(),addFlight.getEstimatedArrivalTime());
+        if(existingFlight != null) {
+            return false;
+        } else {
             Flight flight = flightRepository.save(addFlight);
             placeService.addPlaces(flight.getFlightId(), seatCharts);
             return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
         }
     }
 

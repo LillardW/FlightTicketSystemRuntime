@@ -49,18 +49,20 @@ public class UserController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
     public Response register(@RequestBody UserModel userModel) {
-        User user = userService.convert(userModel);
+        User user = userService.convert4Reg(userModel);
         return userService.register(user);
     }
 
     @RequestMapping(value = "/updateUserProfile", method = RequestMethod.POST)
-    public String updateProfile(UserModel userModel, HttpSession session) {
+    @ResponseBody
+    public String updateProfile(@RequestBody UserModel userModel, HttpSession session, Model model) {
         boolean result = userService.updateUserProfile(userModel);
         if(result) {
             User user = userService.findUserByUserId(userModel.getUserId());
             session.setAttribute("currentUser", userService.convertToModel(user));
+            model.addAttribute("userModel",userService.convertToModel(userService.findUserByUserId(user.getUserId())));
         }
-        return "redirect:/updateUserProfilePage";
+        return "success";
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -70,5 +72,11 @@ public class UserController {
         session.removeAttribute("currentUser");
         session.removeAttribute("Authority");
         return "redirect:/index";
+    }
+
+    @RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
+    @ResponseBody
+    public String deleteUser(@RequestParam("userId") long userId) {
+        return userService.deleteUser(userId);
     }
 }

@@ -74,10 +74,12 @@
                         <li><a href="index.html" class="hvr-bounce-to-bottom">首页</a></li>
                         <!--<li><a href="addFlightPage.html" class="hvr-bounce-to-bottom">添加航班</a></li>-->
                         <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}"><a th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}" th:href="addFlightPage.html" class="hvr-bounce-to-bottom">添加航班</a></li>
-                        <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==0}"><a href="updateUserProfilePage.html" class="hvr-bounce-to-bottom">更新资料</a></li>
                         <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}"><a href="searchAllUser.html" class="hvr-bounce-to-bottom" th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}">用户信息管理</a></li>
-                        <li  th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}"><a href="searchTickets.html" class="hvr-bounce-to-bottom"  th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}">票务管理</a></li>
-                        <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}"><a th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}" th:href="@{/user/logout}" class="hvr-bounce-to-bottom"><span th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}" th:text="${session.LOGIN_SESSION_KEY_USERNAME}" ></span></a></li>
+                        <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}"><a href="searchTickets.html" class="hvr-bounce-to-bottom"  th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}">票务管理</a></li>
+                        <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==0}"><a href="userOrders.html" class="hvr-bounce-to-bottom">查看订单</a></li>
+                        <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==0}"><a href="updateUserProfilePage.html" class="hvr-bounce-to-bottom">更新资料</a></li>
+                        <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==0}"><a href="userOrders.html" class="hvr-bounce-to-bottom"  th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}">查看订单</a></li>
+                        <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}"><a th:title="登出" th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}" th:href="@{/user/logout}" class="hvr-bounce-to-bottom"><span th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}" th:text="${session.LOGIN_SESSION_KEY_USERNAME}" ></span></a></li>
                         <li th:if="${session.LOGIN_SESSION_KEY_USERNAME == null}"><a th:if="${session.LOGIN_SESSION_KEY_USERNAME == null}" href="login.html" class="active hvr-bounce-to-bottom"><span th:if="${session.LOGIN_SESSION_KEY_USERNAME == null}" th:text="登录"> </span></a></li>
                     </ul>
                 </div>
@@ -134,20 +136,20 @@
 <div class="footer">
     <div class="container">
         <div class="touch-top heading">
-            <h3>FOLLOW US</h3>
+            <h3></h3>
         </div>
         <div class="touch-bottom">
-            <p>756 gt globel Place, CD-Road,M 07 435.</p>
-            <h6>1 234 567 9871 , 800-2345-679</h6>
-            <p>purus tincidunt egestas</p>
+            <p></p>
+            <h6></h6>
+            <p></p>
             <ul>
-                <li><a href="#"><span class="fb"> </span></a></li>
-                <li><a href="#"><span class="twit"> </span></a></li>
-                <li><a href="#"><span class="google"> </span></a></li>
+                <li><a href="#"> </span></a></li>
+                <li><a href="#"> </span></a></li>
+                <li><a href="#"> </span></a></li>
             </ul>
         </div>
         <div class="footer-top">
-            <p class="footer-class">Copyright &copy; 2018.Company name All rights reserved.More Templates </p>
+            <p class="footer-class"></p>
         </div>
     </div>
     <script type="text/javascript">
@@ -158,7 +160,14 @@
                 password: $("#form-password").val()
             };
             axios.post("/user/login",user).then(function(response) {
-                window.location.href = "/index";
+                console.log(response);
+                if (response.data.Result === "success") {
+                    alert("登录成功！");
+                    window.location.href = "/index";
+                } else {
+                    alert("登录失败，请重试。");
+                    return;
+                }
             }).catch(function(error) {
                 console.log("error: "+error);
                 alert("系统出错，请重试！");

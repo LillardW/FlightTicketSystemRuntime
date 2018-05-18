@@ -16,6 +16,12 @@ public class DynamicQueryDao {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private FlightRepository flightRepository;
+
+    @Autowired
+    private PlaceRepository placeRepository;
+
     @PersistenceContext
     private EntityManager em;
 
@@ -83,7 +89,7 @@ public class DynamicQueryDao {
         query.where(p1);
         List<Place> resultList = em.createQuery(query).getResultList();
         List<Map<String, Object>> result = new ArrayList<>();
-        for(Place place:resultList) {
+        for (Place place : resultList) {
             result.add(convertToMap(place));
         }
         return result;
@@ -96,12 +102,12 @@ public class DynamicQueryDao {
         Root<User> root = query.from(User.class);
         query.select(root);
 
-        Predicate p1 = cb.notEqual(root.get("authority"),1);
+        Predicate p1 = cb.notEqual(root.get("authority"), 1);
         query.where(p1);
         List<User> resultList = em.createQuery(query).getResultList();
         List<UserModel> returnList = new ArrayList<>();
         List<Map<String, Object>> result = new ArrayList<>();
-        for(User user:resultList) {
+        for (User user : resultList) {
             returnList.add(userService.convertToModel(user));
         }
         return returnList;
@@ -114,20 +120,68 @@ public class DynamicQueryDao {
         Root<Ticket> root = query.from(Ticket.class);
         query.select(root);
 
-        Predicate p1 = cb.equal(root.get("userId"),ticketSearchModel.getUserId());
+        Predicate p1 = cb.equal(root.get("userId"), ticketSearchModel.getUserId());
         query.where(p1);
 
-        Predicate p2 = cb.equal(root.get(""),ticketSearchModel.getFlightNo());
+        Predicate p2 = cb.equal(root.get(""), ticketSearchModel.getFlightNo());
         query.where(p2);
 
         List<Ticket> resultList = em.createQuery(query).getResultList();
         return resultList;
     }
 
+    public List<TicketSearchModel> searchTickets(long userId) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Ticket> query = cb.createQuery(Ticket.class);
+        Root<Ticket> root = query.from(Ticket.class);
+        query.select(root);
+
+        Predicate p1 = cb.equal(root.get("userId"), userId);
+        query.where(p1);
+
+        List<Ticket> list = em.createQuery(query).getResultList();
+
+        List<TicketSearchModel> result = new ArrayList<>();
+
+        for (Ticket ticket : list) {
+            TicketSearchModel ticketSearchModel = new TicketSearchModel();
+            ticketSearchModel.setFlightNo(ticket.getFlight().getFlightNo());
+            ticketSearchModel.setTicketNo(ticket.getTicketNo());
+            ticketSearchModel.setTicketId(ticket.getTicketId());
+            ticketSearchModel.setDepartureCity(ticket.getFlight().getDepartureCity());
+            ticketSearchModel.setArrivalCity(ticket.getFlight().getArrivalCity());
+            ticketSearchModel.setEstimatedArrivalTime(ticket.getFlight().getEstimatedArrivalTime());
+            ticketSearchModel.setEstimatedTakeOffTime(ticket.getFlight().getEstimatedTakeOffTime());
+            ticketSearchModel.setPersonId(ticket.getPassenger().getPersonId());
+            ticketSearchModel.setPersonName(ticket.getPassenger().getPersonName());
+            ticketSearchModel.setTicketStatusId(ticket.getTicketStatus());
+            ticketSearchModel.setTicketPrice(ticket.getTicketPrice());
+
+            switch (ticket.getTicketStatus()) {
+                case 2:
+                    ticketSearchModel.setTicketStatus("已支付");
+                    break;
+                case 3:
+                    ticketSearchModel.setTicketStatus("已退票");
+                    break;
+                default:
+                    ticketSearchModel.setTicketStatus("已支付");
+                    break;
+            }
+
+            Place place = placeRepository.findOne(ticket.getPlaceId());
+            ticketSearchModel.setPlaceNo(place.getPlaceNo());
+
+            result.add(ticketSearchModel);
+        }
+
+        return result;
+    }
+
     public Map<String, Object> convertToMap(Place place) {
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("placeId",place.getPlaceId());
-        map.put("flightId",place.getFlightId());
+        map.put("placeId", place.getPlaceId());
+        map.put("flightId", place.getFlightId());
         map.put("placeNo", place.getPlaceNo());
         map.put("placeStatus", place.getPlaceStatus());
         map.put("placeLevel", place.getPlaceLevel());

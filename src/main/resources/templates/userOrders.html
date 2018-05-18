@@ -1,10 +1,170 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>订单管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <link href="css/bootstrap.css" rel='stylesheet' type='text/css'/>
+    <link href="css/style.css" rel='stylesheet' type='text/css'/>
+    <script src="js/jquery.min.js"></script>
+    <!-- start-smoth-scrolling-->
+    <script type="text/javascript" src="js/move-top.js"></script>
+    <script type="text/javascript" src="js/easing.js"></script>
+    <script type="text/javascript" src="js/axios.min.js"></script>
+    <script type="text/javascript" src="js/jquery.serializejson.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+                $('html,body').animate({scrollTop: $(this.hash).offset().top}, 1000);
+            });
+        });
+    </script>
+    <!--start-smoth-scrolling-->
 </head>
 <body>
+<!--start-header-->
+<div class="header" id="home">
+    <div class="container">
+        <div class="head">
+            <div class="logo">
+                <a href="index.html"><img src="images/logo.png" alt=""/></a>
+            </div>
+            <div class="navigation">
+                <span class="menu"></span>
+                <ul class="navig">
+                    <li><a href="index.html" class="hvr-bounce-to-bottom">首页</a></li>
+                    <!--<li><a href="addFlightPage.html" class="hvr-bounce-to-bottom">添加航班</a></li>-->
+                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}"><a th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}" th:href="addFlightPage.html" class="hvr-bounce-to-bottom">添加航班</a></li>
+                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}"><a href="searchAllUser.html" class="hvr-bounce-to-bottom" th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}">用户信息管理</a></li>
+                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}"><a href="searchTickets.html" class="hvr-bounce-to-bottom"  th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}">票务管理</a></li>
+                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==0}"><a href="userOrders.html" class="active hvr-bounce-to-bottom">查看订单</a></li>
+                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==0}"><a href="updateUserProfilePage.html?userId=0" class="hvr-bounce-to-bottom">更新资料</a></li>
+                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==0}"><a href="userOrders.html" class="hvr-bounce-to-bottom"  th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null && session.Authority==1}">查看订单</a></li>
+                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}"><a th:title="登出" th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}" th:href="@{/user/logout}" class="hvr-bounce-to-bottom"><span th:if="${session.LOGIN_SESSION_KEY_USERNAME != '' && session.LOGIN_SESSION_KEY_USERNAME!= null}" th:text="${session.LOGIN_SESSION_KEY_USERNAME}" ></span></a></li>
+                    <li th:if="${session.LOGIN_SESSION_KEY_USERNAME == null}"><a th:if="${session.LOGIN_SESSION_KEY_USERNAME == null}" href="login.html" class="hvr-bounce-to-bottom"><span th:if="${session.LOGIN_SESSION_KEY_USERNAME == null}" th:text="登录"> </span></a></li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<!-- script-for-menu -->
+<!-- script-for-menu -->
+<script>
+    $("span.menu").click(function () {
+        $(" ul.navig").slideToggle("slow", function () {
+        });
+    });
+</script>
+<!--script-for-menu-->
+<!--start-about-->
 
+<div class="about">
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>航班号</th>
+                <th>出发城市</th>
+                <th>到达城市</th>
+                <th>身份证号</th>
+                <th>真实姓名</th>
+                <th>起飞时间</th>
+                <th>到达时间</th>
+                <th>座位号</th>
+                <th>票价</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr  th:each="ticket : ${tickets}">
+                <td th:text="${ticket.flightNo}"></td>
+                <td th:text="${ticket.departureCity}"></td>
+                <td th:text="${ticket.arrivalCity}"></td>
+                <td th:text="${ticket.personId}"></td>
+                <td th:text="${ticket.personName}"></td>
+                <td th:text="${ticket.estimatedTakeOffTime}"></td>
+                <td th:text="${ticket.estimatedArrivalTime}"></td>
+                <td th:text="${ticket.placeNo}"></td>
+                <td th:text="${ticket.ticketPrice}"></td>
+                <td th:text="${ticket.ticketStatus}"></td>
+                <td><a th:if="${ticket.ticketStatusId==2}" href="#" th:onclick="'javascript:reverseTicket('+${ticket.ticketId}+')'">退票</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--end-about-->
+<!--start-test-->
+<div class="test" id="testimonials">
+
+</div>
+<!--end-test-->
+<!--FlexSlider-->
+<link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen"/>
+<script src="js/jquery.flexslider.js"></script>
+<script type="text/javascript">
+    $(window).load(function () {
+        $('.flexslider').flexslider({
+            animation: "slide",
+            start: function (slider) {
+                $('body').removeClass('loading');
+            }
+        });
+    });
+</script>
+
+<!--End-slider-script-->
+<!--start-footer-->
+<div class="footer">
+    <div class="container">
+        <div class="touch-top heading">
+            <h3>FOLLOW US</h3>
+        </div>
+        <div class="touch-bottom">
+            <p></p>
+            <h6></h6>
+            <p></p>
+            <ul>
+                <li><a href="#"> </span></a></li>
+                <li><a href="#"> </span></a></li>
+                <li><a href="#"> </span></a></li>
+            </ul>
+        </div>
+        <div class="footer-top">
+            <p class="footer-class">Copyright &copy; 2018.Company name All rights reserved.More Templates </p>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $().UItoTop({easingType: 'easeOutQuart'});
+
+        });
+
+        function reverseTicket(ticketId) {
+            if (confirm("你确定要退票吗？") === true) {
+                axios.get("/flight/reverseTicket?ticketId=" + ticketId).then(
+                    function (response) {
+                        window.location.href = "/userOrders";
+                    }
+                ).catch(function (err) {
+                    console.log(err);
+                });
+            }
+        }
+    </script>
+    <a href="#home" id="toTop" class="scroll" style="display: block;"> <span id="toTopHover"
+                                                                             style="opacity: 1;"> </span></a>
+</div>
+<!--end-footer-->
 </body>
 </html>
